@@ -1,0 +1,14 @@
+<ui:UXML xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="False">
+    <Style src="project://database/Assets/UI%20Toolkit/ModeSelection/ModeStyle.uss?fileID=7433441132597879392&amp;guid=e1457b5fd8d57f2b09981b99c6078dcb&amp;type=3#ModeStyle"/>
+    <ui:VisualElement name="Background" class="Background" style="flex-grow: 1;"/>
+    <ui:VisualElement name="CentredBox" class="CentredBox" style="flex-grow: 1;">
+        <ui:VisualElement class="row">
+            <ui:Image name="JetPack" class="Image" style="background-image: url(&quot;project://database/Assets/Texture/jet-pack.jpg?fileID=2800000&amp;guid=3c5ca433da45db0ff83ed13a86a71c6e&amp;type=3#jet-pack&quot;);"/>
+            <ui:Image name="GrosGun" class="Image Unselected" style="background-image: url(&quot;project://database/Assets/Texture/gros-gun.jpg?fileID=2800000&amp;guid=fc53a4cbf8e5da4c6b04e54a82771d6f&amp;type=3#gros-gun&quot;);"/>
+        </ui:VisualElement>
+        <ui:VisualElement class="row">
+            <ui:Image name="Batte" class="Image Unselected" style="background-image: url(&quot;project://database/Assets/Texture/batte.jpg?fileID=2800000&amp;guid=a6446e522966e960aa1ceca5bddf31a8&amp;type=3#batte&quot;);"/>
+            <ui:Image name="Lasso" class="Image Unselected" style="background-image: url(&quot;project://database/Assets/Texture/lasso.jpg?fileID=2800000&amp;guid=eafd0c3874be2c99ba06d85d8c252783&amp;type=3#lasso&quot;);"/>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>
