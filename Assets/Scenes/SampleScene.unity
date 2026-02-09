@@ -135,7 +135,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &297300196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -356,6 +356,7 @@ MonoBehaviour:
   cameraTransform: {fileID: 519420032}
   moveSpeed: 5
   acceleration: 30
+  uiDocument: {fileID: 297300196}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
