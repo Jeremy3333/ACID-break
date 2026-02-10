@@ -1,12 +1,22 @@
 using UnityEngine;
 
+public enum EnemieType
+{
+    Basic,
+    Gunner
+}
+
 public class EnemieHandler : MonoBehaviour
 {
     [SerializeField]
     Transform playerTransform;
 
+    float acceleration;
+
+    float speed;
+
     [SerializeField]
-    float acceleration = 20f;
+    EnemieType enemieType;
 
     float targetVelocityX = 0f;
 
@@ -15,25 +25,82 @@ public class EnemieHandler : MonoBehaviour
     void Start()
     {
         enemie = GetComponent<Rigidbody2D>();
+        if (enemie == null)
+        {
+            Debug.LogError("Rigidbody2D component is missing on the enemie.");
+        }
+        if (playerTransform == null)
+        {
+            Debug.LogError("Player Transform is not assigned.");
+        }
+        switch (enemieType)
+        {
+            case EnemieType.Basic:
+                acceleration = 25f;
+                speed = 3f;
+                break;
+            case EnemieType.Gunner:
+                acceleration = 20f;
+                speed = 2f;
+                break;
+            default:
+                Debug.LogError("Unknown EnemieType.");
+                targetVelocityX = 0f;
+                break;
+        }
     }
 
-    void MoveTowardsPlayer()
+    void MoveTowardsPlayer(bool moveTowards)
     {
-        if (playerTransform != null)
+        if (moveTowards)
         {
-            float direction = Mathf.Sign(playerTransform.position.x - transform.position.x);
-            targetVelocityX = direction * 2f; // Move towards the player at a speed of 2 units per second
+            targetVelocityX = (playerTransform.position.x > transform.position.x) ? speed : -speed;
         }
         else
         {
-            targetVelocityX = 0f; // Stop moving if the player is not assigned
+            targetVelocityX = (playerTransform.position.x > transform.position.x) ? -speed : speed;
+        }
+    }
+
+    void BasicBehavior()
+    {
+        MoveTowardsPlayer(true);
+    }
+
+    void GunnerBehavior()
+    {
+        Vector2 directionToPlayer = playerTransform.position - transform.position;
+        if(directionToPlayer.magnitude > 6f)
+        {
+            MoveTowardsPlayer(true);
+        }
+        else if(directionToPlayer.magnitude < 4f)
+        {
+            MoveTowardsPlayer(false);
+        }
+    }
+
+    void ChooseBehavior()
+    {
+        switch (enemieType)
+        {
+            case EnemieType.Basic:
+                BasicBehavior();
+                break;
+            case EnemieType.Gunner:
+                GunnerBehavior();
+                break;
+            default:
+                Debug.LogError("Unknown EnemieType.");
+                break;
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        MoveTowardsPlayer();
+        targetVelocityX = 0f; // Reset target velocity at the start of each frame
+        ChooseBehavior();
     }
     void FixedUpdate()
     {
