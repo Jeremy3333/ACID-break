@@ -2267,7 +2267,7 @@ MonoBehaviour:
   gravityScale: 2.5
   GravityMultiplier: 2.3
   groundCheck: {fileID: 1160280726}
-  radius: 0.3
+  radius: 0.1
   collisionLayer:
     serializedVersion: 2
     m_Bits: 64
@@ -2388,6 +2388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
   character: {fileID: 1913417658}
+  torso: {fileID: 1569451147}
 --- !u!1 &2057902205
 GameObject:
   m_ObjectHideFlags: 0
