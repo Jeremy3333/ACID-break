@@ -31,7 +31,7 @@ public class CharacterHandler1 : MonoBehaviour
     
     Keyboard keyboard;
 
-    float epsilon = 0.01f;
+    const float epsilon = 0.01f;
 
     float moveDir = 0.0f;
 
@@ -57,7 +57,7 @@ public class CharacterHandler1 : MonoBehaviour
     {
         if (keyboard == null)
         {
-            Debug.LogError("Keyboard input is not available.");
+            Debug.LogError("(Custom error) Keyboard input is not available.");
             return;
         }
 
@@ -82,7 +82,7 @@ public class CharacterHandler1 : MonoBehaviour
         character.AddForce(movement * Vector2.right);
         #endregion
         #region Jump Gravity
-        if(character.linearVelocity.y < 0)
+        if (character.linearVelocity.y < 0)
         {
             character.gravityScale = gravityScale * GravityMultiplier;
         }
