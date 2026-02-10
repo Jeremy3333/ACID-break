@@ -5,12 +5,16 @@ public class CombatModeManager : MonoBehaviour
 {
     public MonoBehaviour gunMode;
     public MonoBehaviour swordMode;
+    public MonoBehaviour grapplingGunMode;
 
     private ICombatMode currentMode;
 
     void Start()
     {
         SwitchMode(swordMode as ICombatMode);
+        currentMode?.Exit();
+
+        SwitchMode(grapplingGunMode as ICombatMode);
         currentMode?.Exit();
         
         SwitchMode(gunMode as ICombatMode);
@@ -24,10 +28,13 @@ public class CombatModeManager : MonoBehaviour
         if (Keyboard.current.digit2Key.wasPressedThisFrame)
             SwitchMode(swordMode as ICombatMode);
 
+        if (Keyboard.current.digit3Key.wasPressedThisFrame)
+            SwitchMode(grapplingGunMode as ICombatMode);
+
         currentMode?.HandleUpdate();
     }
 
-    void SwitchMode(ICombatMode newMode)
+    public void SwitchMode(ICombatMode newMode)
     {
         if (currentMode == newMode) return;
 

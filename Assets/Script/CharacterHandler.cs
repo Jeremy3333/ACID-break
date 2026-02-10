@@ -3,14 +3,14 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 
-public enum CharacterMode
-{
-    Neutral,
-    Jetpack,
-    BigGun,
-    BaseballBat,
-    Lasso
-}
+// public enum CharacterMode
+// {
+//     Neutral,
+//     Jetpack,
+//     BigGun,
+//     BaseballBat,
+//     Lasso
+// }
 
 public class CharacterHandler : MonoBehaviour
 {
