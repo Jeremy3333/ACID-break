@@ -3,29 +3,31 @@ using UnityEngine.InputSystem;
 
 public class Grappling : MonoBehaviour
 {
-    private Camera mainCam;
+    [Header("References")]
+    public Rope rope;
+    public Camera cam;
     private Vector2 mousePos;
-    public Transform gun;
-    public Rigidbody2D playerRb;
-    public bool canFire;
-    private float timer;
-    private float timeBetweenFire;
 
-    public float cadence = 0.3f;
+    public Transform firePoint;
+    public Rigidbody2D rb;
+    public SpringJoint2D joint;
 
-    public int damage = 1;
+    [Header("Grapple Settings")]
+    public float maxDistance = 20f;
+    public LayerMask grappableLayer;
+    public float jointFrequency = 6f;
 
-    public int nbShotgun = 10;
+    public float retractSpeed = 10f;
+    public float minDistance = 1.5f;
 
-    public float returnForce = 3f;
+    [HideInInspector] public Vector2 grapplePoint;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        joint.enabled = false;
+        rope.enabled = false;
     }
 
-    // Update is called once per frame
     void Update()
     {
         mousePos = Mouse.current.position.ReadValue();
@@ -34,40 +36,58 @@ public class Grappling : MonoBehaviour
         Vector3 rotation = worldPos - transform.position;
         float rotaZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0,0,rotaZ);
-        
-        if(!canFire)
-        {
-            timer += Time.deltaTime;
-            if(timer > timeBetweenFire) 
-            {
-                canFire = true;
-                timer = 0;
-            } 
-        }
 
-        if (Mouse.current.leftButton.isPressed && canFire)
-        {
-            timeBetweenFire = cadence;
-            canFire = false;
-            // TODO
-        }
+        if (Mouse.current.leftButton.wasPressedThisFrame)
+            TryGrapple();
 
-        if (Mouse.current.rightButton.isPressed && canFire)
-        {
-            timeBetweenFire = cadence;
-            canFire = false;
-            // TODO
-        }
+        if (Mouse.current.rightButton.isPressed)
+            Retract();
 
+        if (Mouse.current.leftButton.wasReleasedThisFrame)
+            StopGrapple();
     }
 
-    void Fire(int damage)
+    void TryGrapple()
     {
-        // TODO
+        Vector2 mouseWorld =
+            cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+        Vector2 dir = (mouseWorld - (Vector2)firePoint.position).normalized;
+
+        RaycastHit2D hit = Physics2D.Raycast(
+            firePoint.position,
+            dir,
+            maxDistance,
+            grappableLayer
+        );
+
+        if (!hit) return;
+
+        grapplePoint = hit.point;
+
+        rope.enabled = true;
     }
 
     void Retract()
     {
-        // TODO
+        if (!joint.enabled) return;
+
+        joint.distance -= retractSpeed * Time.deltaTime;
+        joint.distance = Mathf.Max(joint.distance, minDistance);
+    }
+
+    public void ActivateJoint()
+    {
+        joint.enabled = true;
+        joint.connectedAnchor = grapplePoint;
+        joint.autoConfigureDistance = false;
+        joint.distance = Vector2.Distance(rb.position, grapplePoint);
+        joint.frequency = jointFrequency;
+    }
+
+    void StopGrapple()
+    {
+        rope.enabled = false;
+        joint.enabled = false;
     }
 }
