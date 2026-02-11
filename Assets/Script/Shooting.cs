@@ -25,10 +25,13 @@ public class Shooting : MonoBehaviour
 
     public float spreadAngle = 15f;
 
+    private PlayerAnimator playerAnimator;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
+        playerAnimator = playerRb.gameObject.GetComponent<PlayerAnimator>();
     }
 
     // Update is called once per frame
@@ -58,6 +61,8 @@ public class Shooting : MonoBehaviour
             Vector2 recoilDir = -gun.right;
             playerRb.AddForce(recoilDir * recoilForce1, ForceMode2D.Impulse);
             FireSingle(damage1);
+
+            playerAnimator.Bang(worldPos, gun.position);
         }
 
         if (Mouse.current.rightButton.isPressed && canFire)
