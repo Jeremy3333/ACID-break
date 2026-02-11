@@ -39,6 +39,13 @@ public class BulletScripte : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
-        //Destroy(gameObject);
+        if(collision.collider.gameObject.tag == "Mob")
+        {
+            collision.gameObject.GetComponent<HealthManagerMob>().Hit(damage);
+        }
+        if(collision.collider.gameObject.tag != "Player")
+        {
+            Destroy(gameObject);
+        }
     }
 }

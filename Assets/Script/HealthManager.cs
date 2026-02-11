@@ -21,7 +21,7 @@ public class HealthManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        
+        UpDateUI();    
     }
 
     // Update is called once per frame
@@ -41,8 +41,12 @@ public class HealthManager : MonoBehaviour
         {
             isHittable = false;
             health = Mathf.Max(health-1, 0);
+            UpDateUI();
         }
+    }
 
+    void UpDateUI()
+    {
         for (int i = 0; i < moduleUI.Length; i++)
         {
             if (health > i) moduleUI[i].sprite = module;
