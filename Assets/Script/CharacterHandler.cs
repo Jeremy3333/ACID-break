@@ -3,25 +3,53 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 
-// public enum CharacterMode
-// {
-//     Neutral,
-//     Jetpack,
-//     BigGun,
-//     BaseballBat,
-//     Lasso
-// }
+public enum CharacterMode
+{
+    Neutral,
+    Jetpack,
+    BigGun,
+    BaseballBat,
+    Lasso
+}
 
 public class CharacterHandler : MonoBehaviour
 {
     [SerializeField]
     Transform cameraTransform;
     
-    [SerializeField]
-    float moveSpeed = 5f;
+    Rigidbody2D character;
     
     [SerializeField]
-    float acceleration = 30f;
+    float moveSpeed = 10f;
+    
+
+    [SerializeField]
+    float acceleration = 7f;
+
+    [SerializeField]
+    float decceleration = 7f;
+    
+    [SerializeField]
+    float velPow = 0.9f;
+
+    [SerializeField]
+    float jumpForce = 300f;
+
+    [SerializeField]
+    float gravityScale = 1f;
+    [SerializeField]
+    float GravityMultiplier = 2f;
+    
+    Keyboard keyboard;
+
+    float moveDir = 0.0f;
+
+    public Transform groundCheck;
+    public float radius;
+    public LayerMask collisionLayer;
+    public bool isGrounded;
+    
+    public SpringJoint2D joint;
 
     [SerializeField]
     private UIDocument uiDocument;
@@ -29,16 +57,11 @@ public class CharacterHandler : MonoBehaviour
     Dictionary<string, VisualElement> modeIcons = new Dictionary<string, VisualElement>();
 
     Vector2 modeSelectionStartPos;
-    
-    Rigidbody2D character;
-    
-    Keyboard keyboard;
 
-    CharacterMode currentMode = CharacterMode.Neutral;
+    CharacterMode currentMode = CharacterMode.BigGun;
 
-    float targetVelocityX = 0f;
-
-    float epsilon = 0.01f;
+    [SerializeField]
+    CombatModeManager modeManager;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -62,25 +85,9 @@ public class CharacterHandler : MonoBehaviour
 
     void Jump()
     {
-        if (character == null) return;
-
-        if(Mathf.Abs(character.linearVelocity.y) < epsilon)
-        {
-            character.AddForce(new Vector2(0, 300f));
-        }
-    }
-
-    void Movement()
-    {
-        float moveDir = 0f;
-        if (keyboard.aKey.isPressed) moveDir -= 1f;
-        if (keyboard.dKey.isPressed) moveDir += 1f;
-        if (keyboard.spaceKey.wasPressedThisFrame)
-        {
-            Jump();
-        }
-
-        targetVelocityX = moveDir * moveSpeed;
+        if (!isGrounded || character == null) return;
+        
+        character.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
     }
 
     void updateMode()
@@ -163,6 +170,18 @@ public class CharacterHandler : MonoBehaviour
         }
         if (keyboard.tabKey.wasReleasedThisFrame)
         {
+            switch (currentMode)
+            {
+                case CharacterMode.BaseballBat:
+                    modeManager.SwitchMode(modeManager.swordMode as ICombatMode);
+                    break;
+                case CharacterMode.BigGun:
+                    modeManager.SwitchMode(modeManager.gunMode as ICombatMode);
+                    break;
+                case CharacterMode.Lasso:
+                    modeManager.SwitchMode(modeManager.grapplingGunMode as ICombatMode);
+                    break;
+            }
             // Hide the UI
             uiDocument.rootVisualElement.style.display = DisplayStyle.None;
         }
@@ -171,21 +190,63 @@ public class CharacterHandler : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        CheckGround();
+
         if (keyboard == null)
         {
             Debug.LogError("Keyboard input is not available.");
             return;
         }
 
+        moveDir = 0f;
+        if (keyboard.aKey.isPressed) moveDir -= 1f;
+        if (keyboard.dKey.isPressed) moveDir += 1f;
+        
+        if (keyboard.spaceKey.wasPressedThisFrame)
+            Jump();
+        
         ModeSwitch();
-        Movement();
     }
 
     void FixedUpdate()
     {
         if (character == null) return;
 
-        float newVx = Mathf.MoveTowards(character.linearVelocity.x, targetVelocityX, acceleration * Time.fixedDeltaTime);
-        character.linearVelocity = new Vector2(newVx, character.linearVelocity.y);
+        // ===== MOUVEMENT =====
+        float targetSpeed = moveDir * moveSpeed;
+        float speedDiff = targetSpeed - character.linearVelocity.x;
+        
+        float accelerationRate;
+        if (Mathf.Abs(targetSpeed) > 0.01f)
+            accelerationRate = acceleration;
+        else
+            accelerationRate = joint.enabled ? 0f : decceleration;
+
+        float movement =
+            Mathf.Pow(Mathf.Abs(speedDiff) * accelerationRate, velPow)
+            * Mathf.Sign(speedDiff);
+
+        character.AddForce(movement * Vector2.right);
+
+        // ===== GRAVITÉ =====
+        if (character.linearVelocity.y < 0)
+            character.gravityScale = gravityScale * GravityMultiplier;
+        else
+            character.gravityScale = gravityScale;
+    }
+
+
+    void CheckGround()
+    {
+        isGrounded = Physics2D.OverlapCircle(
+            groundCheck.position,
+            radius,
+            collisionLayer
+        );
+    }
+
+    private void OnDrawGizmos(){
+        Gizmos.color = Color.green;
+        Gizmos.DrawWireSphere(groundCheck.position, radius);
     }
 }

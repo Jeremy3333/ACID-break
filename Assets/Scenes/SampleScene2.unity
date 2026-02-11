@@ -2165,7 +2165,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthDisplay
   health: 4
-  maxHealth: 4
+  hitLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  hitCheck: {fileID: 1913417662}
+  dim: {x: 1, y: 1}
+  isHittable: 1
+  invincybilityTime: 0.6
   brokenModule: {fileID: 7446353681231411918, guid: 03442e4a010a21d45ad14416794b02d2, type: 3}
   module: {fileID: -4106512570545776594, guid: 90351103a7b57a0418a6fccafdddf523, type: 3}
   moduleUI:
