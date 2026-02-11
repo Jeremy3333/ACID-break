@@ -1,0 +1,1102 @@
+fileFormatVersion: 2
+guid: 7041d39b514153d478148a6ad6e747cb
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -6220326571722989527
+    second: placeholder_spritesheet_0
+  - first:
+      213: 1571184221981124595
+    second: placeholder_spritesheet_1
+  - first:
+      213: 902990083529411556
+    second: placeholder_spritesheet_2
+  - first:
+      213: 4933237244959255886
+    second: placeholder_spritesheet_3
+  - first:
+      213: -5333340539034883275
+    second: placeholder_spritesheet_4
+  - first:
+      213: -6664312362512920108
+    second: placeholder_spritesheet_5
+  - first:
+      213: -5116469069397527926
+    second: placeholder_spritesheet_6
+  - first:
+      213: -8330595880640495361
+    second: placeholder_spritesheet_7
+  - first:
+      213: 2513397191061888854
+    second: placeholder_spritesheet_8
+  - first:
+      213: 6941172523422159751
+    second: placeholder_spritesheet_9
+  - first:
+      213: 6657137616142998800
+    second: placeholder_spritesheet_10
+  - first:
+      213: -41202703306018521
+    second: placeholder_spritesheet_11
+  - first:
+      213: 8932753696898560507
+    second: placeholder_spritesheet_12
+  - first:
+      213: -7168030596426175707
+    second: placeholder_spritesheet_13
+  - first:
+      213: -6937134750355036819
+    second: placeholder_spritesheet_14
+  - first:
+      213: -3759051442288630946
+    second: placeholder_spritesheet_15
+  - first:
+      213: 4398441108048432096
+    second: placeholder_spritesheet_16
+  - first:
+      213: 4990738195865293024
+    second: placeholder_spritesheet_17
+  - first:
+      213: -7053295247024024577
+    second: placeholder_spritesheet_18
+  - first:
+      213: -8716805782910133580
+    second: placeholder_spritesheet_19
+  - first:
+      213: -8373686572440469946
+    second: placeholder_spritesheet_20
+  - first:
+      213: -1738779134987278130
+    second: placeholder_spritesheet_21
+  - first:
+      213: -40548483299191003
+    second: placeholder_spritesheet_22
+  - first:
+      213: -1936197866296234195
+    second: placeholder_spritesheet_23
+  - first:
+      213: -7598444147747844426
+    second: placeholder_spritesheet_24
+  - first:
+      213: 2527073752097214567
+    second: placeholder_spritesheet_25
+  - first:
+      213: 8776770873707241010
+    second: placeholder_spritesheet_26
+  - first:
+      213: 4697660024788008549
+    second: placeholder_spritesheet_27
+  - first:
+      213: 7384934899082895420
+    second: placeholder_spritesheet_28
+  - first:
+      213: -5555106169846705861
+    second: placeholder_spritesheet_29
+  - first:
+      213: -8209994634525372485
+    second: placeholder_spritesheet_30
+  - first:
+      213: 266396946840141954
+    second: placeholder_spritesheet_31
+  - first:
+      213: 9048646147719188831
+    second: placeholder_spritesheet_32
+  - first:
+      213: -4332542074302843103
+    second: placeholder_spritesheet_33
+  - first:
+      213: -6559286452023856160
+    second: placeholder_spritesheet_34
+  - first:
+      213: -4272728112707792187
+    second: placeholder_spritesheet_35
+  - first:
+      213: 1517672674408004552
+    second: placeholder_spritesheet_36
+  - first:
+      213: 6824804099876129490
+    second: placeholder_spritesheet_37
+  - first:
+      213: 8574966257160010105
+    second: placeholder_spritesheet_38
+  - first:
+      213: -5788607190755574285
+    second: placeholder_spritesheet_39
+  - first:
+      213: -3189757781442288171
+    second: placeholder_spritesheet_40
+  - first:
+      213: -3621933905879267214
+    second: placeholder_spritesheet_41
+  - first:
+      213: -5254587750509351028
+    second: placeholder_spritesheet_42
+  - first:
+      213: -1583818548840562940
+    second: placeholder_spritesheet_43
+  - first:
+      213: 5137165292855697281
+    second: placeholder_spritesheet_44
+  - first:
+      213: 5349181472856308943
+    second: placeholder_spritesheet_45
+  - first:
+      213: 2519975504601608458
+    second: placeholder_spritesheet_46
+  - first:
+      213: 6085572072611722536
+    second: placeholder_spritesheet_47
+  - first:
+      213: 2383345454940651254
+    second: placeholder_spritesheet_48
+  - first:
+      213: -1568242214226434573
+    second: placeholder_spritesheet_49
+  - first:
+      213: 994450357788862997
+    second: placeholder_spritesheet_50
+  - first:
+      213: -7234923402078041573
+    second: placeholder_spritesheet_51
+  - first:
+      213: 7199957023697288890
+    second: placeholder_spritesheet_52
+  - first:
+      213: 7386605223875743176
+    second: placeholder_spritesheet_53
+  - first:
+      213: -7771629170291239993
+    second: placeholder_spritesheet_54
+  - first:
+      213: -672608648974350484
+    second: placeholder_spritesheet_55
+  - first:
+      213: -5830384365728690379
+    second: placeholder_spritesheet_56
+  - first:
+      213: 6875310265853330556
+    second: placeholder_spritesheet_57
+  - first:
+      213: -2504087097678824268
+    second: placeholder_spritesheet_58
+  - first:
+      213: 9003726817025291355
+    second: placeholder_spritesheet_59
+  - first:
+      213: -5445976859426743432
+    second: placeholder_spritesheet_60
+  - first:
+      213: 7799342165132115473
+    second: placeholder_spritesheet_61
+  - first:
+      213: -7634308452475980635
+    second: placeholder_spritesheet_62
+  - first:
+      213: 876268590980484604
+    second: placeholder_spritesheet_63
+  - first:
+      213: -5305662227121696277
+    second: placeholder_spritesheet_64
+  - first:
+      213: 3356638432983324444
+    second: placeholder_spritesheet_65
+  - first:
+      213: -7354841158210176282
+    second: placeholder_spritesheet_66
+  - first:
+      213: 7976231042022987776
+    second: placeholder_spritesheet_67
+  - first:
+      213: -2917245182869983240
+    second: placeholder_spritesheet_68
+  - first:
+      213: -1180695381708164570
+    second: placeholder_spritesheet_69
+  - first:
+      213: -7775273728335127649
+    second: placeholder_spritesheet_70
+  - first:
+      213: 1713048895778141001
+    second: placeholder_spritesheet_71
+  - first:
+      213: -6374339732076223567
+    second: placeholder_spritesheet_72
+  - first:
+      213: 5390821698077824771
+    second: placeholder_spritesheet_73
+  - first:
+      213: -723282973297524778
+    second: placeholder_spritesheet_74
+  - first:
+      213: 4818526903287464987
+    second: placeholder_spritesheet_75
+  - first:
+      213: -1594581053109031624
+    second: placeholder_spritesheet_76
+  - first:
+      213: -2134987395472327570
+    second: placeholder_spritesheet_77
+  - first:
+      213: -1984479105201858700
+    second: placeholder_spritesheet_78
+  - first:
+      213: 8030371115011816774
+    second: placeholder_spritesheet_79
+  - first:
+      213: -7268544924281534072
+    second: placeholder_spritesheet_80
+  - first:
+      213: 4506071902028299014
+    second: placeholder_spritesheet_81
+  - first:
+      213: 7256992274828050362
+    second: placeholder_spritesheet_82
+  - first:
+      213: 1987081788963401790
+    second: placeholder_spritesheet_83
+  - first:
+      213: 2477458276448674601
+    second: placeholder_spritesheet_84
+  - first:
+      213: -7387289047744340473
+    second: placeholder_spritesheet_85
+  - first:
+      213: 7725266292357494859
+    second: placeholder_spritesheet_86
+  - first:
+      213: 1676762381215396285
+    second: placeholder_spritesheet_87
+  - first:
+      213: -8706889541911988065
+    second: placeholder_spritesheet_88
+  - first:
+      213: 2864904090704542066
+    second: placeholder_spritesheet_89
+  - first:
+      213: -4405095828384421392
+    second: placeholder_spritesheet_90
+  - first:
+      213: -3479973462821448867
+    second: placeholder_spritesheet_91
+  - first:
+      213: 4166587095405830242
+    second: placeholder_spritesheet_92
+  - first:
+      213: 2344374642741965059
+    second: placeholder_spritesheet_93
+  - first:
+      213: -2113595766557046576
+    second: placeholder_spritesheet_94
+  - first:
+      213: 3364754624264571269
+    second: placeholder_spritesheet_95
+  - first:
+      213: -7504795115300203577
+    second: placeholder_spritesheet_96
+  - first:
+      213: 7374537950409694480
+    second: placeholder_spritesheet_97
+  - first:
+      213: -67810571744456550
+    second: placeholder_spritesheet_98
+  - first:
+      213: 3173237179916043994
+    second: placeholder_spritesheet_99
+  - first:
+      213: -2418174476964228219
+    second: placeholder_spritesheet_100
+  - first:
+      213: -6555160420466530455
+    second: placeholder_spritesheet_101
+  - first:
+      213: -4829997898701892200
+    second: placeholder_spritesheet_102
+  - first:
+      213: 8897302162799281679
+    second: placeholder_spritesheet_103
+  - first:
+      213: -2273782839548797903
+    second: placeholder_spritesheet_104
+  - first:
+      213: -4907890586708373010
+    second: placeholder_spritesheet_105
+  - first:
+      213: 227184357276281255
+    second: placeholder_spritesheet_106
+  - first:
+      213: -2314726256270170479
+    second: placeholder_spritesheet_107
+  - first:
+      213: -1120497581745286931
+    second: placeholder_spritesheet_108
+  - first:
+      213: -5573021087231437373
+    second: placeholder_spritesheet_109
+  - first:
+      213: 3346735622450930475
+    second: placeholder_spritesheet_110
+  - first:
+      213: -296797584700103538
+    second: placeholder_spritesheet_111
+  - first:
+      213: 7186914803987187876
+    second: placeholder_spritesheet_112
+  - first:
+      213: -4806039046893729357
+    second: placeholder_spritesheet_113
+  - first:
+      213: -5721970342519735138
+    second: placeholder_spritesheet_114
+  - first:
+      213: 4969935537372362874
+    second: placeholder_spritesheet_115
+  - first:
+      213: -6262459728826904009
+    second: placeholder_spritesheet_116
+  - first:
+      213: -1192313317198094650
+    second: placeholder_spritesheet_117
+  - first:
+      213: 7650082428451899803
+    second: placeholder_spritesheet_118
+  - first:
+      213: 7497622594819000165
+    second: placeholder_spritesheet_119
+  - first:
+      213: 7208635167149027626
+    second: placeholder_spritesheet_120
+  - first:
+      213: 4330591834885458670
+    second: placeholder_spritesheet_121
+  - first:
+      213: -4038319904845561585
+    second: placeholder_spritesheet_122
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 64
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: PlaceholderPlayerIdle0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 920278190f5fca9a0800000000000000
+      internalID: -6220326571722989527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerIdle1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 3f722e3b9b7fdc510800000000000000
+      internalID: 1571184221981124595
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerIdle2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4eb887c52b0188c00800000000000000
+      internalID: 902990083529411556
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderVehicle0
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 53ba2a8790b2cf5b0800000000000000
+      internalID: -5333340539034883275
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderVehicle1
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 448
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 4d15c20273b9383a0800000000000000
+      internalID: -6664312362512920108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerWalk0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 65f55b0cd6161e220800000000000000
+      internalID: 2513397191061888854
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerWalk1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 783974752aff35060800000000000000
+      internalID: 6941172523422159751
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerWalk2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 01d181f0467e26c50800000000000000
+      internalID: 6657137616142998800
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderBat
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 384
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 52be2e0862a068c90800000000000000
+      internalID: -7168030596426175707
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderCannon
+      rect:
+        serializedVersion: 2
+        x: 448
+        y: 384
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e5367f921aa25dbc0800000000000000
+      internalID: -3759051442288630946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerRun0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0ebc3b242e66a0d30800000000000000
+      internalID: 4398441108048432096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerRun1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e0568372f9a24540800000000000000
+      internalID: 4990738195865293024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerRun2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 320
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ff39e21c759ad1e90800000000000000
+      internalID: -7053295247024024577
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderCraneOpen
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 320
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 64e3a359d60bacb80800000000000000
+      internalID: -8373686572440469946
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerJump0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d2f2b8c8c4e3125e0800000000000000
+      internalID: -1936197866296234195
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerJump1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6be08df4e47ec8690800000000000000
+      internalID: -7598444147747844426
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerJump2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 256
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 760d7f24038f11320800000000000000
+      internalID: 2527073752097214567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderCraneClose
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 256
+        width: 128
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 56eba0d37e0713140800000000000000
+      internalID: 4697660024788008549
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerFall0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bbf8049d06d301e80800000000000000
+      internalID: -8209994634525372485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerFall1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 280c7a99c9e62b300800000000000000
+      internalID: 266396946840141954
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerFall2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f515205cabf339d70800000000000000
+      internalID: 9048646147719188831
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerDash
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 192
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e3f51779bbb8f4a0800000000000000
+      internalID: -6559286452023856160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerAim0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8cbf763a14bdf0510800000000000000
+      internalID: 1517672674408004552
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerAim1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2da0fb26b2396be50800000000000000
+      internalID: 6824804099876129490
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerAim2
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 979bbf6f066600770800000000000000
+      internalID: 8574966257160010105
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: PlaceholderPlayerTrigger
+      rect:
+        serializedVersion: 2
+        x: 256
+        y: 128
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5d52895a234bbb3d0800000000000000
+      internalID: -3189757781442288171
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: ee48249bc68ea17488706b98a99509fc
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":1,"keepEmptyRects":false,"isAlternate":false}'
+    nameFileIdTable:
+      PlaceholderBat: -7168030596426175707
+      PlaceholderCannon: -3759051442288630946
+      PlaceholderCraneClose: 4697660024788008549
+      PlaceholderCraneOpen: -8373686572440469946
+      PlaceholderPlayerAim0: 1517672674408004552
+      PlaceholderPlayerAim1: 6824804099876129490
+      PlaceholderPlayerAim2: 8574966257160010105
+      PlaceholderPlayerDash: -6559286452023856160
+      PlaceholderPlayerFall0: -8209994634525372485
+      PlaceholderPlayerFall1: 266396946840141954
+      PlaceholderPlayerFall2: 9048646147719188831
+      PlaceholderPlayerIdle0: -6220326571722989527
+      PlaceholderPlayerIdle1: 1571184221981124595
+      PlaceholderPlayerIdle2: 902990083529411556
+      PlaceholderPlayerJump0: -1936197866296234195
+      PlaceholderPlayerJump1: -7598444147747844426
+      PlaceholderPlayerJump2: 2527073752097214567
+      PlaceholderPlayerRun0: 4398441108048432096
+      PlaceholderPlayerRun1: 4990738195865293024
+      PlaceholderPlayerRun2: -7053295247024024577
+      PlaceholderPlayerTrigger: -3189757781442288171
+      PlaceholderPlayerWalk0: 2513397191061888854
+      PlaceholderPlayerWalk1: 6941172523422159751
+      PlaceholderPlayerWalk2: 6657137616142998800
+      PlaceholderVehicle0: -5333340539034883275
+      PlaceholderVehicle1: -6664312362512920108
+      placeholder_spritesheet_11: -41202703306018521
+      placeholder_spritesheet_12: 8932753696898560507
+      placeholder_spritesheet_14: -6937134750355036819
+      placeholder_spritesheet_19: -8716805782910133580
+      placeholder_spritesheet_21: -1738779134987278130
+      placeholder_spritesheet_22: -40548483299191003
+      placeholder_spritesheet_26: 8776770873707241010
+      placeholder_spritesheet_28: 7384934899082895420
+      placeholder_spritesheet_29: -5555106169846705861
+      placeholder_spritesheet_3: 4933237244959255886
+      placeholder_spritesheet_33: -4332542074302843103
+      placeholder_spritesheet_35: -4272728112707792187
+      placeholder_spritesheet_39: -5788607190755574285
+      placeholder_spritesheet_41: -3621933905879267214
+      placeholder_spritesheet_6: -5116469069397527926
+      placeholder_spritesheet_7: -8330595880640495361
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
