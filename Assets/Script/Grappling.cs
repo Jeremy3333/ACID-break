@@ -40,11 +40,22 @@ public class Grappling : MonoBehaviour
 
     void Update()
     {
-        // Aim towards mouse
-        mousePos = Mouse.current.position.ReadValue();
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
-        Vector3 rotation = worldPos - transform.position;
-        float rotaZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
+        Vector2 targetPos;
+
+        // Aim towards projectile if it exists, otherwise towards mouse
+        if (currentProjectile != null)
+        {
+            targetPos = currentProjectile.transform.position;
+        }
+        else
+        {
+            Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
+            mouseScreenPos.z = Camera.main.nearClipPlane;
+            targetPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        }
+
+        Vector3 direction = (Vector3)targetPos - transform.position;
+        float rotaZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotaZ);
 
         // Fire projectile on left click
