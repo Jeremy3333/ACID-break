@@ -1375,17 +1375,41 @@ PrefabInstance:
       propertyPath: damage2
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 2680243541948075142, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2680243541948075142, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2680243541948075142, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -0.375
+      objectReference: {fileID: 0}
+    - target: {fileID: 6355964925543335445, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: radius
+      value: 0.24
+      objectReference: {fileID: 0}
+    - target: {fileID: 6355964925543335445, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: dashForce
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 6355964925543335445, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: uiDocument
       value: 
       objectReference: {fileID: 46291276}
+    - target: {fileID: 6355964925543335445, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: dashCooldown
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6355964925543335445, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 1231842733}
     - target: {fileID: 6355964925543335445, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: doubleJumpForce
-      value: 19.5
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 6465969072001767519, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: m_LocalPosition.x

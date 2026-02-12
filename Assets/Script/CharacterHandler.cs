@@ -35,7 +35,12 @@ public class CharacterHandler : MonoBehaviour
     [SerializeField]
     float jumpForce = 13.5f;
     [SerializeField]
-    float doubleJumpForce = 19.5f;
+    float doubleJumpForce = 18f;
+
+    [SerializeField]
+    float dashForce = 25.0f;
+    [SerializeField]
+    float dashCooldown = 1.0f;
 
     [SerializeField]
     float gravityScale = 1f;
@@ -49,8 +54,11 @@ public class CharacterHandler : MonoBehaviour
     public Transform groundCheck;
     public float radius;
     public LayerMask collisionLayer;
+    // For jumping
     public bool isGrounded;
     public bool doubleJumpReady;
+    // For dashing
+    public float cantDashUntil;
 
     public SpringJoint2D joint;
 
@@ -93,11 +101,7 @@ public class CharacterHandler : MonoBehaviour
         {
             doubleJumpReady = false;
 
-
             // Stronger jump at a more controllable angle
-            moveDir = 0f;
-            if (keyboard.aKey.isPressed) moveDir -= 1f;
-            if (keyboard.dKey.isPressed) moveDir += 1f;
             Vector2 desiredJump = new Vector2(moveDir, 1);
             desiredJump = desiredJump * doubleJumpForce;
             // Also cancel current force
@@ -108,6 +112,17 @@ public class CharacterHandler : MonoBehaviour
             character.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
 
+    }
+
+    void Dash()
+    {
+        if (Time.time > cantDashUntil && moveDir != 0)
+        {
+            cantDashUntil = Time.time + dashCooldown;
+            Vector2 desiredDash =
+                new Vector2(moveDir * dashForce, Mathf.Max(0, character.linearVelocity.y));
+            character.AddForce(desiredDash - character.linearVelocity, ForceMode2D.Impulse);
+        }
     }
 
     void updateMode()
@@ -225,7 +240,8 @@ public class CharacterHandler : MonoBehaviour
         if (keyboard.spaceKey.wasPressedThisFrame)
             Jump();
 
-        ModeSwitch();
+        if (keyboard.leftShiftKey.isPressed)
+            Dash();
     }
 
     void FixedUpdate()
