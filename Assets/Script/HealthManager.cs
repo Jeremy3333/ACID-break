@@ -41,8 +41,8 @@ public class HealthManager : MonoBehaviour
         {
             isHittable = false;
             health = Mathf.Max(health-1, 0);
-            UpDateUI();
         }
+        UpDateUI();
     }
 
     void UpDateUI()
