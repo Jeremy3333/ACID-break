@@ -62,6 +62,8 @@ public class CharacterHandler : MonoBehaviour
 
     public SpringJoint2D joint;
 
+    private PlayerAnimator playerAnimator;
+
     [SerializeField]
     private UIDocument uiDocument;
 
@@ -79,6 +81,7 @@ public class CharacterHandler : MonoBehaviour
     {
         keyboard = Keyboard.current;
         character = GetComponent<Rigidbody2D>();
+        playerAnimator = GetComponent<PlayerAnimator>();
 
         if (uiDocument != null)
         {
@@ -123,6 +126,8 @@ public class CharacterHandler : MonoBehaviour
                 new Vector2(moveDir * dashForce, Mathf.Max(0, character.linearVelocity.y));
             character.AddForce(desiredDash - character.linearVelocity, ForceMode2D.Impulse);
         }
+
+        playerAnimator.Dash();
     }
 
     void updateMode()
@@ -233,6 +238,7 @@ public class CharacterHandler : MonoBehaviour
             return;
         }
 
+        // Direction gauche/droite
         moveDir = 0f;
         if (keyboard.aKey.isPressed) moveDir -= 1f;
         if (keyboard.dKey.isPressed) moveDir += 1f;
