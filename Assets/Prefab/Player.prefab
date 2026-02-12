@@ -881,6 +881,10 @@ MonoBehaviour:
   jointFrequency: 6
   retractSpeed: 10
   minDistance: 1.5
+  grappleProjectilePrefab: {fileID: 7497794784657280182, guid: 20c5ca481a709d24ca2bad128b13dbfe, type: 3}
+  projectileSpeed: 50
+  projectileMaxDistance: 20
+  projectileRetractSpeed: 15
   grapplePoint: {x: 0, y: 0}
 --- !u!1 &7285019875000084382
 GameObject:
