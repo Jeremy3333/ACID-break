@@ -125,9 +125,9 @@ public class CharacterHandler : MonoBehaviour
             Vector2 desiredDash =
                 new Vector2(moveDir * dashForce, Mathf.Max(0, character.linearVelocity.y));
             character.AddForce(desiredDash - character.linearVelocity, ForceMode2D.Impulse);
-        }
 
-        playerAnimator.Dash();
+            playerAnimator.Dash();
+        }
     }
 
     void updateMode()
