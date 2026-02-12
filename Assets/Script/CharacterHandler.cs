@@ -16,30 +16,37 @@ public class CharacterHandler : MonoBehaviour
 {
     [SerializeField]
     Transform cameraTransform;
-    
+
     Rigidbody2D character;
-    
+
     [SerializeField]
     float moveSpeed = 10f;
-    
+
 
     [SerializeField]
     float acceleration = 7f;
 
     [SerializeField]
     float decceleration = 7f;
-    
+
     [SerializeField]
     float velPow = 0.9f;
 
     [SerializeField]
-    float jumpForce = 300f;
+    float jumpForce = 13.5f;
+    [SerializeField]
+    float doubleJumpForce = 18f;
+
+    [SerializeField]
+    float dashForce = 25.0f;
+    [SerializeField]
+    float dashCooldown = 1.0f;
 
     [SerializeField]
     float gravityScale = 1f;
     [SerializeField]
     float GravityMultiplier = 2f;
-    
+
     Keyboard keyboard;
 
     float moveDir = 0.0f;
@@ -47,9 +54,15 @@ public class CharacterHandler : MonoBehaviour
     public Transform groundCheck;
     public float radius;
     public LayerMask collisionLayer;
+    // For jumping
     public bool isGrounded;
-    
+    public bool doubleJumpReady;
+    // For dashing
+    public float cantDashUntil;
+
     public SpringJoint2D joint;
+
+    private PlayerAnimator playerAnimator;
 
     [SerializeField]
     private UIDocument uiDocument;
@@ -68,6 +81,7 @@ public class CharacterHandler : MonoBehaviour
     {
         keyboard = Keyboard.current;
         character = GetComponent<Rigidbody2D>();
+        playerAnimator = GetComponent<PlayerAnimator>();
 
         if (uiDocument != null)
         {
@@ -85,9 +99,35 @@ public class CharacterHandler : MonoBehaviour
 
     void Jump()
     {
-        if (!isGrounded || character == null) return;
-        
-        character.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        if ((!isGrounded && !doubleJumpReady) || character == null) return;
+        if (!isGrounded && doubleJumpReady) // If not grounded, use up the double jump
+        {
+            doubleJumpReady = false;
+
+            // Stronger jump at a more controllable angle
+            Vector2 desiredJump = new Vector2(moveDir, 1);
+            desiredJump = desiredJump * doubleJumpForce;
+            // Also cancel current force
+            character.AddForce(desiredJump - character.linearVelocity, ForceMode2D.Impulse);
+        }
+        else
+        {
+            character.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+        }
+
+    }
+
+    void Dash()
+    {
+        if (Time.time > cantDashUntil && moveDir != 0)
+        {
+            cantDashUntil = Time.time + dashCooldown;
+            Vector2 desiredDash =
+                new Vector2(moveDir * dashForce, Mathf.Max(0, character.linearVelocity.y));
+            character.AddForce(desiredDash - character.linearVelocity, ForceMode2D.Impulse);
+        }
+
+        playerAnimator.Dash();
     }
 
     void updateMode()
@@ -97,20 +137,20 @@ public class CharacterHandler : MonoBehaviour
 
         if (delta.magnitude < 50f)
             return;
-        
-        if(delta.x > 0 && delta.y > 0)
+
+        if (delta.x > 0 && delta.y > 0)
         {
             currentMode = CharacterMode.BigGun;
         }
-        else if(delta.x <= 0 && delta.y > 0)
+        else if (delta.x <= 0 && delta.y > 0)
         {
             currentMode = CharacterMode.Jetpack;
         }
-        else if(delta.x <= 0 && delta.y <= 0)
+        else if (delta.x <= 0 && delta.y <= 0)
         {
             currentMode = CharacterMode.BaseballBat;
         }
-        else if(delta.x > 0 && delta.y <= 0)
+        else if (delta.x > 0 && delta.y <= 0)
         {
             currentMode = CharacterMode.Lasso;
         }
@@ -198,14 +238,16 @@ public class CharacterHandler : MonoBehaviour
             return;
         }
 
+        // Direction gauche/droite
         moveDir = 0f;
         if (keyboard.aKey.isPressed) moveDir -= 1f;
         if (keyboard.dKey.isPressed) moveDir += 1f;
-        
+
         if (keyboard.spaceKey.wasPressedThisFrame)
             Jump();
-        
-        ModeSwitch();
+
+        if (keyboard.leftShiftKey.isPressed)
+            Dash();
     }
 
     void FixedUpdate()
@@ -215,7 +257,7 @@ public class CharacterHandler : MonoBehaviour
         // ===== MOUVEMENT =====
         float targetSpeed = moveDir * moveSpeed;
         float speedDiff = targetSpeed - character.linearVelocity.x;
-        
+
         float accelerationRate;
         if (Mathf.Abs(targetSpeed) > 0.01f)
             accelerationRate = acceleration;
@@ -243,9 +285,14 @@ public class CharacterHandler : MonoBehaviour
             radius,
             collisionLayer
         );
+        if (!doubleJumpReady && isGrounded)
+        {
+            doubleJumpReady = true;
+        }
     }
 
-    private void OnDrawGizmos(){
+    private void OnDrawGizmos()
+    {
         Gizmos.color = Color.green;
         Gizmos.DrawWireSphere(groundCheck.position, radius);
     }
