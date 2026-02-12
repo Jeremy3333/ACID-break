@@ -560,6 +560,22 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 186201149509189314, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: cam
+      value: 
+      objectReference: {fileID: 1231842732}
+    - target: {fileID: 186201149509189314, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: retractSpeed
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 186201149509189314, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: projectileSpeed
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 186201149509189314, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: projectileRetractSpeed
+      value: 100
+      objectReference: {fileID: 0}
     - target: {fileID: 1951263583988276626, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: m_Name
       value: Player
@@ -1200,7 +1216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b837ef9ce2f1fc4c9ed0eedd96b3519, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraFollowMouse
-  player: {fileID: 0}
+  player: {fileID: 734709647}
   followSpeed: 0.2
   motionMagn: 0.4
   mouseOffset: 3

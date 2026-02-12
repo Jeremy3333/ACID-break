@@ -16,10 +16,14 @@ public class GrappleProjectile : MonoBehaviour
     [HideInInspector] public Vector2 firePointPos;
 
     private bool isRetracting = false;
+    private bool isGrappled = false;
 
     void Start()
     {
         firePointPos = transform.position;
+        playerRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>(); if (playerRb == null) { Debug.LogError("Player Rigidbody2D not found. Make sure the player GameObject has the 'Player' tag and a Rigidbody2D component."); }
+        rb = GetComponent<Rigidbody2D>();
+        col = GetComponent<Collider2D>();
     }
 
     void Update()
@@ -27,14 +31,14 @@ public class GrappleProjectile : MonoBehaviour
         if (isRetracting)
         {
             Vector2 dir = (playerRb.position - rb.position).normalized;
-            rb.velocity = dir * retractSpeed;
+            rb.linearVelocity = dir * retractSpeed;
 
             if (Vector2.Distance(playerRb.position, rb.position) < closeEnoughDistance)
-                Destroy(gameObject);
+                parentGrappling.DestroyCurrentProjectile();
         }
-        else
+        else if(!isGrappled)
         {
-            if (playerRb != null && Vector2.Distance(playerRb.position, rb.position) > maxDistance)
+            if (Vector2.Distance(playerRb.position, rb.position) > maxDistance)
                 StartRetract();
         }
     }
@@ -53,12 +57,10 @@ public class GrappleProjectile : MonoBehaviour
         // If this trigger event fired, the layers are set to collide.
         Vector2 hitPoint = other.ClosestPoint(transform.position);
         parentGrappling.OnGrappleHit(hitPoint);
-        Destroy(gameObject);
-    }
-
-    void OnDestroy()
-    {
-        if (parentGrappling != null)
-            parentGrappling.OnProjectileDestroyed(this);
+        isGrappled = true;
+        transform.position = hitPoint;
+        rb.linearVelocity = Vector2.zero;
+        rb.isKinematic = true;
+        col.enabled = false;
     }
 }

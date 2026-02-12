@@ -20,6 +20,7 @@ public class Grappling : MonoBehaviour
     public float minDistance = 1.5f;
 
     [Header("Projectile Settings")]
+    
     public GameObject grappleProjectilePrefab;
     public float projectileSpeed = 20f;
     public float projectileMaxDistance = 20f;   // how far the projectile can fly
@@ -28,6 +29,8 @@ public class Grappling : MonoBehaviour
     [HideInInspector] public Vector2 grapplePoint;
 
     private GameObject currentProjectile;
+
+    private bool isGrappled = false;
 
     void Start()
     {
@@ -45,7 +48,7 @@ public class Grappling : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, rotaZ);
 
         // Fire projectile on left click
-        if (Mouse.current.leftButton.wasPressedThisFrame)
+        if (Mouse.current.leftButton.wasPressedThisFrame && !isGrappled)
             TryGrapple();
 
         // Retract joint (pull player) on right hold
@@ -53,7 +56,7 @@ public class Grappling : MonoBehaviour
             Retract();
 
         // Release grapple on left release
-        if (Mouse.current.leftButton.wasReleasedThisFrame)
+        if (Mouse.current.leftButton.wasPressedThisFrame && isGrappled)
             StopGrapple();
     }
 
@@ -71,19 +74,21 @@ public class Grappling : MonoBehaviour
         Rigidbody2D projRb = proj.GetComponent<Rigidbody2D>();
         Vector2 mouseWorld = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         Vector2 dir = (mouseWorld - (Vector2)firePoint.position).normalized;
-        projRb.velocity = dir * projectileSpeed;
+        projRb.linearVelocity = dir * projectileSpeed;
 
         GrappleProjectile projScript = proj.GetComponent<GrappleProjectile>();
         projScript.parentGrappling = this;
         projScript.playerRb = rb;
         projScript.maxDistance = projectileMaxDistance;
         projScript.retractSpeed = projectileRetractSpeed;
+
+        rope.enabled = true;
     }
 
     public void OnGrappleHit(Vector2 hitPoint)
     {
         grapplePoint = hitPoint;
-        rope.enabled = true;
+        isGrappled = true;
         ActivateJoint();
     }
 
@@ -108,11 +113,26 @@ public class Grappling : MonoBehaviour
     {
         rope.enabled = false;
         joint.enabled = false;
+        isGrappled = false;
+        DestroyCurrentProjectile();
     }
 
-    public void OnProjectileDestroyed(GrappleProjectile proj)
-    {
-        if (currentProjectile == proj.gameObject)
+    public Vector2 getGrappleProjectilePosition() {
+        if (currentProjectile == null)
+        {
+            Debug.LogError("No Projectil");
+            return Vector2.zero;
+        }
+        return currentProjectile.transform.position;
+            
+    }
+
+    public void DestroyCurrentProjectile() {
+        if (currentProjectile != null)
+        {
+            Destroy(currentProjectile);
             currentProjectile = null;
+            rope.enabled = false;
+        }
     }
 }
