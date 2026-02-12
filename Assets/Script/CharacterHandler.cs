@@ -99,7 +99,7 @@ public class CharacterHandler : MonoBehaviour
             if (keyboard.aKey.isPressed) moveDir -= 1f;
             if (keyboard.dKey.isPressed) moveDir += 1f;
             Vector2 desiredJump = new Vector2(moveDir, 1);
-            desiredJump = desiredJump.normalized * doubleJumpForce;
+            desiredJump = desiredJump * doubleJumpForce;
             // Also cancel current force
             character.AddForce(desiredJump - character.linearVelocity, ForceMode2D.Impulse);
         }
