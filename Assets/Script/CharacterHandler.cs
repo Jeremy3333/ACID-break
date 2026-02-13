@@ -17,7 +17,9 @@ public class CharacterHandler : MonoBehaviour
     [SerializeField]
     Transform cameraTransform;
 
-    Rigidbody2D character;
+    Rigidbody2D rb;
+
+    BoxCollider2D bc;
 
     [SerializeField]
     float moveSpeed = 10f;
@@ -51,21 +53,20 @@ public class CharacterHandler : MonoBehaviour
 
     float moveDir = 0.0f;
 
-    public Transform groundCheck;
-    public float radius;
-    public LayerMask collisionLayer;
+    LayerMask collisionLayer;
     // For jumping
-    public bool isGrounded;
-    public bool doubleJumpReady;
+    bool touchGround;
+
+    bool doubleJumpReady;
     // For dashing
-    public float cantDashUntil;
+    float dashTimer;
 
-    public SpringJoint2D joint;
+    bool isGrapple = false;
 
-    private PlayerAnimator playerAnimator;
+    PlayerAnimator playerAnimator;
 
     [SerializeField]
-    private UIDocument uiDocument;
+    UIDocument uiDocument;
 
     Dictionary<string, VisualElement> modeIcons = new Dictionary<string, VisualElement>();
 
@@ -80,7 +81,8 @@ public class CharacterHandler : MonoBehaviour
     void Start()
     {
         keyboard = Keyboard.current;
-        character = GetComponent<Rigidbody2D>();
+        rb = GetComponent<Rigidbody2D>();
+        bc = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponent<PlayerAnimator>();
 
         if (uiDocument != null)
@@ -97,10 +99,15 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
+    public void setIsGrapple(bool p_isGrapple)
+    {
+        isGrapple = p_isGrapple;
+    }
+
     void Jump()
     {
-        if ((!isGrounded && !doubleJumpReady) || character == null) return;
-        if (!isGrounded && doubleJumpReady) // If not grounded, use up the double jump
+        if (!touchGround && !doubleJumpReady) return;
+        if (!touchGround) // If not grounded, use up the double jump
         {
             doubleJumpReady = false;
 
@@ -108,23 +115,23 @@ public class CharacterHandler : MonoBehaviour
             Vector2 desiredJump = new Vector2(moveDir, 1);
             desiredJump = desiredJump * doubleJumpForce;
             // Also cancel current force
-            character.AddForce(desiredJump - character.linearVelocity, ForceMode2D.Impulse);
+            rb.AddForce(desiredJump - rb.linearVelocity, ForceMode2D.Impulse);
         }
         else
         {
-            character.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
 
     }
 
     void Dash()
     {
-        if (Time.time > cantDashUntil && moveDir != 0)
+        if (Time.time > dashTimer && moveDir != 0)
         {
-            cantDashUntil = Time.time + dashCooldown;
+            dashTimer = Time.time + dashCooldown;
             Vector2 desiredDash =
-                new Vector2(moveDir * dashForce, Mathf.Max(0, character.linearVelocity.y));
-            character.AddForce(desiredDash - character.linearVelocity, ForceMode2D.Impulse);
+                new Vector2(moveDir * dashForce, Mathf.Max(0, rb.linearVelocity.y));
+            rb.AddForce(desiredDash - rb.linearVelocity, ForceMode2D.Impulse);
 
             playerAnimator.Dash();
         }
@@ -227,10 +234,18 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
+    void UpdateValues()
+    {
+        touchGround = CheckGround();
+        if(touchGround)
+            doubleJumpReady = true;
+    }
+
     // Update is called once per frame
     void Update()
     {
-        CheckGround();
+
+        UpdateValues();
 
         if (keyboard == null)
         {
@@ -254,48 +269,55 @@ public class CharacterHandler : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (character == null) return;
+        if (rb == null) return;
 
         // ===== MOUVEMENT =====
         float targetSpeed = moveDir * moveSpeed;
-        float speedDiff = targetSpeed - character.linearVelocity.x;
+        float speedDiff = targetSpeed - rb.linearVelocity.x;
 
         float accelerationRate;
         if (Mathf.Abs(targetSpeed) > 0.01f)
             accelerationRate = acceleration;
         else
-            accelerationRate = joint.enabled ? 0f : decceleration;
+            accelerationRate = isGrapple ? 0f : decceleration;
 
         float movement =
             Mathf.Pow(Mathf.Abs(speedDiff) * accelerationRate, velPow)
             * Mathf.Sign(speedDiff);
 
-        character.AddForce(movement * Vector2.right);
+        rb.AddForce(movement * Vector2.right);
 
         // ===== GRAVITÉ =====
-        if (character.linearVelocity.y < 0)
-            character.gravityScale = gravityScale * GravityMultiplier;
+        if (rb.linearVelocity.y < 0)
+            rb.gravityScale = gravityScale * GravityMultiplier;
         else
-            character.gravityScale = gravityScale;
+            rb.gravityScale = gravityScale;
     }
 
 
-    void CheckGround()
+    bool CheckGround()
     {
-        isGrounded = Physics2D.OverlapCircle(
-            groundCheck.position,
-            radius,
-            collisionLayer
-        );
-        if (!doubleJumpReady && isGrounded)
-        {
-            doubleJumpReady = true;
-        }
+        // Bottom center of the box collider
+        Vector2 bottomCenter = new Vector2(transform.position.x, transform.position.y - bc.bounds.extents.y);
+
+        // Start slightly below the collider to avoid self‑hit
+        Vector2 origin = bottomCenter + Vector2.down * 0.01f;
+
+        // Box size: slightly narrower than the collider, very thin vertically
+        Vector2 boxSize = new Vector2(bc.bounds.size.x * 0.9f, 0.02f);
+
+        // Distance to check downward
+        float distance = 0.1f;
+
+        // Cast without layer mask (detects everything)
+        RaycastHit2D hit = Physics2D.BoxCast(origin, boxSize, 0f, Vector2.down, distance);
+
+        return hit.collider != null;
     }
 
-    private void OnDrawGizmos()
-    {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(groundCheck.position, radius);
-    }
+    // private void OnDrawGizmos()
+    // {
+    //     Gizmos.color = Color.green;
+    //     Gizmos.DrawWireSphere(groundCheck.position, radius);
+    // }
 }
