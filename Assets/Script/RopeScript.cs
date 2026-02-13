@@ -8,9 +8,6 @@ public class Rope : MonoBehaviour
     [Header("Rope Settings")]
     public float extendDuration = 0.15f;
 
-    float t;
-    bool extending;
-
     void Awake()
     {
         line.positionCount = 2;
@@ -19,15 +16,12 @@ public class Rope : MonoBehaviour
 
     void OnEnable()
     {
-        t = 0f;
-        extending = true;
         line.enabled = true;
     }
 
     void OnDisable()
     {
         line.enabled = false;
-        extending = false;
     }
 
     void Update()
@@ -36,26 +30,7 @@ public class Rope : MonoBehaviour
 
         line.SetPosition(0, grappling.firePoint.position);
 
-        if (extending)
-        {
-            t += Time.deltaTime / extendDuration;
-            Vector2 pos = Vector2.Lerp(
-                grappling.firePoint.position,
-                grappling.grapplePoint,
-                t
-            );
 
-            line.SetPosition(1, pos);
-
-            if (t >= 1f)
-            {
-                extending = false;
-                grappling.ActivateJoint();
-            }
-        }
-        else
-        {
-            line.SetPosition(1, grappling.grapplePoint);
-        }
+        line.SetPosition(1, grappling.getGrappleProjectilePosition());
     }
 }

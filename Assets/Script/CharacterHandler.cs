@@ -17,10 +17,17 @@ public class CharacterHandler : MonoBehaviour
     [SerializeField]
     Transform cameraTransform;
 
-    Rigidbody2D character;
+    [SerializeField]
+    GameObject rotationPoint;
+
+    Grappling grappling;
+
+    Rigidbody2D rb;
+
+    BoxCollider2D bc;
 
     [SerializeField]
-    float moveSpeed = 10f;
+    float moveSpeed = 20f;
 
 
     [SerializeField]
@@ -33,9 +40,9 @@ public class CharacterHandler : MonoBehaviour
     float velPow = 0.9f;
 
     [SerializeField]
-    float jumpForce = 13.5f;
+    float jumpForce = 15f;
     [SerializeField]
-    float doubleJumpForce = 18f;
+    float doubleJumpForce = 15f;
 
     [SerializeField]
     float dashForce = 25.0f;
@@ -43,29 +50,38 @@ public class CharacterHandler : MonoBehaviour
     float dashCooldown = 1.0f;
 
     [SerializeField]
-    float gravityScale = 1f;
+    float gravityScale = 2.5f;
     [SerializeField]
-    float GravityMultiplier = 2f;
+    float GravityMultiplier = 2.3f;
 
     Keyboard keyboard;
 
     float moveDir = 0.0f;
 
-    public Transform groundCheck;
-    public float radius;
-    public LayerMask collisionLayer;
+    LayerMask collisionLayer;
     // For jumping
-    public bool isGrounded;
-    public bool doubleJumpReady;
+    [SerializeField] LayerMask groundLayers;
+
+    bool touchGround;
+
+    bool doubleJumpReady;
     // For dashing
-    public float cantDashUntil;
+    float dashCooldownTimer;
+    Vector2 dashDirection;
 
-    public SpringJoint2D joint;
+    bool isDashing;
 
-    private PlayerAnimator playerAnimator;
+    [SerializeField] float dashMaxTimer = 0.2f;
+    float dashTimer;
+
+    bool grappleDashReady = true;
+
+    bool isGrapple = false;
+
+    PlayerAnimator playerAnimator;
 
     [SerializeField]
-    private UIDocument uiDocument;
+    UIDocument uiDocument;
 
     Dictionary<string, VisualElement> modeIcons = new Dictionary<string, VisualElement>();
 
@@ -80,7 +96,11 @@ public class CharacterHandler : MonoBehaviour
     void Start()
     {
         keyboard = Keyboard.current;
-        character = GetComponent<Rigidbody2D>();
+        if(keyboard == null)
+            Debug.LogError("No kayboard detected");
+        grappling = rotationPoint.GetComponent<Grappling>();
+        rb = GetComponent<Rigidbody2D>();
+        bc = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponent<PlayerAnimator>();
 
         if (uiDocument != null)
@@ -99,8 +119,8 @@ public class CharacterHandler : MonoBehaviour
 
     void Jump()
     {
-        if ((!isGrounded && !doubleJumpReady) || character == null) return;
-        if (!isGrounded && doubleJumpReady) // If not grounded, use up the double jump
+        if (!touchGround && !doubleJumpReady) return;
+        if (!touchGround) // If not grounded, use up the double jump
         {
             doubleJumpReady = false;
 
@@ -108,26 +128,75 @@ public class CharacterHandler : MonoBehaviour
             Vector2 desiredJump = new Vector2(moveDir, 1);
             desiredJump = desiredJump * doubleJumpForce;
             // Also cancel current force
-            character.AddForce(desiredJump - character.linearVelocity, ForceMode2D.Impulse);
+            rb.AddForce(desiredJump - rb.linearVelocity, ForceMode2D.Impulse);
         }
         else
         {
-            character.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
         }
 
     }
 
-    void Dash()
+    void GroundDash()
     {
-        if (Time.time > cantDashUntil && moveDir != 0)
+        if (Time.time > dashCooldownTimer && moveDir != 0 && !isDashing)
         {
-            cantDashUntil = Time.time + dashCooldown;
-            Vector2 desiredDash =
-                new Vector2(moveDir * dashForce, Mathf.Max(0, character.linearVelocity.y));
-            character.AddForce(desiredDash - character.linearVelocity, ForceMode2D.Impulse);
+            dashCooldownTimer = Time.time + dashCooldown;
+            isDashing = true;
+            dashTimer = dashMaxTimer;
+            dashDirection = new Vector2(moveDir, 0f).normalized;
 
-            playerAnimator.Dash();
+            // Reset velocity and apply constant dash speed
+            rb.linearVelocity = dashDirection * dashForce;
+            rb.gravityScale = 0f; // Disable gravity during dash
+
+            playerAnimator.Dash(); // Trigger dash animation
         }
+    }
+
+    void GrappleDash()
+{
+    if (grappleDashReady)
+    {
+        grappleDashReady = false;
+
+        // Direction from player to grapple point
+        Vector2 grappleDir = ((Vector2)grappling.getGrappleProjectilePosition() - rb.position).normalized;
+
+        // The two perpendicular directions
+        Vector2 leftTangent  = new Vector2(-grappleDir.y,  grappleDir.x); // 90° counter‑clockwise
+        Vector2 rightTangent = new Vector2( grappleDir.y, -grappleDir.x); // 90° clockwise
+
+        // Check player input
+        if (keyboard.aKey.isPressed)          // replace with actual input check for A
+        {
+            Dash(leftTangent);
+        }
+        else if (keyboard.dKey.isPressed)     // replace with actual input check for D
+        {
+            Dash(rightTangent);
+        }
+        else
+        {
+            // Original behaviour: choose tangent that points in the same general direction as velocity
+            Vector2 tangentDir = leftTangent; // start with one of them
+            if (Vector2.Dot(tangentDir, rb.linearVelocity) < 0)
+                tangentDir = -tangentDir;     // flip if it opposes velocity
+            Dash(tangentDir);
+        }
+    }
+}
+
+    void Dash(Vector2 direction)
+    {
+        Vector2 desiredDash = new Vector2(
+            direction.x * dashForce,
+            Mathf.Max(0, rb.linearVelocity.y)
+        );
+
+        rb.AddForce(desiredDash - rb.linearVelocity, ForceMode2D.Impulse);
+
+        playerAnimator.Dash();
     }
 
     void updateMode()
@@ -193,51 +262,63 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
+    void ApplySelectedMode()
+    {
+        switch (currentMode)
+        {
+            case CharacterMode.BaseballBat:
+                modeManager.SwitchMode(modeManager.swordMode as ICombatMode);
+                break;
+            case CharacterMode.BigGun:
+                modeManager.SwitchMode(modeManager.gunMode as ICombatMode);
+                break;
+            case CharacterMode.Lasso:
+                modeManager.SwitchMode(modeManager.grapplingGunMode as ICombatMode);
+                break;
+        }
+    }
+
     void ModeSwitch()
     {
         if (keyboard.tabKey.wasPressedThisFrame)
         {
-            // Display the UI
+            // Afficher l'interface
             uiDocument.rootVisualElement.style.display = DisplayStyle.Flex;
-            // Store the initial mouse position when the tab key is pressed
+            // Stocker la position initiale de la souris
             modeSelectionStartPos = Mouse.current.position.ReadValue();
         }
+        
         if (keyboard.tabKey.isPressed)
         {
             updateMode();
-            // Update the UI based on the current mode
             updateUI();
         }
+        
         if (keyboard.tabKey.wasReleasedThisFrame)
         {
-            switch (currentMode)
-            {
-                case CharacterMode.BaseballBat:
-                    modeManager.SwitchMode(modeManager.swordMode as ICombatMode);
-                    break;
-                case CharacterMode.BigGun:
-                    modeManager.SwitchMode(modeManager.gunMode as ICombatMode);
-                    break;
-                case CharacterMode.Lasso:
-                    modeManager.SwitchMode(modeManager.grapplingGunMode as ICombatMode);
-                    break;
-            }
-            // Hide the UI
+            ApplySelectedMode();
             uiDocument.rootVisualElement.style.display = DisplayStyle.None;
         }
     }
 
-    // Update is called once per frame
-    void Update()
+    void UpdateValues()
     {
-        CheckGround();
+        touchGround = CheckGround();
+        if(touchGround)
+            doubleJumpReady = true;
+    }
 
-        if (keyboard == null)
+    void UpdateMovement()
+    {
+        if (isDashing) return; 
+        if(isGrapple)
         {
-            Debug.LogError("Keyboard input is not available.");
+            if (keyboard.leftShiftKey.wasPressedThisFrame)
+            {
+                GrappleDash();
+            }
             return;
         }
-
         // Direction gauche/droite
         moveDir = 0f;
         if (keyboard.aKey.isPressed) moveDir -= 1f;
@@ -246,56 +327,95 @@ public class CharacterHandler : MonoBehaviour
         if (keyboard.spaceKey.wasPressedThisFrame)
             Jump();
 
-        if (keyboard.leftShiftKey.isPressed)
-            Dash();
+        if (keyboard.leftShiftKey.wasPressedThisFrame)
+            GroundDash();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        UpdateValues();
+
+        UpdateMovement();
 
         ModeSwitch();
     }
 
     void FixedUpdate()
     {
-        if (character == null) return;
+        if (rb == null) return;
+
+        // ===== DASH STATE =====
+        if (isDashing)
+        {
+            // Maintain constant velocity
+            rb.linearVelocity = dashDirection * dashForce;
+            rb.gravityScale = 0f;
+
+            dashTimer -= Time.fixedDeltaTime;
+            if (dashTimer <= 0f)
+            {
+                isDashing = false;
+                // Gravity will be restored in the normal flow next frame
+            }
+            return; // Skip normal movement & gravity
+        }
 
         // ===== MOUVEMENT =====
         float targetSpeed = moveDir * moveSpeed;
-        float speedDiff = targetSpeed - character.linearVelocity.x;
+        float speedDiff = targetSpeed - rb.linearVelocity.x;
 
         float accelerationRate;
         if (Mathf.Abs(targetSpeed) > 0.01f)
             accelerationRate = acceleration;
         else
-            accelerationRate = joint.enabled ? 0f : decceleration;
+            accelerationRate = isGrapple ? 0f : decceleration;
 
         float movement =
             Mathf.Pow(Mathf.Abs(speedDiff) * accelerationRate, velPow)
             * Mathf.Sign(speedDiff);
 
-        character.AddForce(movement * Vector2.right);
+        rb.AddForce(movement * Vector2.right);
 
         // ===== GRAVITÉ =====
-        if (character.linearVelocity.y < 0)
-            character.gravityScale = gravityScale * GravityMultiplier;
-        else
-            character.gravityScale = gravityScale;
+        if (rb.linearVelocity.y < 0 && !isGrapple)
+            rb.gravityScale = gravityScale * GravityMultiplier;
+        else if (!isGrapple)
+            rb.gravityScale = gravityScale;
     }
 
 
-    void CheckGround()
+    bool CheckGround()
     {
-        isGrounded = Physics2D.OverlapCircle(
-            groundCheck.position,
-            radius,
-            collisionLayer
-        );
-        if (!doubleJumpReady && isGrounded)
+        Vector2 bottomCenter = (Vector2)transform.position + Vector2.down * bc.bounds.extents.y;
+        float skinWidth = 0.01f;
+        Vector2 origin = bottomCenter + Vector2.down * skinWidth;
+        Vector2 boxSize = new Vector2(bc.bounds.size.x * 0.9f, 0.02f);
+        float distance = 0.1f;
+
+        RaycastHit2D hit = Physics2D.BoxCast(origin, boxSize, 0f, Vector2.down, distance, groundLayers);
+
+        // Optional: check surface angle to avoid sticking to steep walls
+        if (hit)
         {
-            doubleJumpReady = true;
+            float angle = Vector2.Angle(hit.normal, Vector2.up);
+            if (angle < 45f) // adjust slope limit as needed
+                return true;
         }
+        return false;
     }
 
-    private void OnDrawGizmos()
+    public void setIsGrapple(bool p_isGrapple)
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(groundCheck.position, radius);
+        isGrapple = p_isGrapple;
+        grappleDashReady = true;
+        moveDir = 0f; // stop horizontal input when grappled
+    }
+
+    public void moveToDirection(float len, Vector2 pos)
+    {
+        Vector2 dir = (pos - (Vector2)transform.position).normalized;
+        rb.position += dir * len;
     }
 }
