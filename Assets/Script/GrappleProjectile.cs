@@ -21,7 +21,7 @@ public class GrappleProjectile : MonoBehaviour
     void Start()
     {
         firePointPos = transform.position;
-        playerRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>(); if (playerRb == null) { Debug.LogError("Player Rigidbody2D not found. Make sure the player GameObject has the 'Player' tag and a Rigidbody2D component."); }
+        playerRb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>();
         rb = GetComponent<Rigidbody2D>();
         col = GetComponent<Collider2D>();
     }
@@ -60,7 +60,7 @@ public class GrappleProjectile : MonoBehaviour
         isGrappled = true;
         transform.position = hitPoint;
         rb.linearVelocity = Vector2.zero;
-        rb.isKinematic = true;
+        rb.bodyType = RigidbodyType2D.Kinematic;
         col.enabled = false;
     }
 }

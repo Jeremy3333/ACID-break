@@ -32,6 +32,8 @@ public class Grappling : MonoBehaviour
 
     private bool isGrappled = false;
 
+    private CharacterHandler characterCharacterHandler;
+
     void Start()
     {
         joint.enabled = false;
@@ -69,6 +71,8 @@ public class Grappling : MonoBehaviour
         // Release grapple on left release
         if (Mouse.current.leftButton.wasPressedThisFrame && isGrappled)
             StopGrapple();
+
+        characterCharacterHandler = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterHandler>();
     }
 
     void TryGrapple()
@@ -100,6 +104,10 @@ public class Grappling : MonoBehaviour
     {
         grapplePoint = hitPoint;
         isGrappled = true;
+
+        rb.gravityScale = 0f;
+        rb.linearVelocity = Vector3.zero;
+        characterCharacterHandler.setIsGrapple(true);
         ActivateJoint();
     }
 
@@ -125,6 +133,7 @@ public class Grappling : MonoBehaviour
         rope.enabled = false;
         joint.enabled = false;
         isGrappled = false;
+        characterCharacterHandler.setIsGrapple(false);
         DestroyCurrentProjectile();
     }
 

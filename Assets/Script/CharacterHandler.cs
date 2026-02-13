@@ -55,6 +55,8 @@ public class CharacterHandler : MonoBehaviour
 
     LayerMask collisionLayer;
     // For jumping
+    [SerializeField] LayerMask groundLayers;
+
     bool touchGround;
 
     bool doubleJumpReady;
@@ -81,6 +83,8 @@ public class CharacterHandler : MonoBehaviour
     void Start()
     {
         keyboard = Keyboard.current;
+        if(keyboard == null)
+            Debug.LogError("No kayboard detected");
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponent<PlayerAnimator>();
@@ -200,36 +204,41 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
+    void ApplySelectedMode()
+    {
+        switch (currentMode)
+        {
+            case CharacterMode.BaseballBat:
+                modeManager.SwitchMode(modeManager.swordMode as ICombatMode);
+                break;
+            case CharacterMode.BigGun:
+                modeManager.SwitchMode(modeManager.gunMode as ICombatMode);
+                break;
+            case CharacterMode.Lasso:
+                modeManager.SwitchMode(modeManager.grapplingGunMode as ICombatMode);
+                break;
+        }
+    }
+
     void ModeSwitch()
     {
         if (keyboard.tabKey.wasPressedThisFrame)
         {
-            // Display the UI
+            // Afficher l'interface
             uiDocument.rootVisualElement.style.display = DisplayStyle.Flex;
-            // Store the initial mouse position when the tab key is pressed
+            // Stocker la position initiale de la souris
             modeSelectionStartPos = Mouse.current.position.ReadValue();
         }
+        
         if (keyboard.tabKey.isPressed)
         {
             updateMode();
-            // Update the UI based on the current mode
             updateUI();
         }
+        
         if (keyboard.tabKey.wasReleasedThisFrame)
         {
-            switch (currentMode)
-            {
-                case CharacterMode.BaseballBat:
-                    modeManager.SwitchMode(modeManager.swordMode as ICombatMode);
-                    break;
-                case CharacterMode.BigGun:
-                    modeManager.SwitchMode(modeManager.gunMode as ICombatMode);
-                    break;
-                case CharacterMode.Lasso:
-                    modeManager.SwitchMode(modeManager.grapplingGunMode as ICombatMode);
-                    break;
-            }
-            // Hide the UI
+            ApplySelectedMode();
             uiDocument.rootVisualElement.style.display = DisplayStyle.None;
         }
     }
@@ -241,18 +250,8 @@ public class CharacterHandler : MonoBehaviour
             doubleJumpReady = true;
     }
 
-    // Update is called once per frame
-    void Update()
+    void UpdateMovement()
     {
-
-        UpdateValues();
-
-        if (keyboard == null)
-        {
-            Debug.LogError("Keyboard input is not available.");
-            return;
-        }
-
         // Direction gauche/droite
         moveDir = 0f;
         if (keyboard.aKey.isPressed) moveDir -= 1f;
@@ -263,6 +262,15 @@ public class CharacterHandler : MonoBehaviour
 
         if (keyboard.leftShiftKey.isPressed)
             Dash();
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+
+        UpdateValues();
+
+        UpdateMovement();
 
         ModeSwitch();
     }
@@ -297,27 +305,21 @@ public class CharacterHandler : MonoBehaviour
 
     bool CheckGround()
     {
-        // Bottom center of the box collider
-        Vector2 bottomCenter = new Vector2(transform.position.x, transform.position.y - bc.bounds.extents.y);
-
-        // Start slightly below the collider to avoid self‑hit
-        Vector2 origin = bottomCenter + Vector2.down * 0.01f;
-
-        // Box size: slightly narrower than the collider, very thin vertically
+        Vector2 bottomCenter = (Vector2)transform.position + Vector2.down * bc.bounds.extents.y;
+        float skinWidth = 0.01f;
+        Vector2 origin = bottomCenter + Vector2.down * skinWidth;
         Vector2 boxSize = new Vector2(bc.bounds.size.x * 0.9f, 0.02f);
-
-        // Distance to check downward
         float distance = 0.1f;
 
-        // Cast without layer mask (detects everything)
-        RaycastHit2D hit = Physics2D.BoxCast(origin, boxSize, 0f, Vector2.down, distance);
+        RaycastHit2D hit = Physics2D.BoxCast(origin, boxSize, 0f, Vector2.down, distance, groundLayers);
 
-        return hit.collider != null;
+        // Optional: check surface angle to avoid sticking to steep walls
+        if (hit)
+        {
+            float angle = Vector2.Angle(hit.normal, Vector2.up);
+            if (angle < 45f) // adjust slope limit as needed
+                return true;
+        }
+        return false;
     }
-
-    // private void OnDrawGizmos()
-    // {
-    //     Gizmos.color = Color.green;
-    //     Gizmos.DrawWireSphere(groundCheck.position, radius);
-    // }
 }
