@@ -57,11 +57,19 @@ public class PlayerAnimator : MonoBehaviour
 
     public void Bang(Vector3 mouseWorldPos, Vector3 gunPos)
     {
+        // Rotate the torso in the aiming direction
         bangFlipsUntil = Time.time + timeAfterBang;
         torsoRenderer.flipX = mouseWorldPos.x > transform.position.x;
         torsoRenderer.flipY = true;
         torso.transform.right = (gunPos - torso.transform.position)
             * ((torsoRenderer.flipX) ? -1 : 1);
+
         torsoAnimator.SetTrigger("Bang");
+    }
+
+    public void Dash()
+    {
+        legsAnimator.SetTrigger("Dash");
+        torsoAnimator.SetTrigger("Dash");
     }
 }

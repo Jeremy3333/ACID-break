@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 2584174364687755549}
   - component: {fileID: 3638947686692133501}
   - component: {fileID: 6358263389224969798}
+  - component: {fileID: -5342938595425036397}
   m_Layer: 7
   m_Name: BasicEnemy
-  m_TagString: Untagged
+  m_TagString: Mob
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -107,7 +108,7 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4294967295
   m_ExcludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -181,3 +182,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemieHandler
   playerTransform: {fileID: 0}
   enemieType: 0
+--- !u!114 &-5342938595425036397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 940783413828997715}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 667c147ee6eae03429bf708eb139028f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::HealthManagerMob
+  MaxHealth: 10
+  health: 10
+  invincybilityTime: 0.05

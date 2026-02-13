@@ -38,7 +38,7 @@ public class HealthManagerMob : MonoBehaviour
         if (isHittable)
         {
             isHittable = false;
-            health = Mathf.Max(health-1, 0);
+            health = Mathf.Max(health-damage, 0);
             if (health <= 0) Destroy(gameObject);
         }   
     }
