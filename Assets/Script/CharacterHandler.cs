@@ -248,6 +248,8 @@ public class CharacterHandler : MonoBehaviour
 
         if (keyboard.leftShiftKey.isPressed)
             Dash();
+
+        ModeSwitch();
     }
 
     void FixedUpdate()
