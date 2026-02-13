@@ -17,12 +17,17 @@ public class CharacterHandler : MonoBehaviour
     [SerializeField]
     Transform cameraTransform;
 
+    [SerializeField]
+    GameObject rotationPoint;
+
+    Grappling grappling;
+
     Rigidbody2D rb;
 
     BoxCollider2D bc;
 
     [SerializeField]
-    float moveSpeed = 10f;
+    float moveSpeed = 20f;
 
 
     [SerializeField]
@@ -35,9 +40,9 @@ public class CharacterHandler : MonoBehaviour
     float velPow = 0.9f;
 
     [SerializeField]
-    float jumpForce = 13.5f;
+    float jumpForce = 15f;
     [SerializeField]
-    float doubleJumpForce = 18f;
+    float doubleJumpForce = 15f;
 
     [SerializeField]
     float dashForce = 25.0f;
@@ -45,9 +50,9 @@ public class CharacterHandler : MonoBehaviour
     float dashCooldown = 1.0f;
 
     [SerializeField]
-    float gravityScale = 1f;
+    float gravityScale = 2.5f;
     [SerializeField]
-    float GravityMultiplier = 2f;
+    float GravityMultiplier = 2.3f;
 
     Keyboard keyboard;
 
@@ -61,7 +66,15 @@ public class CharacterHandler : MonoBehaviour
 
     bool doubleJumpReady;
     // For dashing
+    float dashCooldownTimer;
+    Vector2 dashDirection;
+
+    bool isDashing;
+
+    [SerializeField] float dashMaxTimer = 0.2f;
     float dashTimer;
+
+    bool grappleDashReady = true;
 
     bool isGrapple = false;
 
@@ -85,6 +98,7 @@ public class CharacterHandler : MonoBehaviour
         keyboard = Keyboard.current;
         if(keyboard == null)
             Debug.LogError("No kayboard detected");
+        grappling = rotationPoint.GetComponent<Grappling>();
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponent<PlayerAnimator>();
@@ -101,11 +115,6 @@ public class CharacterHandler : MonoBehaviour
         {
             Debug.LogError("UI Document is not assigned.");
         }
-    }
-
-    public void setIsGrapple(bool p_isGrapple)
-    {
-        isGrapple = p_isGrapple;
     }
 
     void Jump()
@@ -128,17 +137,48 @@ public class CharacterHandler : MonoBehaviour
 
     }
 
-    void Dash()
+    void GroundDash()
     {
-        if (Time.time > dashTimer && moveDir != 0)
+        if (Time.time > dashCooldownTimer && moveDir != 0 && !isDashing)
         {
-            dashTimer = Time.time + dashCooldown;
-            Vector2 desiredDash =
-                new Vector2(moveDir * dashForce, Mathf.Max(0, rb.linearVelocity.y));
-            rb.AddForce(desiredDash - rb.linearVelocity, ForceMode2D.Impulse);
+            dashCooldownTimer = Time.time + dashCooldown;
+            isDashing = true;
+            dashTimer = dashMaxTimer;
+            dashDirection = new Vector2(moveDir, 0f).normalized;
 
-            playerAnimator.Dash();
+            // Reset velocity and apply constant dash speed
+            rb.linearVelocity = dashDirection * dashForce;
+            rb.gravityScale = 0f; // Disable gravity during dash
+
+            playerAnimator.Dash(); // Trigger dash animation
         }
+    }
+
+    void GrappleDash()
+    {
+        if (grappleDashReady)
+        {
+            grappleDashReady = false;
+
+            // Dash tangentially to the grapple direction facing the direction of the the current velocity
+            Vector2 grappleDir = ((Vector2)grappling.getGrappleProjectilePosition() - rb.position).normalized;
+            Vector2 tangentDir = new Vector2(-grappleDir.y, grappleDir.x);
+            if (Vector2.Dot(tangentDir, rb.linearVelocity) < 0)
+                tangentDir = -tangentDir;
+            Dash(tangentDir);
+        }
+    }
+
+    void Dash(Vector2 direction)
+    {
+        Vector2 desiredDash = new Vector2(
+            direction.x * dashForce,
+            Mathf.Max(0, rb.linearVelocity.y)
+        );
+
+        rb.AddForce(desiredDash - rb.linearVelocity, ForceMode2D.Impulse);
+
+        playerAnimator.Dash();
     }
 
     void updateMode()
@@ -252,6 +292,15 @@ public class CharacterHandler : MonoBehaviour
 
     void UpdateMovement()
     {
+        if (isDashing) return; 
+        if(isGrapple)
+        {
+            if (keyboard.leftShiftKey.wasPressedThisFrame)
+            {
+                GrappleDash();
+            }
+            return;
+        }
         // Direction gauche/droite
         moveDir = 0f;
         if (keyboard.aKey.isPressed) moveDir -= 1f;
@@ -260,8 +309,8 @@ public class CharacterHandler : MonoBehaviour
         if (keyboard.spaceKey.wasPressedThisFrame)
             Jump();
 
-        if (keyboard.leftShiftKey.isPressed)
-            Dash();
+        if (keyboard.leftShiftKey.wasPressedThisFrame)
+            GroundDash();
     }
 
     // Update is called once per frame
@@ -278,6 +327,22 @@ public class CharacterHandler : MonoBehaviour
     void FixedUpdate()
     {
         if (rb == null) return;
+
+        // ===== DASH STATE =====
+        if (isDashing)
+        {
+            // Maintain constant velocity
+            rb.linearVelocity = dashDirection * dashForce;
+            rb.gravityScale = 0f;
+
+            dashTimer -= Time.fixedDeltaTime;
+            if (dashTimer <= 0f)
+            {
+                isDashing = false;
+                // Gravity will be restored in the normal flow next frame
+            }
+            return; // Skip normal movement & gravity
+        }
 
         // ===== MOUVEMENT =====
         float targetSpeed = moveDir * moveSpeed;
@@ -296,9 +361,9 @@ public class CharacterHandler : MonoBehaviour
         rb.AddForce(movement * Vector2.right);
 
         // ===== GRAVITÉ =====
-        if (rb.linearVelocity.y < 0)
+        if (rb.linearVelocity.y < 0 && !isGrapple)
             rb.gravityScale = gravityScale * GravityMultiplier;
-        else
+        else if (!isGrapple)
             rb.gravityScale = gravityScale;
     }
 
@@ -321,5 +386,17 @@ public class CharacterHandler : MonoBehaviour
                 return true;
         }
         return false;
+    }
+
+    public void setIsGrapple(bool p_isGrapple)
+    {
+        isGrapple = p_isGrapple;
+        grappleDashReady = true;
+    }
+
+    public void moveToDirection(float len, Vector2 pos)
+    {
+        Vector2 dir = (pos - (Vector2)transform.position).normalized;
+        rb.position += dir * len;
     }
 }

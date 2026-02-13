@@ -13,18 +13,19 @@ public class Grappling : MonoBehaviour
     public SpringJoint2D joint;
 
     [Header("Grapple Settings")]
-    public float maxDistance = 20f;        // max rope length after attach
-    public float jointFrequency = 6f;
+    [SerializeField] float jointFrequency = 6f;
 
-    public float retractSpeed = 10f;       // right‑click retract (shorten rope)
-    public float minDistance = 1.5f;
+    [SerializeField] float retractSpeed = 30f;       // right‑click retract (shorten rope)
+    [SerializeField] float minDistance = 1.5f;
+
+    [SerializeField] float maxLength = 15f;
 
     [Header("Projectile Settings")]
     
-    public GameObject grappleProjectilePrefab;
-    public float projectileSpeed = 20f;
-    public float projectileMaxDistance = 20f;   // how far the projectile can fly
-    public float projectileRetractSpeed = 15f;  // speed when it returns automatically
+    [SerializeField] GameObject grappleProjectilePrefab;
+    [SerializeField] float projectileSpeed = 100f;
+    [SerializeField] float projectileMaxDistance = 20f;   // how far the projectile can fly
+    [SerializeField] float projectileRetractSpeed = 100f;  // speed when it returns automatically
 
     [HideInInspector] public Vector2 grapplePoint;
 
@@ -77,6 +78,7 @@ public class Grappling : MonoBehaviour
 
     void TryGrapple()
     {
+        // TODO: il faut remplacé ça par un mix de raycast et de projectile demandé a Jérémy pourquoi et comment faire ça
         if (joint.enabled)
             StopGrapple();
 
@@ -103,11 +105,13 @@ public class Grappling : MonoBehaviour
     public void OnGrappleHit(Vector2 hitPoint)
     {
         grapplePoint = hitPoint;
+        float distance = Vector2.Distance(rb.position, grapplePoint);
         isGrappled = true;
-
-        rb.gravityScale = 0f;
-        rb.linearVelocity = Vector3.zero;
         characterCharacterHandler.setIsGrapple(true);
+        if(distance > maxLength)
+        {
+            characterCharacterHandler.moveToDirection(distance - maxLength, grapplePoint);
+        }
         ActivateJoint();
     }
 
