@@ -1381,6 +1381,14 @@ PrefabInstance:
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 186201149509189314, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: grappleMask.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
+    - target: {fileID: 186201149509189314, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: grappleLayer.m_Bits
+      value: 192
+      objectReference: {fileID: 0}
+    - target: {fileID: 186201149509189314, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: projectileRetractSpeed
       value: 100
       objectReference: {fileID: 0}
@@ -1434,7 +1442,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6355964925543335445, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: dashForce
-      value: 25
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 6355964925543335445, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: jumpForce

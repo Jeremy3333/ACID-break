@@ -155,19 +155,37 @@ public class CharacterHandler : MonoBehaviour
     }
 
     void GrappleDash()
+{
+    if (grappleDashReady)
     {
-        if (grappleDashReady)
-        {
-            grappleDashReady = false;
+        grappleDashReady = false;
 
-            // Dash tangentially to the grapple direction facing the direction of the the current velocity
-            Vector2 grappleDir = ((Vector2)grappling.getGrappleProjectilePosition() - rb.position).normalized;
-            Vector2 tangentDir = new Vector2(-grappleDir.y, grappleDir.x);
+        // Direction from player to grapple point
+        Vector2 grappleDir = ((Vector2)grappling.getGrappleProjectilePosition() - rb.position).normalized;
+
+        // The two perpendicular directions
+        Vector2 leftTangent  = new Vector2(-grappleDir.y,  grappleDir.x); // 90° counter‑clockwise
+        Vector2 rightTangent = new Vector2( grappleDir.y, -grappleDir.x); // 90° clockwise
+
+        // Check player input
+        if (keyboard.aKey.isPressed)          // replace with actual input check for A
+        {
+            Dash(leftTangent);
+        }
+        else if (keyboard.dKey.isPressed)     // replace with actual input check for D
+        {
+            Dash(rightTangent);
+        }
+        else
+        {
+            // Original behaviour: choose tangent that points in the same general direction as velocity
+            Vector2 tangentDir = leftTangent; // start with one of them
             if (Vector2.Dot(tangentDir, rb.linearVelocity) < 0)
-                tangentDir = -tangentDir;
+                tangentDir = -tangentDir;     // flip if it opposes velocity
             Dash(tangentDir);
         }
     }
+}
 
     void Dash(Vector2 direction)
     {
@@ -392,6 +410,7 @@ public class CharacterHandler : MonoBehaviour
     {
         isGrapple = p_isGrapple;
         grappleDashReady = true;
+        moveDir = 0f; // stop horizontal input when grappled
     }
 
     public void moveToDirection(float len, Vector2 pos)

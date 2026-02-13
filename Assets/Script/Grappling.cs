@@ -26,6 +26,9 @@ public class Grappling : MonoBehaviour
     [SerializeField] float projectileSpeed = 100f;
     [SerializeField] float projectileMaxDistance = 20f;   // how far the projectile can fly
     [SerializeField] float projectileRetractSpeed = 100f;  // speed when it returns automatically
+    
+    [Header("Collision")]
+    [SerializeField] LayerMask grappleMask;   // set in Inspector to layers the projectile can hit
 
     [HideInInspector] public Vector2 grapplePoint;
 
@@ -70,7 +73,7 @@ public class Grappling : MonoBehaviour
             Retract();
 
         // Release grapple on left release
-        if (Mouse.current.leftButton.wasPressedThisFrame && isGrappled)
+        if (Mouse.current.leftButton.wasReleasedThisFrame && isGrappled)
             StopGrapple();
 
         characterCharacterHandler = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterHandler>();
@@ -78,26 +81,47 @@ public class Grappling : MonoBehaviour
 
     void TryGrapple()
     {
-        // TODO: il faut remplacé ça par un mix de raycast et de projectile demandé a Jérémy pourquoi et comment faire ça
         if (joint.enabled)
             StopGrapple();
 
         if (currentProjectile != null)
             Destroy(currentProjectile);
 
-        GameObject proj = Instantiate(grappleProjectilePrefab, firePoint.position, Quaternion.identity);
+        // Direction from firePoint to mouse
+        Vector2 mouseWorld = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 firePos = firePoint.position;
+        Vector2 dir = (mouseWorld - firePos).normalized;
+
+        // Raycast to find a valid grapple point
+        RaycastHit2D hit = Physics2D.Raycast(firePos, dir, maxLength, grappleMask);
+        Vector2 targetPoint;
+        bool hasValidTarget = false;
+
+        if (hit.collider != null)
+        {
+            targetPoint = hit.point;
+            hasValidTarget = true;
+        }
+        else
+        {
+            targetPoint = firePos + dir * maxLength;
+        }
+
+        // Create and setup projectile
+        GameObject proj = Instantiate(grappleProjectilePrefab, firePos, Quaternion.identity);
         currentProjectile = proj;
 
         Rigidbody2D projRb = proj.GetComponent<Rigidbody2D>();
-        Vector2 mouseWorld = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
-        Vector2 dir = (mouseWorld - (Vector2)firePoint.position).normalized;
-        projRb.linearVelocity = dir * projectileSpeed;
+        projRb.linearVelocity = dir * projectileSpeed;   // initial direction
 
         GrappleProjectile projScript = proj.GetComponent<GrappleProjectile>();
         projScript.parentGrappling = this;
         projScript.playerRb = rb;
-        projScript.maxDistance = projectileMaxDistance;
+        projScript.maxDistance = projectileMaxDistance;   // for auto‑retract when no target
         projScript.retractSpeed = projectileRetractSpeed;
+
+        // Pass the target information
+        projScript.SetTarget(targetPoint, hasValidTarget);
 
         rope.enabled = true;
     }
