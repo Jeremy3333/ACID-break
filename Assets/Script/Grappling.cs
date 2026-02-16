@@ -6,7 +6,7 @@ public class Grappling : MonoBehaviour
     [Header("References")]
     public Rope rope;
     public Camera cam;
-    private Vector2 mousePos;
+    [SerializeField] Transform target;
 
     public Transform firePoint;
     public Rigidbody2D rb;
@@ -64,27 +64,13 @@ public class Grappling : MonoBehaviour
         }
         else
         {
-            Vector3 mouseScreenPos = Mouse.current.position.ReadValue();
-            mouseScreenPos.z = Camera.main.nearClipPlane;
-            targetPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+            targetPos = target.position;
         }
 
         Vector3 direction = (Vector3)targetPos - transform.position;
         float rotaZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotaZ);
 
-        // Fire projectile on left click
-        if (Mouse.current.leftButton.wasPressedThisFrame && !isGrappled && currentProjectile == null)
-            TryGrapple();
-
-        // Retract joint (pull player) on right hold
-        if (Mouse.current.rightButton.isPressed)
-            Retract();
-
-        // Release grapple on left release
-        if (Mouse.current.leftButton.wasReleasedThisFrame && isGrappled && !isEnnemieGrappled)
-            StopGrapple();
-        
         if(isEnnemieGrappled && grapledEnnemieHandler != null)
         {
             AttaqueEnnemie();
@@ -105,8 +91,10 @@ public class Grappling : MonoBehaviour
         }
     }
 
-    void TryGrapple()
+    public void TryGrapple()
     {
+        if(isGrappled  || currentProjectile != null) return;
+
         if (joint.enabled)
             StopGrapple();
 
@@ -114,9 +102,9 @@ public class Grappling : MonoBehaviour
             Destroy(currentProjectile);
 
         // Direction from firePoint to mouse
-        Vector2 mouseWorld = cam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+        Vector2 targetPos = target.position;
         Vector2 firePos = firePoint.position;
-        Vector2 dir = (mouseWorld - firePos).normalized;
+        Vector2 dir = (targetPos - firePos).normalized;
 
         // Raycast to find a valid grapple point
         RaycastHit2D hitPlateform = Physics2D.Raycast(firePos, dir, maxLength, grapplePlateformMask);
@@ -183,7 +171,7 @@ public class Grappling : MonoBehaviour
         joint.frequency = jointFrequency;
     }
 
-    void Retract()
+    public void Retract()
     {
         if (!joint.enabled) return;
 
@@ -191,8 +179,10 @@ public class Grappling : MonoBehaviour
         joint.distance = Mathf.Max(joint.distance, 0.1f); // prevent distance from becoming negative
     }
 
-    void StopGrapple()
+    public void StopGrapple()
     {
+        if(!isGrappled || isEnnemieGrappled) return;
+
         rope.enabled = false;
         joint.enabled = false;
         isGrappled = false;

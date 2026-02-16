@@ -1,10 +1,9 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Swording : MonoBehaviour
 {
     private Camera mainCam;
-    private Vector2 mousePos;
+    [SerializeField] Transform target;
 
     [Header("Attack")]
     public int damage = 2;
@@ -28,23 +27,13 @@ public class Swording : MonoBehaviour
 
     void Update()
     {
-        RotateToMouse();
+        RotateToTarget();
         HandleCooldown();
-
-        if (Mouse.current.leftButton.wasPressedThisFrame && canAttack)
-        {
-            Attack();
-        }
     }
 
-    void RotateToMouse()
+    void RotateToTarget()
     {
-        mousePos = Mouse.current.position.ReadValue();
-        Vector3 worldPos = mainCam.ScreenToWorldPoint(
-            new Vector3(mousePos.x, mousePos.y, mainCam.nearClipPlane)
-        );
-
-        Vector3 dir = worldPos - transform.position;
+        Vector3 dir = target.position - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
@@ -62,8 +51,9 @@ public class Swording : MonoBehaviour
         }
     }
 
-    void Attack()
+    public void Attack()
     {
+        if(canAttack == false) return;
         canAttack = false;
         swordHitbox.enabled = true;
         swordSprite.enabled = true;
