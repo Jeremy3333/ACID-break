@@ -16,7 +16,6 @@ public class Grappling : MonoBehaviour
     [SerializeField] float jointFrequency = 6f;
 
     [SerializeField] float retractSpeed = 30f;       // right‑click retract (shorten rope)
-    [SerializeField] float minDistance = 1.5f;
 
     [SerializeField] float maxLength = 15f;
 
@@ -28,15 +27,25 @@ public class Grappling : MonoBehaviour
     [SerializeField] float projectileRetractSpeed = 100f;  // speed when it returns automatically
     
     [Header("Collision")]
-    [SerializeField] LayerMask grappleMask;   // set in Inspector to layers the projectile can hit
+    [SerializeField] LayerMask grapplePlateformMask;   // set in Inspector to layers the projectile can hit
+    [SerializeField] LayerMask grappleEnnemieMask;   // set in Inspector to layers the projectile can hit
+
+    
+    [Header("Attaque Settings")]
+
+    [SerializeField] int attaqueDamage = 1;
 
     [HideInInspector] public Vector2 grapplePoint;
 
-    private GameObject currentProjectile;
+    GameObject currentProjectile;
 
-    private bool isGrappled = false;
+    bool isGrappled = false;
 
-    private CharacterHandler characterCharacterHandler;
+    bool isEnnemieGrappled = false;
+
+    EnemieHandler grapledEnnemieHandler;
+
+    CharacterHandler characterCharacterHandler;
 
     void Start()
     {
@@ -65,7 +74,7 @@ public class Grappling : MonoBehaviour
         transform.rotation = Quaternion.Euler(0, 0, rotaZ);
 
         // Fire projectile on left click
-        if (Mouse.current.leftButton.wasPressedThisFrame && !isGrappled)
+        if (Mouse.current.leftButton.wasPressedThisFrame && !isGrappled && currentProjectile == null)
             TryGrapple();
 
         // Retract joint (pull player) on right hold
@@ -73,10 +82,27 @@ public class Grappling : MonoBehaviour
             Retract();
 
         // Release grapple on left release
-        if (Mouse.current.leftButton.wasReleasedThisFrame && isGrappled)
+        if (Mouse.current.leftButton.wasReleasedThisFrame && isGrappled && !isEnnemieGrappled)
             StopGrapple();
+        
+        if(isEnnemieGrappled && grapledEnnemieHandler != null)
+        {
+            AttaqueEnnemie();
+        }
 
         characterCharacterHandler = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterHandler>();
+    }
+
+    void AttaqueEnnemie()
+    {
+        Retract();
+        if (Vector2.Distance(rb.position, grapplePoint) < 0.5f)
+        {
+            grapledEnnemieHandler.Hit(attaqueDamage);
+            isEnnemieGrappled = false;
+            grapledEnnemieHandler.setFrozen(false);
+            StopGrapple();
+        }
     }
 
     void TryGrapple()
@@ -93,14 +119,23 @@ public class Grappling : MonoBehaviour
         Vector2 dir = (mouseWorld - firePos).normalized;
 
         // Raycast to find a valid grapple point
-        RaycastHit2D hit = Physics2D.Raycast(firePos, dir, maxLength, grappleMask);
+        RaycastHit2D hitPlateform = Physics2D.Raycast(firePos, dir, maxLength, grapplePlateformMask);
+        RaycastHit2D hitEnnemie = Physics2D.Raycast(firePos, dir, maxLength, grappleEnnemieMask);
         Vector2 targetPoint;
         bool hasValidTarget = false;
 
-        if (hit.collider != null)
+        if (hitPlateform.collider != null)
         {
-            targetPoint = hit.point;
+            targetPoint = hitPlateform.point;
             hasValidTarget = true;
+        }
+        else if (hitEnnemie.collider != null)
+        {
+            hasValidTarget = true;
+            isEnnemieGrappled = true;
+            grapledEnnemieHandler = hitEnnemie.collider.GetComponent<EnemieHandler>();
+            targetPoint = hitEnnemie.collider.transform.position;
+            grapledEnnemieHandler.setFrozen(true);
         }
         else
         {
@@ -153,7 +188,7 @@ public class Grappling : MonoBehaviour
         if (!joint.enabled) return;
 
         joint.distance -= retractSpeed * Time.deltaTime;
-        joint.distance = Mathf.Max(joint.distance, minDistance);
+        joint.distance = Mathf.Max(joint.distance, 0.1f); // prevent distance from becoming negative
     }
 
     void StopGrapple()

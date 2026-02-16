@@ -20,12 +20,20 @@ public class EnemieHandler : MonoBehaviour
 
     float targetVelocityX = 0f;
 
-    Rigidbody2D enemie;
+    Rigidbody2D enemieRB;
+
+    BoxCollider2D enemieCollider;
+
+    HealthManagerMob healthManagerMob;
+
+    bool isFrozen = false;
 
     void Start()
     {
-        enemie = GetComponent<Rigidbody2D>();
-        if (enemie == null)
+        enemieRB = GetComponent<Rigidbody2D>();
+        enemieCollider = GetComponent<BoxCollider2D>();
+        healthManagerMob = GetComponent<HealthManagerMob>();
+        if (enemieRB == null)
         {
             Debug.LogError("Rigidbody2D component is missing on the enemie.");
         }
@@ -96,15 +104,38 @@ public class EnemieHandler : MonoBehaviour
         }
     }
 
+    public void setFrozen(bool frozen)
+    {
+        isFrozen = frozen;
+        if (isFrozen)
+        {
+            targetVelocityX = 0f;
+            enemieRB.bodyType = RigidbodyType2D.Kinematic;
+            enemieRB.linearVelocity = Vector2.zero;
+            enemieCollider.enabled = false;
+        }
+        else
+        {
+            enemieRB.bodyType = RigidbodyType2D.Dynamic;
+            enemieCollider.enabled = true;
+        }
+    }
+
+    public void Hit(int damage)
+    {
+        healthManagerMob.Hit(damage);
+    }
+
     // Update is called once per frame
     void Update()
     {
         targetVelocityX = 0f; // Reset target velocity at the start of each frame
-        ChooseBehavior();
+        if (!isFrozen)
+            ChooseBehavior();
     }
     void FixedUpdate()
     {
-        float newVx = Mathf.MoveTowards(enemie.linearVelocity.x, targetVelocityX, acceleration * Time.fixedDeltaTime);
-        enemie.linearVelocity = new Vector2(newVx, enemie.linearVelocity.y);
+        float newVx = Mathf.MoveTowards(enemieRB.linearVelocity.x, targetVelocityX, acceleration * Time.fixedDeltaTime);
+        enemieRB.linearVelocity = new Vector2(newVx, enemieRB.linearVelocity.y);
     }
 }

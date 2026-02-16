@@ -547,7 +547,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 17.69, y: 17.54, z: 0}
-  m_LocalScale: {x: 49.789455, y: 1.0587379, z: 1}
+  m_LocalScale: {x: 50, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -685,7 +685,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -30.76, y: 11.87, z: 0}
-  m_LocalScale: {x: 12.860617, y: 0.7987119, z: 1}
+  m_LocalScale: {x: 13, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1275,7 +1275,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -22.96, y: 4.76, z: 0}
-  m_LocalScale: {x: 12.860617, y: 0.7987119, z: 1}
+  m_LocalScale: {x: 13, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1374,11 +1374,11 @@ PrefabInstance:
       objectReference: {fileID: 1231842732}
     - target: {fileID: 186201149509189314, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: retractSpeed
-      value: 30
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 186201149509189314, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: projectileSpeed
-      value: 100
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 186201149509189314, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: grappleMask.m_Bits
@@ -1390,7 +1390,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 186201149509189314, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: projectileRetractSpeed
-      value: 100
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 186201149509189314, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: grappleEnnemieMask.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 186201149509189314, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: grapplePlateformMask.m_Bits
+      value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 805151172194036635, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: m_Layer

@@ -5,9 +5,6 @@ public class Rope : MonoBehaviour
     public LineRenderer line;
     public Grappling grappling;
 
-    [Header("Rope Settings")]
-    public float extendDuration = 0.15f;
-
     void Awake()
     {
         line.positionCount = 2;
@@ -16,6 +13,8 @@ public class Rope : MonoBehaviour
 
     void OnEnable()
     {
+        line.SetPosition(0, grappling.firePoint.position);
+        line.SetPosition(1, grappling.getGrappleProjectilePosition());
         line.enabled = true;
     }
 
