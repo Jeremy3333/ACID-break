@@ -69,6 +69,8 @@ public class CharacterHandler : MonoBehaviour
 
     float moveDir = 0.0f;
 
+    bool isFacingRight = true;
+
     LayerMask collisionLayer;
     // For jumping
     [SerializeField] LayerMask groundLayers;
@@ -149,31 +151,24 @@ public class CharacterHandler : MonoBehaviour
     void Jump()
     {
         if (!touchGround && !doubleJumpReady) return;
-        if (!touchGround) // If not grounded, use up the double jump
+        if(!touchGround)
         {
-            doubleJumpReady = false;
-
-            // Stronger jump at a more controllable angle
-            Vector2 desiredJump = new Vector2(moveDir, 1);
-            desiredJump = desiredJump * doubleJumpForce;
-            // Also cancel current force
-            rb.AddForce(desiredJump - rb.linearVelocity, ForceMode2D.Impulse);
-        }
-        else
-        {
+            rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            doubleJumpReady = false;
+            return;
         }
-
+        rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
     }
 
     void GroundDash()
     {
-        if (Time.time > dashCooldownTimer && moveDir != 0 && !isDashing)
+        if (Time.time > dashCooldownTimer && !isDashing)
         {
             dashCooldownTimer = Time.time + dashCooldown;
             isDashing = true;
             dashTimer = dashMaxTimer;
-            dashDirection = new Vector2(moveDir, 0f).normalized;
+            dashDirection = new Vector2(isFacingRight ? 1f : -1f, 0f).normalized;
 
             // Reset velocity and apply constant dash speed
             rb.linearVelocity = dashDirection * dashVelocityAmplitude;
@@ -343,6 +338,11 @@ public class CharacterHandler : MonoBehaviour
             doubleJumpReady = true;
     }
 
+    void Flip()
+    {
+        isFacingRight = !isFacingRight;
+    }
+
     void UpdateMovement()
     {
 
@@ -359,6 +359,14 @@ public class CharacterHandler : MonoBehaviour
         // Direction gauche/droite
         moveInput = m_moveAction.ReadValue<float>();
         moveDir = moveInput;
+        if(moveDir > 0 && !isFacingRight)
+        {
+            Flip();
+        }
+        else if(moveDir < 0 && isFacingRight)
+        {
+            Flip();
+        }
         
         if (m_jumpAction.WasPressedThisFrame())
             Jump();
