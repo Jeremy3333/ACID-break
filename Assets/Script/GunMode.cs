@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
+
 
 public class GunMode : MonoBehaviour, ICombatMode
 {
@@ -17,5 +19,15 @@ public class GunMode : MonoBehaviour, ICombatMode
     public void HandleUpdate()
     {
         
+    }
+    public void Action1(InputAction input)
+    {
+        if(input.IsPressed())
+            shooting.FireSingle();
+    }
+    public void Action2(InputAction input)
+    {
+        if(input.IsPressed())
+            shooting.FireShotgun();
     }
 }

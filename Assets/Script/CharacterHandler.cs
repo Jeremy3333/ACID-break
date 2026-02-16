@@ -14,6 +14,17 @@ public enum CharacterMode
 
 public class CharacterHandler : MonoBehaviour
 {
+    [Header("Input Actions")]
+    [SerializeField]
+    InputActionAsset inputActions;
+    private InputAction m_dashAction;
+    private InputAction m_jumpAction;
+    private InputAction m_moveAction;
+    private InputAction m_menuAction;
+    private InputAction m_lookAction;
+    Vector2 lookInput;
+    float moveInput;
+
     [SerializeField]
     Transform cameraTransform;
 
@@ -92,12 +103,30 @@ public class CharacterHandler : MonoBehaviour
     [SerializeField]
     CombatModeManager modeManager;
 
+    private void OnEnable()
+    {
+        inputActions.FindActionMap("Player").Enable();
+    }
+    private void onDisable()
+    {
+        inputActions.FindActionMap("Player").Disable();
+    }
+    private void Awake()
+    {
+        m_jumpAction = inputActions.FindAction("Jump");
+        m_dashAction = inputActions.FindAction("Dash");
+        m_moveAction = inputActions.FindAction("Move");
+        m_lookAction = inputActions.FindAction("Look");
+        m_menuAction = inputActions.FindAction("Menu");
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         keyboard = Keyboard.current;
         if(keyboard == null)
             Debug.LogError("No kayboard detected");
+
         grappling = rotationPoint.GetComponent<Grappling>();
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
@@ -155,37 +184,37 @@ public class CharacterHandler : MonoBehaviour
     }
 
     void GrappleDash()
-{
-    if (grappleDashReady)
     {
-        grappleDashReady = false;
-
-        // Direction from player to grapple point
-        Vector2 grappleDir = ((Vector2)grappling.getGrappleProjectilePosition() - rb.position).normalized;
-
-        // The two perpendicular directions
-        Vector2 leftTangent  = new Vector2(-grappleDir.y,  grappleDir.x); // 90° counter‑clockwise
-        Vector2 rightTangent = new Vector2( grappleDir.y, -grappleDir.x); // 90° clockwise
-
-        // Check player input
-        if (keyboard.aKey.isPressed)          // replace with actual input check for A
+        if (grappleDashReady)
         {
-            Dash(leftTangent);
-        }
-        else if (keyboard.dKey.isPressed)     // replace with actual input check for D
-        {
-            Dash(rightTangent);
-        }
-        else
-        {
-            // Original behaviour: choose tangent that points in the same general direction as velocity
-            Vector2 tangentDir = leftTangent; // start with one of them
-            if (Vector2.Dot(tangentDir, rb.linearVelocity) < 0)
-                tangentDir = -tangentDir;     // flip if it opposes velocity
-            Dash(tangentDir);
+            grappleDashReady = false;
+
+            // Direction from player to grapple point
+            Vector2 grappleDir = ((Vector2)grappling.getGrappleProjectilePosition() - rb.position).normalized;
+
+            // The two perpendicular directions
+            Vector2 leftTangent  = new Vector2(-grappleDir.y,  grappleDir.x); // 90° counter‑clockwise
+            Vector2 rightTangent = new Vector2( grappleDir.y, -grappleDir.x); // 90° clockwise
+
+            // Check player input
+            if (keyboard.aKey.isPressed)          // replace with actual input check for A
+            {
+                Dash(leftTangent);
+            }
+            else if (keyboard.dKey.isPressed)     // replace with actual input check for D
+            {
+                Dash(rightTangent);
+            }
+            else
+            {
+                // Original behaviour: choose tangent that points in the same general direction as velocity
+                Vector2 tangentDir = leftTangent; // start with one of them
+                if (Vector2.Dot(tangentDir, rb.linearVelocity) < 0)
+                    tangentDir = -tangentDir;     // flip if it opposes velocity
+                Dash(tangentDir);
+            }
         }
     }
-}
 
     void Dash(Vector2 direction)
     {
@@ -201,11 +230,17 @@ public class CharacterHandler : MonoBehaviour
 
     void updateMode()
     {
-        Vector2 currentMousePos = Mouse.current.position.ReadValue();
-        Vector2 delta = currentMousePos - modeSelectionStartPos;
-
-        if (delta.magnitude < 50f)
-            return;
+        lookInput = m_lookAction.ReadValue<Vector2>();
+        Vector2 delta;
+        if (lookInput.sqrMagnitude > 0.01f)
+        {
+            delta = lookInput;
+        }
+        else if( Mouse.current.delta.ReadValue().sqrMagnitude > 0.01f && Mouse.current != null)
+        {
+            Vector2 currentMousePos = Mouse.current.position.ReadValue();
+            delta = currentMousePos - modeSelectionStartPos;
+        } else return;
 
         if (delta.x > 0 && delta.y > 0)
         {
@@ -280,7 +315,7 @@ public class CharacterHandler : MonoBehaviour
 
     void ModeSwitch()
     {
-        if (keyboard.tabKey.wasPressedThisFrame)
+        if (m_menuAction.WasPressedThisFrame())
         {
             // Afficher l'interface
             uiDocument.rootVisualElement.style.display = DisplayStyle.Flex;
@@ -288,13 +323,13 @@ public class CharacterHandler : MonoBehaviour
             modeSelectionStartPos = Mouse.current.position.ReadValue();
         }
         
-        if (keyboard.tabKey.isPressed)
+        if (m_menuAction.IsPressed())
         {
             updateMode();
             updateUI();
         }
         
-        if (keyboard.tabKey.wasReleasedThisFrame)
+        if (m_menuAction.WasReleasedThisFrame())
         {
             ApplySelectedMode();
             uiDocument.rootVisualElement.style.display = DisplayStyle.None;
@@ -310,31 +345,31 @@ public class CharacterHandler : MonoBehaviour
 
     void UpdateMovement()
     {
+
         if (isDashing) return; 
         if(isGrapple)
         {
-            if (keyboard.leftShiftKey.wasPressedThisFrame)
+            if (m_dashAction.WasPressedThisFrame())
             {
                 GrappleDash();
             }
             return;
         }
+        
         // Direction gauche/droite
-        moveDir = 0f;
-        if (keyboard.aKey.isPressed) moveDir -= 1f;
-        if (keyboard.dKey.isPressed) moveDir += 1f;
-
-        if (keyboard.spaceKey.wasPressedThisFrame)
+        moveInput = m_moveAction.ReadValue<float>();
+        moveDir = moveInput;
+        
+        if (m_jumpAction.WasPressedThisFrame())
             Jump();
 
-        if (keyboard.leftShiftKey.wasPressedThisFrame)
+        if (m_dashAction.WasPressedThisFrame())
             GroundDash();
     }
 
     // Update is called once per frame
     void Update()
     {
-
         UpdateValues();
 
         UpdateMovement();
