@@ -45,7 +45,7 @@ public class CharacterHandler : MonoBehaviour
     float doubleJumpForce = 15f;
 
     [SerializeField]
-    float dashForce = 25.0f;
+    float dashVelocityAmplitude = 25.0f;
     [SerializeField]
     float dashCooldown = 1.0f;
 
@@ -147,7 +147,7 @@ public class CharacterHandler : MonoBehaviour
             dashDirection = new Vector2(moveDir, 0f).normalized;
 
             // Reset velocity and apply constant dash speed
-            rb.linearVelocity = dashDirection * dashForce;
+            rb.linearVelocity = dashDirection * dashVelocityAmplitude;
             rb.gravityScale = 0f; // Disable gravity during dash
 
             playerAnimator.Dash(); // Trigger dash animation
@@ -190,7 +190,7 @@ public class CharacterHandler : MonoBehaviour
     void Dash(Vector2 direction)
     {
         Vector2 desiredDash = new Vector2(
-            direction.x * dashForce,
+            direction.x * dashVelocityAmplitude,
             Mathf.Max(0, rb.linearVelocity.y)
         );
 
@@ -350,7 +350,7 @@ public class CharacterHandler : MonoBehaviour
         if (isDashing)
         {
             // Maintain constant velocity
-            rb.linearVelocity = dashDirection * dashForce;
+            rb.linearVelocity = dashDirection * dashVelocityAmplitude;
             rb.gravityScale = 0f;
 
             dashTimer -= Time.fixedDeltaTime;
