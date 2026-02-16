@@ -1404,6 +1404,10 @@ PrefabInstance:
       propertyPath: grapplePlateformMask.m_Bits
       value: 64
       objectReference: {fileID: 0}
+    - target: {fileID: 470113166121709219, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: inputActions
+      value: 
+      objectReference: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
     - target: {fileID: 805151172194036635, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: m_Layer
       value: 3

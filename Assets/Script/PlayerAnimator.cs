@@ -3,6 +3,11 @@ using UnityEngine.InputSystem;
 
 public class PlayerAnimator : MonoBehaviour
 {
+    [Header("Input Actions")]
+    [SerializeField] InputActionAsset inputActions;
+    private InputAction m_moveAction;
+    private float moveInput;
+
     public Rigidbody2D character;
     public GameObject torso;
     private Animator legsAnimator, torsoAnimator;
@@ -14,6 +19,11 @@ public class PlayerAnimator : MonoBehaviour
     const float timeAfterBang = 0.5f;
 
     private Keyboard keyboard;
+
+    private void Awake()
+    {
+        m_moveAction = inputActions.FindAction("Move");
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -37,13 +47,14 @@ public class PlayerAnimator : MonoBehaviour
             torsoRenderer.flipX = legsRenderer.flipX;
             torsoRenderer.flipY = false;
 
-            int dir = (keyboard.aKey.isPressed ? 0 : 1)
-                - (keyboard.dKey.isPressed ? 0 : 1);
+            moveInput = m_moveAction.ReadValue<float>();
 
-            if (Mathf.Abs(dir) >= 1)
+            moveInput = m_moveAction.ReadValue<float>();
+
+            if (Mathf.Abs(moveInput) >= 0.1f)
             {
                 legsRenderer.flipX =
-                    torsoRenderer.flipX = dir < 0;
+                    torsoRenderer.flipX = moveInput < 0;
             }
         }
 
