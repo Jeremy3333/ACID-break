@@ -154,7 +154,7 @@ public class CharacterHandler : MonoBehaviour
         if(!touchGround)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
-            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(0, doubleJumpForce), ForceMode2D.Impulse);
             doubleJumpReady = false;
             return;
         }
@@ -429,7 +429,7 @@ public class CharacterHandler : MonoBehaviour
     }
 
 
-    bool CheckGround()
+    public bool CheckGround()
     {
         Vector2 bottomCenter = (Vector2)transform.position + Vector2.down * bc.bounds.extents.y;
         float skinWidth = 0.01f;
