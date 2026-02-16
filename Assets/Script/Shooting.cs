@@ -1,29 +1,28 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Shooting : MonoBehaviour
 {
     private Camera mainCam;
-    private Vector2 mousePos;
-    public GameObject bullet;
-    public Transform gun;
-    public Rigidbody2D playerRb;
-    public bool canFire;
+    [SerializeField] Transform target;
+    [SerializeField] GameObject bullet;
+    [SerializeField] Transform gun;
+    [SerializeField] Rigidbody2D playerRb;
+    [SerializeField] bool canFire;
     private float timer;
     private float timeBetweenFire;
 
-    public float cadence1 = 0.3f;
-    public float cadence2 = 1.3f;
+    [SerializeField] float cadence1 = 0.3f;
+    [SerializeField] float cadence2 = 1.3f;
 
-    public int damage1 = 1;
-    public int damage2 = 2;
+    [SerializeField] int damage1 = 1;
+    [SerializeField] int damage2 = 2;
 
-    public int nbShotgun = 10;
+    [SerializeField] int nbShotgun = 10;
 
-    public float recoilForce1 = 3f;
-    public float recoilForce2 = 7f;
+    [SerializeField] float recoilForce1 = 3f;
+    [SerializeField] float recoilForce2 = 7f;
 
-    public float spreadAngle = 15f;
+    [SerializeField] float spreadAngle = 15f;
 
     private PlayerAnimator playerAnimator;
 
@@ -37,12 +36,7 @@ public class Shooting : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        mousePos = Mouse.current.position.ReadValue();
-        Vector3 worldPos = Camera.main.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, Camera.main.nearClipPlane));
-
-        Vector3 rotation = worldPos - transform.position;
-        float rotaZ = Mathf.Atan2(rotation.y, rotation.x) * Mathf.Rad2Deg;
-        transform.rotation = Quaternion.Euler(0,0,rotaZ);
+        RotateToTarget();
         
         if(!canFire)
         {
@@ -53,46 +47,44 @@ public class Shooting : MonoBehaviour
                 timer = 0;
             } 
         }
-
-        if (Mouse.current.leftButton.isPressed && canFire)
-        {
-            timeBetweenFire = cadence1;
-            canFire = false;
-            Vector2 recoilDir = -gun.right;
-            playerRb.AddForce(recoilDir * recoilForce1, ForceMode2D.Impulse);
-            FireSingle(damage1);
-
-            playerAnimator.Bang(worldPos, gun.position);
-        }
-
-        if (Mouse.current.rightButton.isPressed && canFire)
-        {
-            timeBetweenFire = cadence2;
-            canFire = false;
-            Vector2 recoilDir = -gun.right;
-            playerRb.AddForce(recoilDir * recoilForce2, ForceMode2D.Impulse);
-            FireShotgun(damage2);
-        }
-
     }
 
-    void FireSingle(int damage)
+    void RotateToTarget()
     {
+        Vector3 dir = target.position - transform.position;
+        float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+        transform.rotation = Quaternion.Euler(0, 0, angle);
+    }
+
+    public void FireSingle()
+    {
+        if(!canFire) return;
+        timeBetweenFire = cadence1;
+        canFire = false;
+        Vector2 recoilDir = -gun.right;
+        playerRb.AddForce(recoilDir * recoilForce1, ForceMode2D.Impulse);
+        
         Vector2 direction = gun.right;
 
         GameObject b = Instantiate(bullet, gun.position, Quaternion.identity);
-        b.GetComponent<BulletScripte>().Init(direction, damage);
+        b.GetComponent<BulletScripte>().Init(direction, damage1);
     }
 
-    void FireShotgun(int damage)
+    public void FireShotgun()
     {
+        if(!canFire) return;
+        timeBetweenFire = cadence2;
+        canFire = false;
+        Vector2 recoilDir = -gun.right;
+        playerRb.AddForce(recoilDir * recoilForce2, ForceMode2D.Impulse);
+        
         for (int i = 0; i < nbShotgun; i++)
         {
             float angle = Random.Range(-spreadAngle, spreadAngle);
             Vector2 direction = Quaternion.Euler(0, 0, angle) * gun.right;
 
             GameObject b = Instantiate(bullet, gun.position, Quaternion.identity);
-            b.GetComponent<BulletScripte>().Init(direction, damage);
+            b.GetComponent<BulletScripte>().Init(direction, damage2);
         }
     }
 }
