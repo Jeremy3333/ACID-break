@@ -52,8 +52,6 @@ public class CharacterHandler : MonoBehaviour
 
     [SerializeField]
     float jumpForce = 15f;
-    [SerializeField]
-    float doubleJumpForce = 15f;
 
     [SerializeField]
     float dashVelocityAmplitude = 25.0f;
@@ -74,6 +72,7 @@ public class CharacterHandler : MonoBehaviour
     LayerMask collisionLayer;
     // For jumping
     [SerializeField] LayerMask groundLayers;
+    [SerializeField] LayerMask screenLayers;
 
     bool touchGround;
 
@@ -85,6 +84,7 @@ public class CharacterHandler : MonoBehaviour
     bool isDashing;
 
     [SerializeField] float dashMaxTimer = 0.2f;
+    [SerializeField] float GrappleDashMaxTimer = 0.5f;
     float dashTimer;
 
     bool grappleDashReady = true;
@@ -105,15 +105,15 @@ public class CharacterHandler : MonoBehaviour
     [SerializeField]
     CombatModeManager modeManager;
 
-    private void OnEnable()
+    void OnEnable()
     {
         inputActions.FindActionMap("Player").Enable();
     }
-    private void onDisable()
+    void onDisable()
     {
         inputActions.FindActionMap("Player").Disable();
     }
-    private void Awake()
+    void Awake()
     {
         m_jumpAction = inputActions.FindAction("Jump");
         m_dashAction = inputActions.FindAction("Dash");
@@ -127,7 +127,7 @@ public class CharacterHandler : MonoBehaviour
     {
         keyboard = Keyboard.current;
         if(keyboard == null)
-            Debug.LogError("No kayboard detected");
+            Debug.LogError("No keyboard detected");
 
         grappling = rotationPoint.GetComponent<Grappling>();
         rb = GetComponent<Rigidbody2D>();
@@ -167,7 +167,7 @@ public class CharacterHandler : MonoBehaviour
         {
             dashCooldownTimer = Time.time + dashCooldown;
             isDashing = true;
-            dashTimer = dashMaxTimer;
+            dashTimer = GrappleDashMaxTimer;
             dashDirection = new Vector2(isFacingRight ? 1f : -1f, 0f).normalized;
 
             // Reset velocity and apply constant dash speed
@@ -218,7 +218,11 @@ public class CharacterHandler : MonoBehaviour
             Mathf.Max(0, rb.linearVelocity.y)
         );
 
-        rb.AddForce(desiredDash - rb.linearVelocity, ForceMode2D.Impulse);
+        isDashing = true;
+        dashTimer = dashMaxTimer;
+        dashDirection = direction.normalized;
+        rb.linearVelocity = dashDirection * dashVelocityAmplitude;
+        rb.gravityScale = 0f;
 
         playerAnimator.Dash();
     }
@@ -424,7 +428,7 @@ public class CharacterHandler : MonoBehaviour
         // ===== GRAVITÉ =====
         if (rb.linearVelocity.y < 0 && !isGrapple)
             rb.gravityScale = gravityScale * GravityMultiplier;
-        else if (!isGrapple)
+        else
             rb.gravityScale = gravityScale;
     }
 
@@ -460,5 +464,15 @@ public class CharacterHandler : MonoBehaviour
     {
         Vector2 dir = (pos - (Vector2)transform.position).normalized;
         rb.position += dir * len;
+    }
+
+    public BoxCollider2D getScreenCollider()
+    {
+        // if he doesn't collide with a screen collider return null use screenLayers to only check screen colliders
+        Collider2D[] hits = Physics2D.OverlapBoxAll(transform.position, bc.bounds.size, 0f, screenLayers);
+        foreach (Collider2D hit in hits)        {
+            return hit as BoxCollider2D;
+        }
+        return null;   
     }
 }
