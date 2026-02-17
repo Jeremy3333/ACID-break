@@ -18,11 +18,20 @@ public class Swording : MonoBehaviour
     public float attackAngle = 120f;
 
     [Header("Charged Attack (Right Click)")]
+    [Range(0f, 360f)]
+    public float chargedAttackAngle = 120f;
     public float chargedAttackChargeTime = 0.75f;
-    public float chargedAttackCooldown = 1.0f; //temps entre chaque attaque
+    public float chargedAttackCooldown = 0f; //temps entre chaque attaque
     public int chargedDamage = 6;
     public float chargedDashForce = 22f;
-    public float chargedActiveTime = 0.22f; //temps ou le sprite est visible pendant l'attaque
+    public float chargedActiveTime = 0.22f; //duree du dash
+
+    [Header("Charged Attack Hit Rules")]
+    public float chargedHitInterval = 0.03f; // fréquence de détection dash
+    private bool isChargedActive = false;
+    private float chargedHitTimer = 0f;
+
+    private readonly System.Collections.Generic.HashSet<Collider2D> chargedAlreadyHit = new System.Collections.Generic.HashSet<Collider2D>();
 
     [Header("References")]
     public SpriteRenderer swordSprite;
@@ -61,12 +70,25 @@ public class Swording : MonoBehaviour
 
         if (Mouse.current.rightButton.wasReleasedThisFrame && isCharging)
             CancelCharge(); // si on relache avant la fin on annule l'attaque
+
+        if (isChargedActive)
+        {
+            chargedHitTimer += Time.deltaTime;
+            if (chargedHitTimer >= chargedHitInterval)
+            {
+                chargedHitTimer = 0f;
+                DoArcDamage(chargedDamage, chargedAttackAngle);
+            }
+        }
+
     }
 
     void RotateToMouse()
     {
         mousePos = Mouse.current.position.ReadValue();
-        Vector3 worldPos = mainCam.ScreenToWorldPoint(new Vector3(mousePos.x, mousePos.y, mainCam.nearClipPlane));
+        Vector3 worldPos = mainCam.ScreenToWorldPoint(
+            new Vector3(mousePos.x, mousePos.y, mainCam.nearClipPlane)
+        );
 
         Vector3 dir = worldPos - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
@@ -105,7 +127,7 @@ public class Swording : MonoBehaviour
 
         swordSprite.enabled = true;
 
-        DoArcDamage(damage);
+        DoArcDamage(damage, attackAngle);
 
         Invoke(nameof(EndAttack), activeTime);
     }
@@ -142,6 +164,8 @@ public class Swording : MonoBehaviour
         chargeCancelled = true;
     }
 
+    private Vector2 chargedDashDir;
+
     void ExecuteChargedAttack()
     {
         if (!isCharging)
@@ -150,44 +174,60 @@ public class Swording : MonoBehaviour
         isCharging = false;
         canCharged = false;
 
-        DashToMouse(chargedDashForce);
+        chargedAlreadyHit.Clear();
+        isChargedActive = true;
+        chargedHitTimer = 0f;
 
+        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
+        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
+        mouseWorldPos.z = 0f;
+
+        chargedDashDir = (mouseWorldPos - transform.position).normalized;
         swordSprite.enabled = true;
 
-        DoArcDamage(chargedDamage);
-
-        Invoke(nameof(EndAttack), chargedActiveTime);
+        Invoke(nameof(EndChargedAttack), chargedActiveTime);
     }
 
-    void DashToMouse(float dashSpeed)
+    void FixedUpdate()
     {
-        Vector2 mouseScreen = Mouse.current.position.ReadValue();
-        Vector3 mouseWorld3 = mainCam.ScreenToWorldPoint(new Vector3(mouseScreen.x, mouseScreen.y, 0f));
-        mouseWorld3.z = 0f;
-
-        Vector2 dir = ((Vector2)mouseWorld3 - playerRb.position).normalized;
-
-        playerRb.linearVelocity = dir * dashSpeed;
+        if (isChargedActive)
+        {
+            playerRb.linearVelocity = chargedDashDir * chargedDashForce;
+        }
     }
 
-    void DoArcDamage(int dmg)
+    void EndChargedAttack()
+    {
+        isChargedActive = false;
+        swordSprite.enabled = false;
+    }
+
+    void DoArcDamage(int dmg, float arcAngle)
     {
         Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRadius);
+
         foreach (Collider2D hit in hits)
         {
             if (!hit.CompareTag("Mob"))
                 continue;
 
-            Vector2 dirToEnemy = (hit.transform.position - transform.position).normalized;
-            float angle = Vector2.Angle(transform.right, dirToEnemy);
+            if (isChargedActive && chargedAlreadyHit.Contains(hit))
+                continue;
 
-            if (angle <= attackAngle * 0.5f)
+            Vector2 dirToEnemy = ((Vector2)hit.transform.position - (Vector2)transform.position).normalized;
+            Vector2 facing = isChargedActive ? chargedDashDir : (Vector2)transform.right;
+
+            float angleToEnemy = Vector2.Angle(facing, dirToEnemy);
+
+            if (angleToEnemy <= arcAngle * 0.5f)
             {
                 HealthManagerMob health = hit.GetComponent<HealthManagerMob>();
                 if (health != null)
                 {
                     health.Hit(dmg);
-                    Debug.Log("Ennemi touche attaque corps à corps : " + hit.name + " Damage : " + dmg);
+                    Debug.Log("Ennemi touché pendant charge : " + hit.name + " Damage : " + dmg);
+                    if (isChargedActive)
+                        chargedAlreadyHit.Add(hit);
                 }
             }
         }
