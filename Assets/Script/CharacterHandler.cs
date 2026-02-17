@@ -63,8 +63,6 @@ public class CharacterHandler : MonoBehaviour
     [SerializeField]
     float GravityMultiplier = 2.3f;
 
-    Keyboard keyboard;
-
     float moveDir = 0.0f;
 
     bool isFacingRight = true;
@@ -126,9 +124,6 @@ public class CharacterHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        keyboard = Keyboard.current;
-        if(keyboard == null)
-            Debug.LogError("No keyboard detected");
 
         grappling = rotationPoint.GetComponent<Grappling>();
         rb = GetComponent<Rigidbody2D>();
@@ -193,11 +188,11 @@ public class CharacterHandler : MonoBehaviour
             Vector2 rightTangent = new Vector2( grappleDir.y, -grappleDir.x); // 90° clockwise
 
             // Check player input
-            if (keyboard.aKey.isPressed)          // replace with actual input check for A
+            if (m_moveAction.ReadValue<Vector2>().x < 0)          // replace with actual input check for A
             {
                 Dash(leftTangent);
             }
-            else if (keyboard.dKey.isPressed)     // replace with actual input check for D
+            else if (m_moveAction.ReadValue<Vector2>().x > 0)     // replace with actual input check for D
             {
                 Dash(rightTangent);
             }
