@@ -170,7 +170,7 @@ public class CharacterHandler : MonoBehaviour
             rb.linearVelocity = dashDirection * dashVelocityAmplitude;
             rb.gravityScale = 0f; // Disable gravity during dash
 
-            playerAnimator.Dash(); // Trigger dash animation
+            playerAnimator.Dash(true, !isFacingRight); // Trigger dash animation
         }
     }
 
@@ -220,7 +220,7 @@ public class CharacterHandler : MonoBehaviour
         rb.linearVelocity = dashDirection * dashVelocityAmplitude;
         rb.gravityScale = 0f;
 
-        playerAnimator.Dash();
+        playerAnimator.Dash(true, !isFacingRight);
     }
 
     void updateMode()
@@ -369,6 +369,7 @@ public class CharacterHandler : MonoBehaviour
             if (dashTimer <= 0f)
             {
                 isDashing = false;
+                playerAnimator.Dash(false, !isFacingRight);
                 // Gravity will be restored in the normal flow next frame
             }
             return; // Skip normal movement & gravity

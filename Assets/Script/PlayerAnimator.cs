@@ -18,6 +18,8 @@ public class PlayerAnimator : MonoBehaviour
     private float bangFlipsUntil = 0f;
     const float timeAfterBang = 0.5f;
 
+    private bool dashFlipX;
+
     private Keyboard keyboard;
 
     private void Awake()
@@ -58,6 +60,12 @@ public class PlayerAnimator : MonoBehaviour
             }
         }
 
+        // Lock legs flip during dash
+        if(legsAnimator.GetBool("IsDashing"))
+        {
+            legsRenderer.flipX = dashFlipX;
+        }
+
         float xSpeedAbs = Mathf.Abs(character.linearVelocity.x);
         legsAnimator.SetFloat("XSpeed", xSpeedAbs);
         torsoAnimator.SetFloat("XSpeed", xSpeedAbs);
@@ -78,9 +86,10 @@ public class PlayerAnimator : MonoBehaviour
         torsoAnimator.SetTrigger("Bang");
     }
 
-    public void Dash()
+    public void Dash(bool toggle, bool flipX)
     {
-        legsAnimator.SetTrigger("Dash");
-        torsoAnimator.SetTrigger("Dash");
+        dashFlipX = flipX;
+        legsAnimator.SetBool("IsDashing", toggle);
+        torsoAnimator.SetBool("IsDashing", toggle);
     }
 }
