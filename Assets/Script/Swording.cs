@@ -47,6 +47,9 @@ public class Swording : MonoBehaviour
     private float chargeTimer = 0f;
     private bool chargeCancelled = false;
 
+    private RigidbodyConstraints2D _savedConstraints;
+    private bool _movementLocked = false;
+
     void Start()
     {
         mainCam = Camera.main;
@@ -142,6 +145,7 @@ public class Swording : MonoBehaviour
         isCharging = true;
         chargeTimer = 0f;
         chargeCancelled = false;
+        LockMovement();
     }
 
     void UpdateCharge()
@@ -162,6 +166,7 @@ public class Swording : MonoBehaviour
         isCharging = false;
         chargeTimer = 0f;
         chargeCancelled = true;
+        UnlockMovement();
     }
 
     private Vector2 chargedDashDir;
@@ -173,6 +178,8 @@ public class Swording : MonoBehaviour
 
         isCharging = false;
         canCharged = false;
+
+        UnlockMovement();
 
         chargedAlreadyHit.Clear();
         isChargedActive = true;
@@ -200,6 +207,7 @@ public class Swording : MonoBehaviour
     {
         isChargedActive = false;
         swordSprite.enabled = false;
+        UnlockMovement();
     }
 
     void DoArcDamage(int dmg, float arcAngle)
@@ -232,6 +240,28 @@ public class Swording : MonoBehaviour
             }
         }
     }
+
+    void LockMovement()
+    {
+        if (_movementLocked) return;
+        _movementLocked = true;
+
+        _savedConstraints = playerRb.constraints;
+        playerRb.linearVelocity = Vector2.zero; // stop immédiat
+
+        // On garde la rotation telle qu’elle est (souvent FreezeRotation déjà actif)
+        playerRb.constraints = RigidbodyConstraints2D.FreezeAll;
+    }
+
+    void UnlockMovement()
+    {
+        if (!_movementLocked) return;
+        _movementLocked = false;
+
+        playerRb.constraints = _savedConstraints;
+    }
+
+
 
     ////////////////////////////////////////////////////////////
     // A implementer plsu tard lorsque joueur prend des degats
