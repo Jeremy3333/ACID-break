@@ -154,7 +154,7 @@ public class CharacterHandler : MonoBehaviour
         if(!touchGround)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
-            rb.AddForce(new Vector2(0, doubleJumpForce), ForceMode2D.Impulse);
+            rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
             doubleJumpReady = false;
             return;
         }
