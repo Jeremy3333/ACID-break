@@ -6,7 +6,6 @@ using System.Collections.Generic;
 public enum CharacterMode
 {
     Neutral,
-    Jetpack,
     BigGun,
     BaseballBat,
     Lasso
@@ -17,11 +16,12 @@ public class CharacterHandler : MonoBehaviour
     [Header("Input Actions")]
     [SerializeField]
     InputActionAsset inputActions;
-    private InputAction m_dashAction;
-    private InputAction m_jumpAction;
-    private InputAction m_moveAction;
-    private InputAction m_menuAction;
-    private InputAction m_lookAction;
+    InputAction m_dashAction;
+    InputAction m_jumpAction;
+    InputAction m_moveAction;
+    InputAction m_menuAction;
+    InputAction m_lookAction;
+    InputAction m_changeModeAction;
     Vector2 lookInput;
     float moveInput;
 
@@ -62,8 +62,6 @@ public class CharacterHandler : MonoBehaviour
     float gravityScale = 2.5f;
     [SerializeField]
     float GravityMultiplier = 2.3f;
-
-    Keyboard keyboard;
 
     float moveDir = 0.0f;
 
@@ -120,14 +118,12 @@ public class CharacterHandler : MonoBehaviour
         m_moveAction = inputActions.FindAction("Move");
         m_lookAction = inputActions.FindAction("Look");
         m_menuAction = inputActions.FindAction("Menu");
+        m_changeModeAction = inputActions.FindAction("ChangeMode");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        keyboard = Keyboard.current;
-        if(keyboard == null)
-            Debug.LogError("No keyboard detected");
 
         grappling = rotationPoint.GetComponent<Grappling>();
         rb = GetComponent<Rigidbody2D>();
@@ -192,11 +188,11 @@ public class CharacterHandler : MonoBehaviour
             Vector2 rightTangent = new Vector2( grappleDir.y, -grappleDir.x); // 90° clockwise
 
             // Check player input
-            if (keyboard.aKey.isPressed)          // replace with actual input check for A
+            if (m_moveAction.ReadValue<Vector2>().x < 0)          // replace with actual input check for A
             {
                 Dash(leftTangent);
             }
-            else if (keyboard.dKey.isPressed)     // replace with actual input check for D
+            else if (m_moveAction.ReadValue<Vector2>().x > 0)     // replace with actual input check for D
             {
                 Dash(rightTangent);
             }
@@ -245,10 +241,6 @@ public class CharacterHandler : MonoBehaviour
         {
             currentMode = CharacterMode.BigGun;
         }
-        else if (delta.x <= 0 && delta.y > 0)
-        {
-            currentMode = CharacterMode.Jetpack;
-        }
         else if (delta.x <= 0 && delta.y <= 0)
         {
             currentMode = CharacterMode.BaseballBat;
@@ -259,80 +251,53 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
-    void updateUI()
-    {
-        switch (currentMode)
-        {
-            case CharacterMode.Neutral:
-                modeIcons["Jetpack"].AddToClassList("Unselected");
-                modeIcons["BigGun"].AddToClassList("Unselected");
-                modeIcons["BaseballBat"].AddToClassList("Unselected");
-                modeIcons["Lasso"].AddToClassList("Unselected");
-                break;
-            case CharacterMode.Jetpack:
-                modeIcons["Jetpack"].RemoveFromClassList("Unselected");
-                modeIcons["BigGun"].AddToClassList("Unselected");
-                modeIcons["BaseballBat"].AddToClassList("Unselected");
-                modeIcons["Lasso"].AddToClassList("Unselected");
-                break;
-            case CharacterMode.BigGun:
-                modeIcons["Jetpack"].AddToClassList("Unselected");
-                modeIcons["BigGun"].RemoveFromClassList("Unselected");
-                modeIcons["BaseballBat"].AddToClassList("Unselected");
-                modeIcons["Lasso"].AddToClassList("Unselected");
-                break;
-            case CharacterMode.BaseballBat:
-                modeIcons["Jetpack"].AddToClassList("Unselected");
-                modeIcons["BigGun"].AddToClassList("Unselected");
-                modeIcons["BaseballBat"].RemoveFromClassList("Unselected");
-                modeIcons["Lasso"].AddToClassList("Unselected");
-                break;
-            case CharacterMode.Lasso:
-                modeIcons["Jetpack"].AddToClassList("Unselected");
-                modeIcons["BigGun"].AddToClassList("Unselected");
-                modeIcons["BaseballBat"].AddToClassList("Unselected");
-                modeIcons["Lasso"].RemoveFromClassList("Unselected");
-                break;
-        }
-    }
-
     void ApplySelectedMode()
     {
         switch (currentMode)
         {
             case CharacterMode.BaseballBat:
+                Debug.Log("Baseball Bat mode selected");
                 modeManager.SwitchMode(modeManager.swordMode as ICombatMode);
                 break;
             case CharacterMode.BigGun:
+                Debug.Log("Big Gun mode selected");
                 modeManager.SwitchMode(modeManager.gunMode as ICombatMode);
                 break;
             case CharacterMode.Lasso:
+                Debug.Log("Lasso mode selected");
                 modeManager.SwitchMode(modeManager.grapplingGunMode as ICombatMode);
+                break;
+            case CharacterMode.Neutral:
+                Debug.Log("Neutral mode selected");
                 break;
         }
     }
 
     void ModeSwitch()
     {
-        if (m_menuAction.WasPressedThisFrame())
+        // changemode is an axis that is 0 when not pressed, 1 when pressed in one direction and -1 when pressed in the other
+        if (m_changeModeAction.WasPressedThisFrame())
         {
-            // Afficher l'interface
-            uiDocument.rootVisualElement.style.display = DisplayStyle.Flex;
-            // Stocker la position initiale de la souris
-            modeSelectionStartPos = Mouse.current.position.ReadValue();
-        }
-        
-        if (m_menuAction.IsPressed())
-        {
-            updateMode();
-            updateUI();
-        }
-        
-        if (m_menuAction.WasReleasedThisFrame())
-        {
+            if(m_changeModeAction.ReadValue<float>() > 0)
+            {
+                NextMode();
+            }
+            else
+            {
+                PreviousMode();
+            }
             ApplySelectedMode();
-            uiDocument.rootVisualElement.style.display = DisplayStyle.None;
         }
+    }
+
+    void NextMode()
+    {
+        currentMode = (CharacterMode)(((int)currentMode + 1) % System.Enum.GetValues(typeof(CharacterMode)).Length);
+    }
+
+    void PreviousMode()
+    {
+        currentMode = (CharacterMode)(((int)currentMode - 1 + System.Enum.GetValues(typeof(CharacterMode)).Length) % System.Enum.GetValues(typeof(CharacterMode)).Length);
     }
 
     void UpdateValues()

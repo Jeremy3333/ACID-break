@@ -88,31 +88,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Mode1",
-                    "type": "Button",
-                    "id": "6520a435-8123-466e-9493-2a68ddc546ec",
-                    "expectedControlType": "",
+                    "name": "ChangeMode",
+                    "type": "Value",
+                    "id": "a7cb7bc4-419d-467c-b108-662083b95144",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Mode2",
-                    "type": "Button",
-                    "id": "168287bc-bb35-497e-9491-0563b8528aec",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Mode3",
-                    "type": "Button",
-                    "id": "7832c550-fd6c-499d-8910-ad9bb118ad0b",
-                    "expectedControlType": "",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -337,70 +319,37 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "ac022979-cc31-4fb0-acfb-7068fa57de86",
-                    "path": "<Keyboard>/1",
+                    "name": "1D Axis",
+                    "id": "ff8a97b2-3a7a-4b15-a09b-1dc102b0d709",
+                    "path": "1DAxis",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Mode1",
-                    "isComposite": false,
+                    "groups": "",
+                    "action": "ChangeMode",
+                    "isComposite": true,
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "93c75e0c-c3be-4c28-b959-bbd6c576df3b",
-                    "path": "<Gamepad>/dpad/left",
+                    "name": "Negative",
+                    "id": "a6153923-080c-451d-ac6f-5b3b6f424f1a",
+                    "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Mode1",
+                    "groups": "",
+                    "action": "ChangeMode",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 },
                 {
-                    "name": "",
-                    "id": "e26d866d-c804-4f6c-9172-c0446c87c253",
-                    "path": "<Keyboard>/2",
+                    "name": "Positive",
+                    "id": "b73202bc-0b60-471c-aba0-efaf857c3875",
+                    "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Mode2",
+                    "groups": "",
+                    "action": "ChangeMode",
                     "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "27e9d417-5430-441c-aa08-22e4495d7eb4",
-                    "path": "<Gamepad>/dpad/up",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Mode2",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "8e749182-f555-4c4a-9c1e-d8d3c5c8a364",
-                    "path": "<Keyboard>/3",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Keyboard&Mouse",
-                    "action": "Mode3",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "99414023-355a-4b0b-884e-bbca88496b2c",
-                    "path": "<Gamepad>/dpad/right",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";Gamepad",
-                    "action": "Mode3",
-                    "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 }
             ]
         },
