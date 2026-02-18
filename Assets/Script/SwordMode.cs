@@ -22,8 +22,10 @@ public class SwordMode : MonoBehaviour, ICombatMode
     }
     public void Action1(InputAction input)
     {
+        /*
         if(input.IsPressed())
             swording.Attack();
+        */
     }
     
     public void Action2(InputAction input)

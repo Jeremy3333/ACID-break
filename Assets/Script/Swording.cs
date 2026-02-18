@@ -235,7 +235,7 @@ public class Swording : MonoBehaviour
                 if (health != null)
                 {
                     health.Hit(dmg);
-                    Debug.Log("Ennemi touché pendant charge : " + hit.name + " Damage : " + dmg);
+                    //Debug.Log("Ennemi touché pendant charge : " + hit.name + " Damage : " + dmg);
                     if (isChargedActive)
                         chargedAlreadyHit.Add(hit);
                 }
