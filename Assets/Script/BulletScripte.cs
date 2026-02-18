@@ -43,7 +43,8 @@ public class BulletScripte : MonoBehaviour
         {
             collision.gameObject.GetComponent<HealthManagerMob>().Hit(damage);
         }
-        if(collision.collider.gameObject.tag != "Player")
+        bool isTrigger = collision.collider.gameObject.tag == "LeftJumpTrigger" || collision.collider.gameObject.tag == "RightJumpTrigger";
+        if(collision.collider.gameObject.tag != "Player" && collision.collider.gameObject.tag != "Bullet" && !isTrigger)
         {
             Destroy(gameObject);
         }

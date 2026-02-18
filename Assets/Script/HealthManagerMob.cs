@@ -7,6 +7,8 @@ public class HealthManagerMob : MonoBehaviour
     int MaxHealth;
     [SerializeField]
     int health;
+    [SerializeField]
+    EnemieHandler enemieHandler;
 
     bool isHittable = true;
 
@@ -16,7 +18,7 @@ public class HealthManagerMob : MonoBehaviour
 
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -40,6 +42,7 @@ public class HealthManagerMob : MonoBehaviour
             isHittable = false;
             health = Mathf.Max(health-damage, 0);
             if (health <= 0) Destroy(gameObject);
+            enemieHandler.asDetected = true;
         }   
     }
 }
