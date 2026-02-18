@@ -350,6 +350,17 @@
                     "action": "ChangeMode",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "Positive",
+                    "id": "ce493e7c-9be5-4014-af7a-753a487d0f75",
+                    "path": "<Gamepad>/buttonNorth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ChangeMode",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         },
