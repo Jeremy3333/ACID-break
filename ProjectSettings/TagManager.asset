@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 3
   tags:
   - Mob
+  - RightJumpTrigger
+  - LeftJumpTrigger
+  - Bullet
   layers:
   - Default
   - TransparentFX

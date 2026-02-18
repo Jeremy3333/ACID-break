@@ -4,10 +4,6 @@ using UnityEngine.UI;
 public class HealthManager : MonoBehaviour
 {
     public int health;
-
-    public LayerMask hitLayer;
-    public Transform hitCheck;
-    public Vector2 dim;
     public bool isHittable = true;
 
     private float timer;
@@ -36,13 +32,16 @@ public class HealthManager : MonoBehaviour
                 timer = 0;
             } 
         }
+        UpDateUI();
+    }
 
-        if (isHittable && CheckHit())
+    public void Hit()
+    {
+        if(isHittable)
         {
             isHittable = false;
             health = Mathf.Max(health-1, 0);
         }
-        UpDateUI();
     }
 
     void UpDateUI()
@@ -52,21 +51,5 @@ public class HealthManager : MonoBehaviour
             if (health > i) moduleUI[i].sprite = module;
             else moduleUI[i].sprite = brokenModule;
         }
-    }
-
-    bool CheckHit()
-    {
-        return Physics2D.OverlapBox(
-            hitCheck.position,
-            dim,
-            0,
-            hitLayer
-        );
-    }
-
-    private void OnDrawGizmos(){
-        Gizmos.color = Color.blue;
-        Vector3 dimmension = new Vector3(dim.x, dim.y, 0.0f);
-        Gizmos.DrawWireCube(hitCheck.position, dimmension);
     }
 }

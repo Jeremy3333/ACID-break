@@ -33,7 +33,7 @@ public class Grappling : MonoBehaviour
     
     [Header("Attaque Settings")]
 
-    [SerializeField] int attaqueDamage = 1;
+    [SerializeField] int attaqueDamage = 5;
 
     [HideInInspector] public Vector2 grapplePoint;
 
@@ -112,7 +112,24 @@ public class Grappling : MonoBehaviour
         Vector2 targetPoint;
         bool hasValidTarget = false;
 
-        if (hitPlateform.collider != null)
+        if(hitPlateform.collider != null && hitEnnemie.collider != null)
+        {
+            // If both a platform and an enemy are hit, choose the closer one
+            if (hitPlateform.distance < hitEnnemie.distance)
+            {
+                targetPoint = hitPlateform.point;
+                hasValidTarget = true;
+            }
+            else
+            {
+                hasValidTarget = true;
+                isEnnemieGrappled = true;
+                grapledEnnemieHandler = hitEnnemie.collider.GetComponent<EnemieHandler>();
+                targetPoint = hitEnnemie.collider.transform.position;
+                grapledEnnemieHandler.setFrozen(true);
+            }
+        }
+        else if (hitPlateform.collider != null)
         {
             targetPoint = hitPlateform.point;
             hasValidTarget = true;
