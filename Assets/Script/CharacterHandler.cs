@@ -188,11 +188,11 @@ public class CharacterHandler : MonoBehaviour
             Vector2 rightTangent = new Vector2( grappleDir.y, -grappleDir.x); // 90° clockwise
 
             // Check player input
-            if (m_moveAction.ReadValue<Vector2>().x < 0)          // replace with actual input check for A
+            if (m_moveAction.ReadValue<float>() < 0)          // replace with actual input check for A
             {
                 Dash(leftTangent);
             }
-            else if (m_moveAction.ReadValue<Vector2>().x > 0)     // replace with actual input check for D
+            else if (m_moveAction.ReadValue<float>() > 0)     // replace with actual input check for D
             {
                 Dash(rightTangent);
             }

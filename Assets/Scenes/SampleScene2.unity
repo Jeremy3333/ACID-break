@@ -1864,6 +1864,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 3638947686692133501, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4486148833515737218, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
       propertyPath: m_LocalPosition.x
       value: -5
@@ -1925,6 +1929,10 @@ PrefabInstance:
       propertyPath: playerTransform
       value: 
       objectReference: {fileID: 1570926633}
+    - target: {fileID: 5996860795566591727, guid: b98ce16cf832e7092940942daca89d8e, type: 3}
+      propertyPath: m_Mass
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6916124000452609040, guid: b98ce16cf832e7092940942daca89d8e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5
