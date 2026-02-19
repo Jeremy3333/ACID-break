@@ -143,7 +143,7 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
-    void Jump()
+    public void Jump()
     {
         if (!touchGround && !doubleJumpReady) return;
         if(!touchGround)

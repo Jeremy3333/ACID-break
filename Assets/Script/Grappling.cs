@@ -87,6 +87,7 @@ public class Grappling : MonoBehaviour
             grapledEnnemieHandler.Hit(attaqueDamage);
             isEnnemieGrappled = false;
             grapledEnnemieHandler.setFrozen(false);
+            characterCharacterHandler.Jump();
             StopGrapple();
         }
     }

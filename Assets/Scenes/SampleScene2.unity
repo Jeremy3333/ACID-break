@@ -32096,6 +32096,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: BasicEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 940783413828997715, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2531184352530750273, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3167378870401262104, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 3187793944558814133, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
       propertyPath: target
       value: 
@@ -32169,6 +32181,14 @@ PrefabInstance:
       propertyPath: m_Mass
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6435053822282972602, guid: b98ce16cf832e7092940942daca89d8e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 6797025575972673432, guid: b98ce16cf832e7092940942daca89d8e, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
     - target: {fileID: 6916124000452609040, guid: b98ce16cf832e7092940942daca89d8e, type: 3}
       propertyPath: m_LocalPosition.x
       value: 5
@@ -32216,6 +32236,10 @@ PrefabInstance:
     - target: {fileID: 7833825997235308225, guid: b98ce16cf832e7092940942daca89d8e, type: 3}
       propertyPath: m_Name
       value: GunnerEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7833825997235308225, guid: b98ce16cf832e7092940942daca89d8e, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
