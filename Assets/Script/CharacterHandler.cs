@@ -192,7 +192,7 @@ public class CharacterHandler : MonoBehaviour
             {
                 Dash(leftTangent);
             }
-            else if (m_moveAction.ReadValue<float>() > 0)     // replace with actual input check for D
+            else if ((m_moveAction.ReadValue<float>() < 0 && grappleDir.y < 0) || (m_moveAction.ReadValue<float>() > 0 && grappleDir.y > 0)) // replace with actual input check for D
             {
                 Dash(rightTangent);
             }
