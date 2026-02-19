@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public enum CharacterMode
 {
-    Neutral,
     BigGun,
     BaseballBat,
     Lasso
@@ -282,16 +281,13 @@ public class CharacterHandler : MonoBehaviour
                 Debug.Log("Lasso mode selected");
                 modeManager.SwitchMode(modeManager.grapplingGunMode as ICombatMode);
                 break;
-            case CharacterMode.Neutral:
-                Debug.Log("Neutral mode selected");
-                break;
         }
     }
 
     void ModeSwitch()
     {
         // changemode is an axis that is 0 when not pressed, 1 when pressed in one direction and -1 when pressed in the other
-        if (m_changeModeAction.WasPressedThisFrame())
+        if (m_changeModeAction.WasPressedThisFrame() && !isGrapple)
         {
             if(m_changeModeAction.ReadValue<float>() > 0)
             {
