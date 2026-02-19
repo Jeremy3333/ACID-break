@@ -174,6 +174,20 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
+    // when starting a grapple, the player linear velocity should be perpendicular to the direction of the grapple point. in the facing direction
+    void startGrapple()
+    {
+        Vector2 grappleDir = (Vector2)grappling.getGrappleProjectilePosition();
+        if (grappleDir == null) return;
+
+        grappleDir = (grappleDir - rb.position).normalized;
+        Vector2 perpendicularDir = new Vector2(-grappleDir.y, grappleDir.x); // 90° counter‑clockwise
+        if ((isFacingRight && perpendicularDir.x < 0) || (!isFacingRight && perpendicularDir.x > 0))
+            perpendicularDir = -perpendicularDir; // Flip to match facing direction
+
+        rb.linearVelocity = perpendicularDir * moveSpeed; // Set initial velocity for smooth swinging
+    }
+
     void GrappleDash()
     {
         if (grappleDashReady)
@@ -423,7 +437,11 @@ public class CharacterHandler : MonoBehaviour
     {
         isGrapple = p_isGrapple;
         grappleDashReady = true;
-        moveDir = 0f; // stop horizontal input when grappled
+        moveDir = 0f;
+        if (isGrapple)
+        {
+            startGrapple();
+        }
     }
 
     public void moveToDirection(float len, Vector2 pos)
