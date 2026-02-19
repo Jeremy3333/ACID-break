@@ -177,6 +177,7 @@ public class CharacterHandler : MonoBehaviour
     // when starting a grapple, the player linear velocity should be perpendicular to the direction of the grapple point. in the facing direction
     void startGrapple()
     {
+        if(touchGround) return; // only apply the grapple velocity if we're in the air, otherwise the player will be launched in the opposite direction of the grapple point
         Vector2 grappleDir = (Vector2)grappling.getGrappleProjectilePosition();
         if (grappleDir == null) return;
 
@@ -332,7 +333,7 @@ public class CharacterHandler : MonoBehaviour
         if (isDashing) return; 
         if(isGrapple)
         {
-            if (m_dashAction.WasPressedThisFrame())
+            if (m_dashAction.WasPressedThisFrame() && !touchGround)
             {
                 GrappleDash();
             }
