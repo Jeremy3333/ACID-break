@@ -252,7 +252,7 @@ public class Grappling : MonoBehaviour
 
     public void startRetracting()
     {
-        Debug.Log("Start Retracting");
+        if (!isGrappled) return;
         isRetracting = true;
         rb.linearVelocity = Vector2.zero;
     }
