@@ -168,8 +168,8 @@ public class CharacterHandler : MonoBehaviour
 
         grappleDir = (grappleDir - rb.position).normalized;
         Vector2 perpendicularDir = new Vector2(-grappleDir.y, grappleDir.x); // 90° counter‑clockwise
-        if ((isFacingRight && perpendicularDir.x < 0) || (!isFacingRight && perpendicularDir.x > 0))
-            perpendicularDir = -perpendicularDir; // Flip to match facing direction
+        if (Vector2.Dot(perpendicularDir, rb.linearVelocity) < 0)
+            perpendicularDir = -perpendicularDir;
 
         rb.linearVelocity = perpendicularDir * moveSpeed; // Set initial velocity for smooth swinging
     }
