@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public enum CharacterMode
 {
-    Neutral,
+    //Neutral,
     BigGun,
     BaseballBat,
     Lasso
@@ -267,9 +267,9 @@ public class CharacterHandler : MonoBehaviour
                 Debug.Log("Lasso mode selected");
                 modeManager.SwitchMode(modeManager.grapplingGunMode as ICombatMode);
                 break;
-            case CharacterMode.Neutral:
-                Debug.Log("Neutral mode selected");
-                break;
+            // case CharacterMode.Neutral:
+            //     Debug.Log("Neutral mode selected");
+            //     break;
         }
     }
 

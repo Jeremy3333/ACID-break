@@ -335,7 +335,18 @@
                     "path": "<Keyboard>/q",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "ChangeMode",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "Negative",
+                    "id": "11463afd-fba9-46c6-9b14-46e48540d5c9",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Gamepad",
                     "action": "ChangeMode",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -346,7 +357,7 @@
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Keyboard&Mouse",
                     "action": "ChangeMode",
                     "isComposite": false,
                     "isPartOfComposite": true
@@ -354,10 +365,10 @@
                 {
                     "name": "Positive",
                     "id": "ce493e7c-9be5-4014-af7a-753a487d0f75",
-                    "path": "<Gamepad>/buttonNorth",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
-                    "groups": "",
+                    "groups": ";Gamepad",
                     "action": "ChangeMode",
                     "isComposite": false,
                     "isPartOfComposite": true
