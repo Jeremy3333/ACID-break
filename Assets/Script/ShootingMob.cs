@@ -6,7 +6,7 @@ public class ShootingMob : MonoBehaviour
     [SerializeField] GameObject bullet;
     [SerializeField] Transform gun;
     [SerializeField] bool canFire;
-    [SerializeField] EnemieHandler enemieHandler;
+    EnemieHandler enemieHandler;
     private float timer;
     private float timeBetweenFire;
 
@@ -15,7 +15,7 @@ public class ShootingMob : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-       
+        enemieHandler = GetComponentInParent<EnemieHandler>();
     }
 
     // Update is called once per frame
@@ -44,7 +44,7 @@ public class ShootingMob : MonoBehaviour
 
     public void FireSingle()
     {
-        if(!canFire || !enemieHandler.asDetected) return;
+        if(!canFire || !enemieHandler.asDetected || enemieHandler.isFrozen) return;
         timeBetweenFire = cadence;
         canFire = false;
         Vector2 recoilDir = -gun.right;

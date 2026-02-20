@@ -16,11 +16,11 @@ public class SwordMob : MonoBehaviour
     [SerializeField] float attackAngle = 100f;
 
     [Header("References")]
-    [SerializeField] EnemieHandler enemieHandler;
     [SerializeField] Collider2D swordHitbox;
     [SerializeField] SpriteRenderer mobSprite;
     [SerializeField] SpriteRenderer swordSprite;
     [SerializeField] Rigidbody2D MobRb;
+    EnemieHandler enemieHandler;
 
     bool canAttack = true;
     bool isAnticipating = false;
@@ -32,6 +32,7 @@ public class SwordMob : MonoBehaviour
     {
         swordHitbox.enabled = false;
         swordSprite.enabled = false;
+        enemieHandler = GetComponentInParent<EnemieHandler>();
     }
 
     void Update()
@@ -66,7 +67,7 @@ public class SwordMob : MonoBehaviour
     {
         float distanceToPlayer = Vector2.Distance(transform.position, target.position);
 
-        if (!canAttack || isAnticipating || distanceToPlayer > 2.5f || !enemieHandler.asDetected)
+        if (!canAttack || isAnticipating || distanceToPlayer > 2.5f || !enemieHandler.asDetected || enemieHandler.isFrozen)
             return;
 
         StartAnticipation();

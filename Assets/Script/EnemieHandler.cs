@@ -31,7 +31,7 @@ public class EnemieHandler : MonoBehaviour
 
     HealthManagerMob healthManagerMob;
 
-    bool isFrozen = false;
+    public bool isFrozen = false;
     
     [Header("Gravity Settings")]
     [SerializeField] float gravityScale = 2.5f;
