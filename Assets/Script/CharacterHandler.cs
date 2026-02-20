@@ -31,6 +31,8 @@ public class CharacterHandler : MonoBehaviour
 
     Grappling grappling;
 
+    Swording swording;
+
     Rigidbody2D rb;
 
     BoxCollider2D bc;
@@ -124,8 +126,8 @@ public class CharacterHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
         grappling = rotationPoint.GetComponent<Grappling>();
+        swording = GetComponentInChildren<Swording>();
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponent<PlayerAnimator>();
@@ -234,7 +236,7 @@ public class CharacterHandler : MonoBehaviour
     void ModeSwitch()
     {
         // changemode is an axis that is 0 when not pressed, 1 when pressed in one direction and -1 when pressed in the other
-        if (m_changeModeAction.WasPressedThisFrame() && !isGrapple)
+        if (m_changeModeAction.WasPressedThisFrame() && !isGrapple && !swording.isCharging)
         {
             if(m_changeModeAction.ReadValue<float>() > 0)
             {
