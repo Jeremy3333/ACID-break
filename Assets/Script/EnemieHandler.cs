@@ -33,6 +33,10 @@ public class EnemieHandler : MonoBehaviour
 
     bool isFrozen = false;
     
+    [Header("Gravity Settings")]
+    [SerializeField] float gravityScale = 2.5f;
+    [SerializeField] float gravityMultiplier = 2.3f;
+
     [Header("Searching Settings")]
     [SerializeField] float minMarche = 1f;
     [SerializeField] float maxMarche = 3f;
@@ -325,6 +329,12 @@ public class EnemieHandler : MonoBehaviour
             isFacingRight = true;
         else if (targetVelocityX < 0)
             isFacingRight = false;
+        
+        if (enemieRB.linearVelocity.y < 0)
+            enemieRB.gravityScale = gravityScale * gravityMultiplier;
+        else
+            enemieRB.gravityScale = gravityScale;
+
     }
 
     void OnCollisionStay2D(Collision2D collision)

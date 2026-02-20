@@ -4,12 +4,19 @@ using UnityEngine.InputSystem;
 public class Swording : MonoBehaviour
 {
     private Camera mainCam;
-    private Vector2 mousePos;
+
+    [SerializeField] Transform target;
 
     [Header("Attack (Left Click)")]
     public int damage = 2;
     public float attackCooldown = 0.5f;
     public float activeTime = 0.15f;
+
+    [Header("Pogo")]
+    public float pogoForce = 18f;
+    public float pogoDownAngleTolerance = 30f;
+    bool pogoTriggered;
+
 
     [Header("Melee Arc")]
     public float attackRadius = 1.5f; // porté de l'attaque du personnage
@@ -35,7 +42,9 @@ public class Swording : MonoBehaviour
 
     [Header("References")]
     public SpriteRenderer swordSprite;
+    public Collider2D swordCollider;
     public Rigidbody2D playerRb;
+    CharacterHandler characterHandler;
 
     private bool canAttack = true;
     private float attackTimer;
@@ -43,7 +52,7 @@ public class Swording : MonoBehaviour
     private bool canCharged = true;
     private float chargedTimer;
 
-    private bool isCharging = false;
+    public bool isCharging = false;
     private float chargeTimer = 0f;
     private bool chargeCancelled = false;
 
@@ -54,27 +63,18 @@ public class Swording : MonoBehaviour
     {
         mainCam = Camera.main;
         swordSprite.enabled = false;
+        swordCollider.enabled = false;
+        characterHandler = GetComponentInParent<CharacterHandler>();
     }
 
     void Update()
     {
-        RotateToMouse();
+        RotateToTarget();
         HandleAttackCooldown();
         HandleChargedCooldown();
 
-        if (Mouse.current.leftButton.isPressed && canAttack)
-            Attack();
-
-        if (Mouse.current.rightButton.wasPressedThisFrame && canCharged)
-            StartCharge();
-
         if (isCharging)
             UpdateCharge();
-
-        /*
-        if (Mouse.current.rightButton.wasReleasedThisFrame && isCharging)
-            CancelCharge(); // si on relache avant la fin on annule l'attaque
-        */
 
         if (isChargedActive)
         {
@@ -88,14 +88,9 @@ public class Swording : MonoBehaviour
 
     }
 
-    void RotateToMouse()
+    void RotateToTarget()
     {
-        mousePos = Mouse.current.position.ReadValue();
-        Vector3 worldPos = mainCam.ScreenToWorldPoint(
-            new Vector3(mousePos.x, mousePos.y, mainCam.nearClipPlane)
-        );
-
-        Vector3 dir = worldPos - transform.position;
+        Vector3 dir = target.position - transform.position;
         float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, angle);
     }
@@ -126,11 +121,23 @@ public class Swording : MonoBehaviour
         }
     }
 
-    void Attack()
+    bool IsAttackingDown()
     {
+        Vector2 attackDir = isChargedActive ? chargedDashDir : (Vector2)transform.right;
+
+        float angle = Vector2.Angle(attackDir, Vector2.down);
+
+        return angle <= pogoDownAngleTolerance;
+    }
+
+    public void Attack()
+    {
+        if(!canAttack) return;
         canAttack = false;
+        pogoTriggered = false;
 
         swordSprite.enabled = true;
+        swordCollider.enabled = true;
 
         DoArcDamage(damage, attackAngle);
 
@@ -140,10 +147,12 @@ public class Swording : MonoBehaviour
     void EndAttack()
     {
         swordSprite.enabled = false;
+        swordCollider.enabled = false;
     }
 
-    void StartCharge()
+    public void StartCharge()
     {
+        if(!canCharged) return;
         isCharging = true;
         chargeTimer = 0f;
         chargeCancelled = false;
@@ -163,7 +172,7 @@ public class Swording : MonoBehaviour
         }
     }
 
-    void CancelCharge()
+    public void CancelCharge()
     {
         isCharging = false;
         chargeTimer = 0f;
@@ -178,6 +187,7 @@ public class Swording : MonoBehaviour
         if (!isCharging)
             return;
 
+        pogoTriggered = false;
         isCharging = false;
         canCharged = false;
 
@@ -187,12 +197,9 @@ public class Swording : MonoBehaviour
         isChargedActive = true;
         chargedHitTimer = 0f;
 
-        Vector2 mouseScreenPos = Mouse.current.position.ReadValue();
-        Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(mouseScreenPos);
-        mouseWorldPos.z = 0f;
-
-        chargedDashDir = (mouseWorldPos - transform.position).normalized;
+        chargedDashDir = (target.position - transform.position).normalized;
         swordSprite.enabled = true;
+        swordCollider.enabled = true;
 
         Invoke(nameof(EndChargedAttack), chargedActiveTime);
     }
@@ -209,6 +216,7 @@ public class Swording : MonoBehaviour
     {
         isChargedActive = false;
         swordSprite.enabled = false;
+        swordCollider.enabled = false;
         UnlockMovement();
     }
 
@@ -235,6 +243,12 @@ public class Swording : MonoBehaviour
                 if (health != null)
                 {
                     health.Hit(dmg);
+                    if (!pogoTriggered && !characterHandler.CheckGround() && IsAttackingDown())
+                    {
+                        pogoTriggered = true;
+                        playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, 0f);
+                        playerRb.AddForce(Vector2.up * pogoForce, ForceMode2D.Impulse);
+                    }
                     //Debug.Log("Ennemi touché pendant charge : " + hit.name + " Damage : " + dmg);
                     if (isChargedActive)
                         chargedAlreadyHit.Add(hit);

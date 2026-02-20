@@ -22,14 +22,17 @@ public class SwordMode : MonoBehaviour, ICombatMode
     }
     public void Action1(InputAction input)
     {
-        /*
-        if(input.IsPressed())
+        if(input.WasPressedThisFrame())
             swording.Attack();
-        */
     }
     
     public void Action2(InputAction input)
     {
-        // No secondary attack for now
+        if(input.WasPressedThisFrame())
+            swording.StartCharge();
+        
+        if (input.WasReleasedThisFrame() && swording.isCharging)
+            swording.CancelCharge(); // si on relache avant la fin on annule l'attaque
+        
     }
 }

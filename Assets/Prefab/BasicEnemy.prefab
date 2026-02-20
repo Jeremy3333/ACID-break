@@ -167,7 +167,7 @@ Rigidbody2D:
     m_Bits: 0
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!114 &6358263389224969798
 MonoBehaviour:
@@ -244,8 +244,8 @@ Transform:
   m_GameObject: {fileID: 2531184352530750273}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1, y: 0.2, z: 0}
-  m_LocalScale: {x: 1.25, y: 0.79999995, z: 1}
+  m_LocalPosition: {x: 0.8537, y: 0.0138, z: 0}
+  m_LocalScale: {x: 0.9230644, y: 0.93181145, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2683336461985382455}
@@ -430,7 +430,11 @@ MonoBehaviour:
   target: {fileID: 0}
   attackCooldown: 2
   activeTime: 0.3
+  anticipationTime: 0.8
+  attackRadius: 1.5
+  attackAngle: 100
   enemieHandler: {fileID: 6358263389224969798}
   swordHitbox: {fileID: 5438124526137640460}
+  mobSprite: {fileID: 1180174616362238746}
   swordSprite: {fileID: 6730832120624779111}
   MobRb: {fileID: 3638947686692133501}
