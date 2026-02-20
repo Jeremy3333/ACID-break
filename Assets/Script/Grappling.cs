@@ -118,30 +118,20 @@ public class Grappling : MonoBehaviour
             // If both a platform and an enemy are hit, choose the closer one
             if (hitPlateform.distance < hitEnnemie.distance)
             {
-                targetPoint = hitPlateform.point;
-                hasValidTarget = true;
+                targetPoint = grapplePlateform(out hasValidTarget, hitPlateform);
             }
             else
             {
-                hasValidTarget = true;
-                isEnnemieGrappled = true;
-                grapledEnnemieHandler = hitEnnemie.collider.GetComponent<EnemieHandler>();
-                targetPoint = hitEnnemie.collider.transform.position;
-                grapledEnnemieHandler.setFrozen(true);
+                targetPoint = grappleEnemie(out hasValidTarget, hitEnnemie);
             }
         }
         else if (hitPlateform.collider != null)
         {
-            targetPoint = hitPlateform.point;
-            hasValidTarget = true;
+            targetPoint =  grapplePlateform(out hasValidTarget, hitPlateform);
         }
         else if (hitEnnemie.collider != null)
         {
-            hasValidTarget = true;
-            isEnnemieGrappled = true;
-            grapledEnnemieHandler = hitEnnemie.collider.GetComponent<EnemieHandler>();
-            targetPoint = hitEnnemie.collider.transform.position;
-            grapledEnnemieHandler.setFrozen(true);
+            targetPoint = grappleEnemie(out hasValidTarget, hitEnnemie);
         }
         else
         {
@@ -165,6 +155,22 @@ public class Grappling : MonoBehaviour
         projScript.SetTarget(targetPoint, hasValidTarget);
 
         rope.enabled = true;
+    }
+
+    Vector2 grappleEnemie(out bool hasValidTarget, RaycastHit2D hitEnnemie)
+    {
+        hasValidTarget = true;
+        isEnnemieGrappled = true;
+        grapledEnnemieHandler = hitEnnemie.collider.GetComponent<EnemieHandler>();
+        characterCharacterHandler.gameObject.layer = LayerMask.NameToLayer("PlayerGrappleAttaque");
+        grapledEnnemieHandler.setFrozen(true);
+        return hitEnnemie.collider.transform.position;
+    }
+
+    Vector2 grapplePlateform(out bool hasValidTarget, RaycastHit2D hitPlateform)
+    {
+        hasValidTarget = true;
+        return hitPlateform.point;
     }
 
     public void OnGrappleHit(Vector2 hitPoint)
@@ -205,6 +211,7 @@ public class Grappling : MonoBehaviour
         joint.enabled = false;
         isGrappled = false;
         characterCharacterHandler.setIsGrapple(false);
+        characterCharacterHandler.gameObject.layer = LayerMask.NameToLayer("Player");
         DestroyCurrentProjectile();
     }
 

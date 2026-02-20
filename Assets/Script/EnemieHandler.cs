@@ -207,12 +207,10 @@ public class EnemieHandler : MonoBehaviour
             targetVelocityX = 0f;
             enemieRB.bodyType = RigidbodyType2D.Kinematic;
             enemieRB.linearVelocity = Vector2.zero;
-            gameObject.layer = LayerMask.NameToLayer("FrozenMob");
         }
         else
         {
             enemieRB.bodyType = RigidbodyType2D.Dynamic;
-            gameObject.layer = LayerMask.NameToLayer("Mob");
         }
     }
 
