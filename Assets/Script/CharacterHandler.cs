@@ -182,28 +182,19 @@ public class CharacterHandler : MonoBehaviour
 
             // Direction from player to grapple point
             Vector2 grappleDir = ((Vector2)grappling.getGrappleProjectilePosition() - rb.position).normalized;
+            
+            Vector2 perpendicularDir = new Vector2(-grappleDir.y, grappleDir.x);
+            float mo = m_moveAction.ReadValue<float>();
 
-            // The two perpendicular directions
-            Vector2 leftTangent  = new Vector2(-grappleDir.y,  grappleDir.x); // 90° counter‑clockwise
-            Vector2 rightTangent = new Vector2( grappleDir.y, -grappleDir.x); // 90° clockwise
+            if (
+                (mo == 0 && Vector2.Dot(perpendicularDir, rb.linearVelocity) < 0) ||
+                (mo > 0 && grappleDir.y > 0) ||
+                (mo < 0 && grappleDir.y < 0)
+            )
+                perpendicularDir = -perpendicularDir;
 
-            // Check player input
-            if (m_moveAction.ReadValue<float>() < 0)          // replace with actual input check for A
-            {
-                Dash(leftTangent);
-            }
-            else if ((m_moveAction.ReadValue<float>() < 0 && grappleDir.y < 0) || (m_moveAction.ReadValue<float>() > 0 && grappleDir.y > 0)) // replace with actual input check for D
-            {
-                Dash(rightTangent);
-            }
-            else
-            {
-                // Original behaviour: choose tangent that points in the same general direction as velocity
-                Vector2 tangentDir = leftTangent; // start with one of them
-                if (Vector2.Dot(tangentDir, rb.linearVelocity) < 0)
-                    tangentDir = -tangentDir;     // flip if it opposes velocity
-                Dash(tangentDir);
-            }
+            Dash(perpendicularDir);
+
         }
     }
 
