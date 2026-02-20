@@ -3,6 +3,7 @@ using UnityEngine;
 public class PseudoKillPlane : MonoBehaviour
 {
     public float killHeight = -20f;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -14,7 +15,7 @@ public class PseudoKillPlane : MonoBehaviour
     {
         if(transform.position.y < killHeight)
         {
-            transform.position = new Vector2(0, 2);
+            GetComponent<HealthManager>().Resapwn();
         }
     }
 }

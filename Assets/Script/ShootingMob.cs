@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class ShootingMob : MonoBehaviour
 { 
-    [SerializeField] Transform target;
+    Transform target;
     [SerializeField] GameObject bullet;
     [SerializeField] Transform gun;
     [SerializeField] bool canFire;
@@ -15,6 +15,7 @@ public class ShootingMob : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         enemieHandler = GetComponentInParent<EnemieHandler>();
     }
 

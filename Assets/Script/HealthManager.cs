@@ -6,6 +6,10 @@ public class HealthManager : MonoBehaviour
     public int health;
     public bool isHittable = true;
 
+    public ZoneHandler zoneHandler;
+    Transform spawn;
+
+
     private float timer;
 
     private Swording swording;
@@ -14,6 +18,12 @@ public class HealthManager : MonoBehaviour
     public Sprite brokenModule;
     public Sprite module;
     public Image[] moduleUI;
+
+    void Awake()
+    {
+        spawn = zoneHandler.spawn;
+        Resapwn();
+    }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -35,6 +45,8 @@ public class HealthManager : MonoBehaviour
             } 
         }
         UpDateUI();
+
+        if(health <= 0) Resapwn();
     }
 
     public void Hit()
@@ -47,12 +59,42 @@ public class HealthManager : MonoBehaviour
         }
     }
 
+    public void Resapwn()
+    {
+        health = 4;
+        transform.position = spawn.position;
+        zoneHandler.Set();
+    }
+
+    void Heal()
+    {
+        health = 4;
+    }
+
     void UpDateUI()
     {
         for (int i = 0; i < moduleUI.Length; i++)
         {
             if (health > i) moduleUI[i].sprite = module;
             else moduleUI[i].sprite = brokenModule;
+        }
+    }
+
+    void OnTriggerEnter2D(Collider2D  collision)
+    {
+        if(collision.CompareTag("Zone"))
+        {
+            zoneHandler = collision.gameObject.GetComponent<ZoneHandler>();
+            spawn = zoneHandler.spawn;
+            Heal();
+            zoneHandler.Set();
+        }
+    }
+    void OnTriggerExit2D(Collider2D  collision)
+    {
+        if(collision.CompareTag("Zone"))
+        {
+            collision.gameObject.GetComponent<ZoneHandler>().ReSet();
         }
     }
 }

@@ -8,12 +8,11 @@ public enum EnemieType
 
 public class EnemieHandler : MonoBehaviour
 {
-    [SerializeField]
     Transform playerTransform;
 
-    float acceleration;
+    [SerializeField] float acceleration;
 
-    float speed;
+    [SerializeField] float speed;
     
     [SerializeField]
     LayerMask groundLayers;
@@ -61,6 +60,7 @@ public class EnemieHandler : MonoBehaviour
 
     void Start()
     {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         enemieRB = GetComponent<Rigidbody2D>();
         enemieCollider = GetComponent<BoxCollider2D>();
         healthManagerMob = GetComponent<HealthManagerMob>();

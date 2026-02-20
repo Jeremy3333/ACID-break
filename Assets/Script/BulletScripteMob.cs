@@ -28,8 +28,8 @@ public class BulletScripteMob : MonoBehaviour
     {
         Vector3 viewPos = mainCam.WorldToViewportPoint(transform.position);
 
-        if (viewPos.x < 0 || viewPos.x > 1 ||
-            viewPos.y < 0 || viewPos.y > 1)
+        if (viewPos.x < -0.2 || viewPos.x > 1.2 ||
+            viewPos.y < -0.2 || viewPos.y > 1.2)
         {
             Destroy(gameObject);
         }

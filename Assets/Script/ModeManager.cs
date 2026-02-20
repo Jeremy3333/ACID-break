@@ -38,8 +38,8 @@ public class CombatModeManager : MonoBehaviour
 
         currentMode?.HandleUpdate();
 
-        currentMode?.Action1(m_action1Action);
         currentMode?.Action2(m_action2Action);
+        currentMode?.Action1(m_action1Action);
     }
 
     public void SwitchMode(ICombatMode newMode)
