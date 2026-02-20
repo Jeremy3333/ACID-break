@@ -8,6 +8,7 @@ TagManager:
   - RightJumpTrigger
   - LeftJumpTrigger
   - Bullet
+  - PassableGround
   layers:
   - Default
   - TransparentFX
