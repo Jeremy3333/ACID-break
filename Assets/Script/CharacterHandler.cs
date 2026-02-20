@@ -127,19 +127,6 @@ public class CharacterHandler : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponent<PlayerAnimator>();
-
-        if (uiDocument != null)
-        {
-            // Assuming you have VisualElements with these names in your UI Document
-            modeIcons["Jetpack"] = uiDocument.rootVisualElement.Q<VisualElement>("JetPack");
-            modeIcons["BigGun"] = uiDocument.rootVisualElement.Q<VisualElement>("BigGun");
-            modeIcons["BaseballBat"] = uiDocument.rootVisualElement.Q<VisualElement>("BaseballBat");
-            modeIcons["Lasso"] = uiDocument.rootVisualElement.Q<VisualElement>("Lasso");
-        }
-        else
-        {
-            Debug.LogError("UI Document is not assigned.");
-        }
     }
 
     public void Jump()

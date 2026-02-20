@@ -10,7 +10,6 @@ public class CombatModeManager : MonoBehaviour
     private InputAction m_action2Action;
     
     [Header("Modes:")]
-    public MonoBehaviour gunMode;
     public MonoBehaviour swordMode;
     public MonoBehaviour grapplingGunMode;
 
@@ -28,9 +27,6 @@ public class CombatModeManager : MonoBehaviour
         currentMode?.Exit();
 
         SwitchMode(grapplingGunMode as ICombatMode);
-        currentMode?.Exit();
-        
-        SwitchMode(gunMode as ICombatMode);
     }
 
     void Update()
