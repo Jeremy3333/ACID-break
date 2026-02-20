@@ -276,11 +276,6 @@ public class Swording : MonoBehaviour
         playerRb.constraints = _savedConstraints;
     }
 
-
-
-    ////////////////////////////////////////////////////////////
-    // A implementer plsu tard lorsque joueur prend des degats
-    ////////////////////////////////////////////////////////////
     public void InterruptChargedAttack()
     {
         if (isCharging)

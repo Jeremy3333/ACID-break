@@ -8,6 +8,7 @@ public class HealthManager : MonoBehaviour
 
     private float timer;
 
+    private Swording swording;
     public float invincybilityTime = 0.6f;
 
     public Sprite brokenModule;
@@ -17,6 +18,7 @@ public class HealthManager : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        swording = GetComponentInChildren<Swording>();
         UpDateUI();    
     }
 
@@ -41,6 +43,7 @@ public class HealthManager : MonoBehaviour
         {
             isHittable = false;
             health = Mathf.Max(health-1, 0);
+            swording.InterruptChargedAttack();
         }
     }
 

@@ -30,9 +30,5 @@ public class SwordMode : MonoBehaviour, ICombatMode
     {
         if(input.WasPressedThisFrame())
             swording.StartCharge();
-        
-        if (input.WasReleasedThisFrame() && swording.isCharging)
-            swording.CancelCharge(); // si on relache avant la fin on annule l'attaque
-        
     }
 }
