@@ -329,7 +329,6 @@ public class EnemieHandler : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D collision)
     {
-        if(enemieType == EnemieType.Basic);
         if(collision.collider.gameObject.tag == "LeftJumpTrigger" && !isFacingRight)
         {
             float jumpForce = collision.gameObject.GetComponent<JumpTriggerScript>().jumpForce;
