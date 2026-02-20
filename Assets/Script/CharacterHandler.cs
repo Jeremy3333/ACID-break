@@ -5,7 +5,6 @@ using System.Collections.Generic;
 
 public enum CharacterMode
 {
-    BigGun,
     BaseballBat,
     Lasso
 }
@@ -97,7 +96,7 @@ public class CharacterHandler : MonoBehaviour
 
     Vector2 modeSelectionStartPos;
 
-    CharacterMode currentMode = CharacterMode.BigGun;
+    CharacterMode currentMode = CharacterMode.BaseballBat;
 
     [SerializeField]
     CombatModeManager modeManager;
@@ -237,34 +236,6 @@ public class CharacterHandler : MonoBehaviour
         playerAnimator.Dash(true, !isFacingRight);
     }
 
-    void updateMode()
-    {
-        lookInput = m_lookAction.ReadValue<Vector2>();
-        Vector2 delta;
-        if (lookInput.sqrMagnitude > 0.01f)
-        {
-            delta = lookInput;
-        }
-        else if( Mouse.current.delta.ReadValue().sqrMagnitude > 0.01f && Mouse.current != null)
-        {
-            Vector2 currentMousePos = Mouse.current.position.ReadValue();
-            delta = currentMousePos - modeSelectionStartPos;
-        } else return;
-
-        if (delta.x > 0 && delta.y > 0)
-        {
-            currentMode = CharacterMode.BigGun;
-        }
-        else if (delta.x <= 0 && delta.y <= 0)
-        {
-            currentMode = CharacterMode.BaseballBat;
-        }
-        else if (delta.x > 0 && delta.y <= 0)
-        {
-            currentMode = CharacterMode.Lasso;
-        }
-    }
-
     void ApplySelectedMode()
     {
         switch (currentMode)
@@ -272,10 +243,6 @@ public class CharacterHandler : MonoBehaviour
             case CharacterMode.BaseballBat:
                 Debug.Log("Baseball Bat mode selected");
                 modeManager.SwitchMode(modeManager.swordMode as ICombatMode);
-                break;
-            case CharacterMode.BigGun:
-                Debug.Log("Big Gun mode selected");
-                modeManager.SwitchMode(modeManager.gunMode as ICombatMode);
                 break;
             case CharacterMode.Lasso:
                 Debug.Log("Lasso mode selected");
