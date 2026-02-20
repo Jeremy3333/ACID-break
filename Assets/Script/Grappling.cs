@@ -19,6 +19,8 @@ public class Grappling : MonoBehaviour
 
     [SerializeField] float maxLength = 15f;
 
+    bool isRetracting = false;
+
     [Header("Projectile Settings")]
     
     [SerializeField] GameObject grappleProjectilePrefab;
@@ -71,6 +73,12 @@ public class Grappling : MonoBehaviour
         float rotaZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotaZ);
 
+        if(isRetracting)
+        {
+            Retract();
+            return;
+        }
+
         if(isEnnemieGrappled && grapledEnnemieHandler != null)
         {
             AttaqueEnnemie();
@@ -94,6 +102,7 @@ public class Grappling : MonoBehaviour
 
     public void TryGrapple()
     {
+        isRetracting = false;
         if(isGrappled  || currentProjectile != null) return;
 
         if (joint.enabled)
@@ -201,6 +210,12 @@ public class Grappling : MonoBehaviour
 
         joint.distance -= retractSpeed * Time.deltaTime;
         joint.distance = Mathf.Max(joint.distance, 0.1f); // prevent distance from becoming negative
+
+        if (joint.distance <= 0.1f)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+        
     }
 
     public void StopGrapple()
@@ -210,6 +225,7 @@ public class Grappling : MonoBehaviour
         rope.enabled = false;
         joint.enabled = false;
         isGrappled = false;
+        isRetracting = false;
         characterCharacterHandler.setIsGrapple(false);
         characterCharacterHandler.gameObject.layer = LayerMask.NameToLayer("Player");
         DestroyCurrentProjectile();
@@ -232,5 +248,12 @@ public class Grappling : MonoBehaviour
             currentProjectile = null;
             rope.enabled = false;
         }
+    }
+
+    public void startRetracting()
+    {
+        Debug.Log("Start Retracting");
+        isRetracting = true;
+        rb.linearVelocity = Vector2.zero;
     }
 }
