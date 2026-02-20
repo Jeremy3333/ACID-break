@@ -211,12 +211,10 @@ public class EnemieHandler : MonoBehaviour
             targetVelocityX = 0f;
             enemieRB.bodyType = RigidbodyType2D.Kinematic;
             enemieRB.linearVelocity = Vector2.zero;
-            enemieCollider.enabled = false;
         }
         else
         {
             enemieRB.bodyType = RigidbodyType2D.Dynamic;
-            enemieCollider.enabled = true;
         }
     }
 
@@ -339,7 +337,6 @@ public class EnemieHandler : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D collision)
     {
-        if(enemieType == EnemieType.Basic);
         if(collision.collider.gameObject.tag == "LeftJumpTrigger" && !isFacingRight)
         {
             float jumpForce = collision.gameObject.GetComponent<JumpTriggerScript>().jumpForce;
