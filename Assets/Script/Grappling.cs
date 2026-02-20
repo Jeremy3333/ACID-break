@@ -45,6 +45,8 @@ public class Grappling : MonoBehaviour
 
     bool isEnnemieGrappled = false;
 
+    bool hasTriggeredAttack = false;
+
     EnemieHandler grapledEnnemieHandler;
 
     CharacterHandler characterCharacterHandler;
@@ -53,6 +55,8 @@ public class Grappling : MonoBehaviour
     {
         joint.enabled = false;
         rope.enabled = false;
+
+        characterCharacterHandler = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterHandler>();
     }
 
     void Update()
@@ -73,30 +77,22 @@ public class Grappling : MonoBehaviour
         float rotaZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotaZ);
 
-        if(isRetracting)
-        {
-            Retract();
-            return;
-        }
-
         if(isEnnemieGrappled && grapledEnnemieHandler != null)
         {
             AttaqueEnnemie();
         }
 
-        characterCharacterHandler = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterHandler>();
+        if(isRetracting)
+        {
+            Retract();
+        }
     }
 
     void AttaqueEnnemie()
     {
-        Retract();
         if (Vector2.Distance(rb.position, grapplePoint) < 0.5f)
         {
-            grapledEnnemieHandler.Hit(attaqueDamage);
-            isEnnemieGrappled = false;
-            grapledEnnemieHandler.setFrozen(false);
-            characterCharacterHandler.Jump();
-            StopGrapple();
+            hasTriggeredAttack = true;
         }
     }
 
@@ -172,7 +168,9 @@ public class Grappling : MonoBehaviour
         isEnnemieGrappled = true;
         grapledEnnemieHandler = hitEnnemie.collider.GetComponent<EnemieHandler>();
         characterCharacterHandler.gameObject.layer = LayerMask.NameToLayer("PlayerGrappleAttaque");
+        characterCharacterHandler.setCanDash(false);
         grapledEnnemieHandler.setFrozen(true);
+        startRetracting();
         return hitEnnemie.collider.transform.position;
     }
 
@@ -220,7 +218,12 @@ public class Grappling : MonoBehaviour
 
     public void StopGrapple()
     {
-        if(!isGrappled || isEnnemieGrappled) return;
+        if(!isGrappled || (isEnnemieGrappled && !hasTriggeredAttack)) return;
+
+        if(hasTriggeredAttack)
+        {
+            finishAttack();
+        }
 
         rope.enabled = false;
         joint.enabled = false;
@@ -228,7 +231,17 @@ public class Grappling : MonoBehaviour
         isRetracting = false;
         characterCharacterHandler.setIsGrapple(false);
         characterCharacterHandler.gameObject.layer = LayerMask.NameToLayer("Player");
+        characterCharacterHandler.setCanDash(true);
         DestroyCurrentProjectile();
+    }
+
+    void finishAttack()
+    {
+        hasTriggeredAttack = false;
+        grapledEnnemieHandler.Hit(attaqueDamage);
+        isEnnemieGrappled = false;
+        grapledEnnemieHandler.setFrozen(false);
+        characterCharacterHandler.Jump();
     }
 
     public Vector2 getGrappleProjectilePosition() {
@@ -252,7 +265,7 @@ public class Grappling : MonoBehaviour
 
     public void startRetracting()
     {
-        if (!isGrappled) return;
+        if (!isGrappled && !isEnnemieGrappled) return;
         isRetracting = true;
         rb.linearVelocity = Vector2.zero;
     }

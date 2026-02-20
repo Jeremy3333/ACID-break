@@ -79,6 +79,8 @@ public class CharacterHandler : MonoBehaviour
 
     bool isDashing;
 
+    bool canDash = true;
+
     [SerializeField] float dashMaxTimer = 0.2f;
     [SerializeField] float GrappleDashMaxTimer = 0.5f;
     float dashTimer;
@@ -274,7 +276,7 @@ public class CharacterHandler : MonoBehaviour
         if (isDashing) return; 
         if(isGrapple)
         {
-            if (m_dashAction.WasPressedThisFrame() && !touchGround)
+            if (m_dashAction.WasPressedThisFrame() && !touchGround && canDash)
             {
                 GrappleDash();
             }
@@ -296,7 +298,7 @@ public class CharacterHandler : MonoBehaviour
         if (m_jumpAction.WasPressedThisFrame())
             Jump();
 
-        if (m_dashAction.WasPressedThisFrame())
+        if (m_dashAction.WasPressedThisFrame() && canDash)
             GroundDash();
     }
 
@@ -384,6 +386,11 @@ public class CharacterHandler : MonoBehaviour
         {
             startGrapple();
         }
+    }
+
+    public void setCanDash(bool p_canDash)
+    {
+        canDash = p_canDash;
     }
 
     public void moveToDirection(float len, Vector2 pos)

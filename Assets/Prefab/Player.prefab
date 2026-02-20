@@ -368,7 +368,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatModeManager
   inputActions: {fileID: 0}
-  gunMode: {fileID: 5107798206874076563}
   swordMode: {fileID: 2135474792646751812}
   grapplingGunMode: {fileID: 9162712609039972583}
 --- !u!231 &1144064943240423146
@@ -753,8 +752,6 @@ GameObject:
   - component: {fileID: 4901940864253591851}
   - component: {fileID: 9162712609039972583}
   - component: {fileID: 2135474792646751812}
-  - component: {fileID: 5107798206874076563}
-  - component: {fileID: 2443643812853457910}
   - component: {fileID: 2079898334404387158}
   - component: {fileID: 186201149509189314}
   m_Layer: 3
@@ -808,44 +805,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwordMode
   swording: {fileID: 2079898334404387158}
---- !u!114 &5107798206874076563
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6230553782290057071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74ded110a2e46a446925fb55aa04b609, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GunMode
-  shooting: {fileID: 2443643812853457910}
---- !u!114 &2443643812853457910
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6230553782290057071}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 983ab8c4475d2a8409ca515d7b8c8da6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Shooting
-  target: {fileID: 0}
-  bullet: {fileID: 7877757816228954581, guid: 026099bc5dab35047a2980d9a7c53a67, type: 3}
-  gun: {fileID: 504931342200667117}
-  playerRb: {fileID: 3444569684929839330}
-  canFire: 0
-  cadence1: 0.1
-  cadence2: 1
-  damage1: 1
-  damage2: 2
-  nbShotgun: 8
-  recoilForce1: 0.8
-  recoilForce2: 7
-  spreadAngle: 15
 --- !u!114 &2079898334404387158
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -886,23 +845,23 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Grappling
   rope: {fileID: 7642688602594505811}
   cam: {fileID: 0}
-  target: {fileID: 0}
+  target: {fileID: 1755876027355803547}
   firePoint: {fileID: 2850996097111250123}
   rb: {fileID: 3444569684929839330}
   joint: {fileID: 1144064943240423146}
   jointFrequency: 6
-  retractSpeed: 10
+  retractSpeed: 50
   maxLength: 15
   grappleProjectilePrefab: {fileID: 7497794784657280182, guid: 20c5ca481a709d24ca2bad128b13dbfe, type: 3}
-  projectileSpeed: 50
+  projectileSpeed: 70
   projectileMaxDistance: 20
-  projectileRetractSpeed: 15
+  projectileRetractSpeed: 70
   grapplePlateformMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 64
   grappleEnnemieMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   attaqueDamage: 5
   grapplePoint: {x: 0, y: 0}
 --- !u!1 &7285019875000084382
