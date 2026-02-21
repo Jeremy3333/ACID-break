@@ -23,12 +23,12 @@ public class GrapplingGunMode : MonoBehaviour, ICombatMode
     {
         if(input.WasPressedThisFrame())
             grappling.TryGrapple();
-        if(input.WasReleasedThisFrame())
+        if(!input.IsPressed())
             grappling.StopGrapple();
     }
     public void Action2(InputAction input)
     {
-        if(input.IsPressed())
-            grappling.Retract();
+        if(input.WasPressedThisFrame())
+            grappling.startRetracting();
     }
 }

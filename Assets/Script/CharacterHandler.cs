@@ -5,8 +5,6 @@ using System.Collections.Generic;
 
 public enum CharacterMode
 {
-    //Neutral,
-    BigGun,
     BaseballBat,
     Lasso
 }
@@ -32,6 +30,8 @@ public class CharacterHandler : MonoBehaviour
     GameObject rotationPoint;
 
     Grappling grappling;
+
+    Swording swording;
 
     Rigidbody2D rb;
 
@@ -81,6 +81,8 @@ public class CharacterHandler : MonoBehaviour
 
     bool isDashing;
 
+    bool canDash = true;
+
     [SerializeField] float dashMaxTimer = 0.2f;
     [SerializeField] float GrappleDashMaxTimer = 0.5f;
     float dashTimer;
@@ -98,7 +100,7 @@ public class CharacterHandler : MonoBehaviour
 
     Vector2 modeSelectionStartPos;
 
-    CharacterMode currentMode = CharacterMode.BigGun;
+    CharacterMode currentMode = CharacterMode.BaseballBat;
 
     [SerializeField]
     CombatModeManager modeManager;
@@ -124,27 +126,14 @@ public class CharacterHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
         grappling = rotationPoint.GetComponent<Grappling>();
+        swording = GetComponentInChildren<Swording>();
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponent<PlayerAnimator>();
-
-        if (uiDocument != null)
-        {
-            // Assuming you have VisualElements with these names in your UI Document
-            modeIcons["Jetpack"] = uiDocument.rootVisualElement.Q<VisualElement>("JetPack");
-            modeIcons["BigGun"] = uiDocument.rootVisualElement.Q<VisualElement>("BigGun");
-            modeIcons["BaseballBat"] = uiDocument.rootVisualElement.Q<VisualElement>("BaseballBat");
-            modeIcons["Lasso"] = uiDocument.rootVisualElement.Q<VisualElement>("Lasso");
-        }
-        else
-        {
-            Debug.LogError("UI Document is not assigned.");
-        }
     }
 
-    void Jump()
+    public void Jump()
     {
         if (!touchGround && !doubleJumpReady) return;
         if(!touchGround)
@@ -174,6 +163,21 @@ public class CharacterHandler : MonoBehaviour
         }
     }
 
+    // when starting a grapple, the player linear velocity should be perpendicular to the direction of the grapple point. in the facing direction
+    void startGrapple()
+    {
+        if(touchGround) return; // only apply the grapple velocity if we're in the air, otherwise the player will be launched in the opposite direction of the grapple point
+        Vector2 grappleDir = (Vector2)grappling.getGrappleProjectilePosition();
+        if (grappleDir == null) return;
+
+        grappleDir = (grappleDir - rb.position).normalized;
+        Vector2 perpendicularDir = new Vector2(-grappleDir.y, grappleDir.x); // 90° counter‑clockwise
+        if (Vector2.Dot(perpendicularDir, rb.linearVelocity) < 0)
+            perpendicularDir = -perpendicularDir;
+
+        rb.linearVelocity = perpendicularDir * moveSpeed; // Set initial velocity for smooth swinging
+    }
+
     void GrappleDash()
     {
         if (grappleDashReady)
@@ -182,28 +186,19 @@ public class CharacterHandler : MonoBehaviour
 
             // Direction from player to grapple point
             Vector2 grappleDir = ((Vector2)grappling.getGrappleProjectilePosition() - rb.position).normalized;
+            
+            Vector2 perpendicularDir = new Vector2(-grappleDir.y, grappleDir.x);
+            float mo = m_moveAction.ReadValue<float>();
 
-            // The two perpendicular directions
-            Vector2 leftTangent  = new Vector2(-grappleDir.y,  grappleDir.x); // 90° counter‑clockwise
-            Vector2 rightTangent = new Vector2( grappleDir.y, -grappleDir.x); // 90° clockwise
+            if (
+                (mo == 0 && Vector2.Dot(perpendicularDir, rb.linearVelocity) < 0) ||
+                (mo > 0 && grappleDir.y > 0) ||
+                (mo < 0 && grappleDir.y < 0)
+            )
+                perpendicularDir = -perpendicularDir;
 
-            // Check player input
-            if (m_moveAction.ReadValue<float>() < 0)          // replace with actual input check for A
-            {
-                Dash(leftTangent);
-            }
-            else if (m_moveAction.ReadValue<float>() > 0)     // replace with actual input check for D
-            {
-                Dash(rightTangent);
-            }
-            else
-            {
-                // Original behaviour: choose tangent that points in the same general direction as velocity
-                Vector2 tangentDir = leftTangent; // start with one of them
-                if (Vector2.Dot(tangentDir, rb.linearVelocity) < 0)
-                    tangentDir = -tangentDir;     // flip if it opposes velocity
-                Dash(tangentDir);
-            }
+            Dash(perpendicularDir);
+
         }
     }
 
@@ -223,34 +218,6 @@ public class CharacterHandler : MonoBehaviour
         playerAnimator.Dash(true, !isFacingRight);
     }
 
-    void updateMode()
-    {
-        lookInput = m_lookAction.ReadValue<Vector2>();
-        Vector2 delta;
-        if (lookInput.sqrMagnitude > 0.01f)
-        {
-            delta = lookInput;
-        }
-        else if( Mouse.current.delta.ReadValue().sqrMagnitude > 0.01f && Mouse.current != null)
-        {
-            Vector2 currentMousePos = Mouse.current.position.ReadValue();
-            delta = currentMousePos - modeSelectionStartPos;
-        } else return;
-
-        if (delta.x > 0 && delta.y > 0)
-        {
-            currentMode = CharacterMode.BigGun;
-        }
-        else if (delta.x <= 0 && delta.y <= 0)
-        {
-            currentMode = CharacterMode.BaseballBat;
-        }
-        else if (delta.x > 0 && delta.y <= 0)
-        {
-            currentMode = CharacterMode.Lasso;
-        }
-    }
-
     void ApplySelectedMode()
     {
         switch (currentMode)
@@ -259,24 +226,17 @@ public class CharacterHandler : MonoBehaviour
                 Debug.Log("Baseball Bat mode selected");
                 modeManager.SwitchMode(modeManager.swordMode as ICombatMode);
                 break;
-            case CharacterMode.BigGun:
-                Debug.Log("Big Gun mode selected");
-                modeManager.SwitchMode(modeManager.gunMode as ICombatMode);
-                break;
             case CharacterMode.Lasso:
                 Debug.Log("Lasso mode selected");
                 modeManager.SwitchMode(modeManager.grapplingGunMode as ICombatMode);
                 break;
-            // case CharacterMode.Neutral:
-            //     Debug.Log("Neutral mode selected");
-            //     break;
         }
     }
 
     void ModeSwitch()
     {
         // changemode is an axis that is 0 when not pressed, 1 when pressed in one direction and -1 when pressed in the other
-        if (m_changeModeAction.WasPressedThisFrame())
+        if (m_changeModeAction.WasPressedThisFrame() && !isGrapple && !swording.isCharging)
         {
             if(m_changeModeAction.ReadValue<float>() > 0)
             {
@@ -318,7 +278,7 @@ public class CharacterHandler : MonoBehaviour
         if (isDashing) return; 
         if(isGrapple)
         {
-            if (m_dashAction.WasPressedThisFrame())
+            if (m_dashAction.WasPressedThisFrame() && !touchGround && canDash)
             {
                 GrappleDash();
             }
@@ -340,7 +300,7 @@ public class CharacterHandler : MonoBehaviour
         if (m_jumpAction.WasPressedThisFrame())
             Jump();
 
-        if (m_dashAction.WasPressedThisFrame())
+        if (m_dashAction.WasPressedThisFrame() && canDash)
             GroundDash();
     }
 
@@ -423,7 +383,16 @@ public class CharacterHandler : MonoBehaviour
     {
         isGrapple = p_isGrapple;
         grappleDashReady = true;
-        moveDir = 0f; // stop horizontal input when grappled
+        moveDir = 0f;
+        if (isGrapple)
+        {
+            startGrapple();
+        }
+    }
+
+    public void setCanDash(bool p_canDash)
+    {
+        canDash = p_canDash;
     }
 
     public void moveToDirection(float len, Vector2 pos)

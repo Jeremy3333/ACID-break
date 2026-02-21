@@ -19,6 +19,8 @@ public class Grappling : MonoBehaviour
 
     [SerializeField] float maxLength = 15f;
 
+    bool isRetracting = false;
+
     [Header("Projectile Settings")]
     
     [SerializeField] GameObject grappleProjectilePrefab;
@@ -43,6 +45,8 @@ public class Grappling : MonoBehaviour
 
     bool isEnnemieGrappled = false;
 
+    bool hasTriggeredAttack = false;
+
     EnemieHandler grapledEnnemieHandler;
 
     CharacterHandler characterCharacterHandler;
@@ -51,6 +55,8 @@ public class Grappling : MonoBehaviour
     {
         joint.enabled = false;
         rope.enabled = false;
+
+        characterCharacterHandler = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterHandler>();
     }
 
     void Update()
@@ -76,23 +82,23 @@ public class Grappling : MonoBehaviour
             AttaqueEnnemie();
         }
 
-        characterCharacterHandler = GameObject.FindGameObjectWithTag("Player").GetComponent<CharacterHandler>();
+        if(isRetracting)
+        {
+            Retract();
+        }
     }
 
     void AttaqueEnnemie()
     {
-        Retract();
         if (Vector2.Distance(rb.position, grapplePoint) < 0.5f)
         {
-            grapledEnnemieHandler.Hit(attaqueDamage);
-            isEnnemieGrappled = false;
-            grapledEnnemieHandler.setFrozen(false);
-            StopGrapple();
+            hasTriggeredAttack = true;
         }
     }
 
     public void TryGrapple()
     {
+        isRetracting = false;
         if(isGrappled  || currentProjectile != null) return;
 
         if (joint.enabled)
@@ -117,30 +123,20 @@ public class Grappling : MonoBehaviour
             // If both a platform and an enemy are hit, choose the closer one
             if (hitPlateform.distance < hitEnnemie.distance)
             {
-                targetPoint = hitPlateform.point;
-                hasValidTarget = true;
+                targetPoint = grapplePlateform(out hasValidTarget, hitPlateform);
             }
             else
             {
-                hasValidTarget = true;
-                isEnnemieGrappled = true;
-                grapledEnnemieHandler = hitEnnemie.collider.GetComponent<EnemieHandler>();
-                targetPoint = hitEnnemie.collider.transform.position;
-                grapledEnnemieHandler.setFrozen(true);
+                targetPoint = grappleEnemie(out hasValidTarget, hitEnnemie);
             }
         }
         else if (hitPlateform.collider != null)
         {
-            targetPoint = hitPlateform.point;
-            hasValidTarget = true;
+            targetPoint =  grapplePlateform(out hasValidTarget, hitPlateform);
         }
         else if (hitEnnemie.collider != null)
         {
-            hasValidTarget = true;
-            isEnnemieGrappled = true;
-            grapledEnnemieHandler = hitEnnemie.collider.GetComponent<EnemieHandler>();
-            targetPoint = hitEnnemie.collider.transform.position;
-            grapledEnnemieHandler.setFrozen(true);
+            targetPoint = grappleEnemie(out hasValidTarget, hitEnnemie);
         }
         else
         {
@@ -164,6 +160,24 @@ public class Grappling : MonoBehaviour
         projScript.SetTarget(targetPoint, hasValidTarget);
 
         rope.enabled = true;
+    }
+
+    Vector2 grappleEnemie(out bool hasValidTarget, RaycastHit2D hitEnnemie)
+    {
+        hasValidTarget = true;
+        isEnnemieGrappled = true;
+        grapledEnnemieHandler = hitEnnemie.collider.GetComponent<EnemieHandler>();
+        characterCharacterHandler.gameObject.layer = LayerMask.NameToLayer("PlayerGrappleAttaque");
+        characterCharacterHandler.setCanDash(false);
+        grapledEnnemieHandler.setFrozen(true);
+        startRetracting();
+        return hitEnnemie.collider.transform.position;
+    }
+
+    Vector2 grapplePlateform(out bool hasValidTarget, RaycastHit2D hitPlateform)
+    {
+        hasValidTarget = true;
+        return hitPlateform.point;
     }
 
     public void OnGrappleHit(Vector2 hitPoint)
@@ -194,17 +208,40 @@ public class Grappling : MonoBehaviour
 
         joint.distance -= retractSpeed * Time.deltaTime;
         joint.distance = Mathf.Max(joint.distance, 0.1f); // prevent distance from becoming negative
+
+        if (joint.distance <= 0.1f)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+        
     }
 
     public void StopGrapple()
     {
-        if(!isGrappled || isEnnemieGrappled) return;
+        if(!isGrappled || (isEnnemieGrappled && !hasTriggeredAttack)) return;
+
+        if(hasTriggeredAttack)
+        {
+            finishAttack();
+        }
 
         rope.enabled = false;
         joint.enabled = false;
         isGrappled = false;
+        isRetracting = false;
         characterCharacterHandler.setIsGrapple(false);
+        characterCharacterHandler.gameObject.layer = LayerMask.NameToLayer("Player");
+        characterCharacterHandler.setCanDash(true);
         DestroyCurrentProjectile();
+    }
+
+    void finishAttack()
+    {
+        hasTriggeredAttack = false;
+        grapledEnnemieHandler.Hit(attaqueDamage);
+        isEnnemieGrappled = false;
+        grapledEnnemieHandler.setFrozen(false);
+        characterCharacterHandler.Jump();
     }
 
     public Vector2 getGrappleProjectilePosition() {
@@ -224,5 +261,12 @@ public class Grappling : MonoBehaviour
             currentProjectile = null;
             rope.enabled = false;
         }
+    }
+
+    public void startRetracting()
+    {
+        if (!isGrappled && !isEnnemieGrappled) return;
+        isRetracting = true;
+        rb.linearVelocity = Vector2.zero;
     }
 }

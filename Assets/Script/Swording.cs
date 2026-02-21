@@ -132,7 +132,8 @@ public class Swording : MonoBehaviour
 
     public void Attack()
     {
-        if(!canAttack) return;
+        if (!canAttack || isCharging || isChargedActive)
+            return;
         canAttack = false;
         pogoTriggered = false;
 
@@ -152,7 +153,8 @@ public class Swording : MonoBehaviour
 
     public void StartCharge()
     {
-        if(!canCharged) return;
+        if (!canCharged || isCharging || isChargedActive)
+            return;
         isCharging = true;
         chargeTimer = 0f;
         chargeCancelled = false;
@@ -226,32 +228,44 @@ public class Swording : MonoBehaviour
 
         foreach (Collider2D hit in hits)
         {
-            if (!hit.CompareTag("Mob"))
+            bool isMob = hit.CompareTag("Mob");
+            bool isBullet = hit.CompareTag("Bullet");
+
+            if (!isMob && !isBullet)
                 continue;
 
             if (isChargedActive && chargedAlreadyHit.Contains(hit))
                 continue;
 
-            Vector2 dirToEnemy = ((Vector2)hit.transform.position - (Vector2)transform.position).normalized;
+            Vector2 dirToTarget = ((Vector2)hit.transform.position - (Vector2)transform.position).normalized;
             Vector2 facing = isChargedActive ? chargedDashDir : (Vector2)transform.right;
 
-            float angleToEnemy = Vector2.Angle(facing, dirToEnemy);
+            float angleToTarget = Vector2.Angle(facing, dirToTarget);
 
-            if (angleToEnemy <= arcAngle * 0.5f)
+            if (angleToTarget <= arcAngle * 0.5f)
             {
-                HealthManagerMob health = hit.GetComponent<HealthManagerMob>();
-                if (health != null)
+                if (isMob)
                 {
-                    health.Hit(dmg);
-                    if (!pogoTriggered && !characterHandler.CheckGround() && IsAttackingDown())
+                    HealthManagerMob health = hit.GetComponent<HealthManagerMob>();
+                    if (health != null)
                     {
-                        pogoTriggered = true;
-                        playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, 0f);
-                        playerRb.AddForce(Vector2.up * pogoForce, ForceMode2D.Impulse);
+                        health.Hit(dmg);
+
+                        if (!pogoTriggered && !characterHandler.CheckGround() && IsAttackingDown())
+                        {
+                            pogoTriggered = true;
+                            playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, 0f);
+                            playerRb.AddForce(Vector2.up * pogoForce, ForceMode2D.Impulse);
+                        }
+
+                        if (isChargedActive)
+                            chargedAlreadyHit.Add(hit);
                     }
-                    //Debug.Log("Ennemi touché pendant charge : " + hit.name + " Damage : " + dmg);
-                    if (isChargedActive)
-                        chargedAlreadyHit.Add(hit);
+                }
+
+                if (isBullet)
+                {
+                    Destroy(hit.gameObject);
                 }
             }
         }
@@ -276,11 +290,6 @@ public class Swording : MonoBehaviour
         playerRb.constraints = _savedConstraints;
     }
 
-
-
-    ////////////////////////////////////////////////////////////
-    // A implementer plsu tard lorsque joueur prend des degats
-    ////////////////////////////////////////////////////////////
     public void InterruptChargedAttack()
     {
         if (isCharging)
