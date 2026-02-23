@@ -55,4 +55,9 @@ public class HealthManager : MonoBehaviour
             else moduleUI[i].sprite = brokenModule;
         }
     }
+
+    public void setIsHittable(bool value)
+    {
+        isHittable = value;
+    }
 }

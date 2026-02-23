@@ -92,6 +92,7 @@ public class CharacterHandler : MonoBehaviour
     bool isGrapple = false;
 
     PlayerAnimator playerAnimator;
+    HealthManager healthManager;
 
     LayerMask playerLayer;
     LayerMask UntangiblePlayerLayer;
@@ -137,6 +138,7 @@ public class CharacterHandler : MonoBehaviour
 
         playerLayer = LayerMask.NameToLayer("Player");
         UntangiblePlayerLayer = LayerMask.NameToLayer("PlayerUntangible");
+        healthManager = GetComponent<HealthManager>();
     }
 
     public void Jump()
@@ -423,10 +425,12 @@ public class CharacterHandler : MonoBehaviour
     public void becomeUntangible()
     {
         gameObject.layer = UntangiblePlayerLayer;
+        healthManager.setIsHittable(false);
     }
 
     public void becomeTangible()
     {
         gameObject.layer = playerLayer;
+        healthManager.setIsHittable(true);
     }
 }
