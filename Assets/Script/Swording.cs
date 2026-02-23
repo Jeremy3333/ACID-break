@@ -28,9 +28,9 @@ public class Swording : MonoBehaviour
     [Range(0f, 360f)]
     public float chargedAttackAngle = 120f;
     public float chargedAttackChargeTime = 0.75f;
-    public float chargedAttackCooldown = 0f; //temps entre chaque attaque
-    public int chargedDamage = 6;
-    public float chargedDashForce = 22f;
+    public float chargedAttackCooldown = 3f; //temps entre chaque attaque
+    public int chargedDamage = 15;
+    public float chargedDashForce = 35f;
     public float chargedActiveTime = 0.22f; //duree du dash
 
     [Header("Charged Attack Hit Rules")]
@@ -110,14 +110,17 @@ public class Swording : MonoBehaviour
 
     void HandleChargedCooldown()
     {
-        if (!canCharged)
+        if (canCharged) return;
+        if (isCharging || isChargedActive) return;
+
+        attackTimer += Time.deltaTime;
+
+        bool grounded = characterHandler != null && characterHandler.CheckGround();
+
+        if (attackTimer >= chargedAttackCooldown || grounded)
         {
-            chargedTimer += Time.deltaTime;
-            if (chargedTimer >= chargedAttackCooldown)
-            {
-                canCharged = true;
-                chargedTimer = 0f;
-            }
+            canCharged = true;
+            attackTimer = 0f;
         }
     }
 
@@ -192,6 +195,7 @@ public class Swording : MonoBehaviour
         pogoTriggered = false;
         isCharging = false;
         canCharged = false;
+        attackTimer = 0f;
 
         UnlockMovement();
 
