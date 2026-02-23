@@ -81,6 +81,11 @@ public class HealthManager : MonoBehaviour
         }
     }
 
+    public void setIsHittable(bool value)
+    {
+        isHittable = value;
+    }
+
     void OnTriggerEnter2D(Collider2D  collision)
     {
         if(collision.CompareTag("Zone"))

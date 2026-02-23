@@ -32,6 +32,8 @@ public class CharacterHandler : MonoBehaviour
 
     Grappling grappling;
 
+    Swording swording;
+
     Rigidbody2D rb;
 
     BoxCollider2D bc;
@@ -91,6 +93,10 @@ public class CharacterHandler : MonoBehaviour
     bool isGrapple = false;
 
     PlayerAnimator playerAnimator;
+    HealthManager healthManager;
+
+    LayerMask playerLayer;
+    LayerMask UntangiblePlayerLayer;
 
     [SerializeField]
     UIDocument uiDocument;
@@ -125,11 +131,15 @@ public class CharacterHandler : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-
         grappling = rotationPoint.GetComponent<Grappling>();
+        swording = GetComponentInChildren<Swording>();
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponent<PlayerAnimator>();
+
+        playerLayer = LayerMask.NameToLayer("Player");
+        UntangiblePlayerLayer = LayerMask.NameToLayer("PlayerUntangible");
+        healthManager = GetComponent<HealthManager>();
     }
 
     public void Jump()
@@ -151,7 +161,7 @@ public class CharacterHandler : MonoBehaviour
         {
             dashCooldownTimer = Time.time + dashCooldown;
             isDashing = true;
-            dashTimer = GrappleDashMaxTimer;
+            dashTimer = dashMaxTimer;
             dashDirection = new Vector2(isFacingRight ? 1f : -1f, 0f).normalized;
 
             // Reset velocity and apply constant dash speed
@@ -159,6 +169,8 @@ public class CharacterHandler : MonoBehaviour
             rb.gravityScale = 0f; // Disable gravity during dash
 
             playerAnimator.Dash(true, !isFacingRight); // Trigger dash animation
+            
+            becomeUntangible();
         }
     }
 
@@ -195,6 +207,9 @@ public class CharacterHandler : MonoBehaviour
                 (mo < 0 && grappleDir.y < 0)
             )
                 perpendicularDir = -perpendicularDir;
+            
+
+        dashTimer = GrappleDashMaxTimer;
 
             Dash(perpendicularDir);
 
@@ -209,7 +224,6 @@ public class CharacterHandler : MonoBehaviour
         );
 
         isDashing = true;
-        dashTimer = dashMaxTimer;
         dashDirection = direction.normalized;
         rb.linearVelocity = dashDirection * dashVelocityAmplitude;
         rb.gravityScale = 0f;
@@ -239,7 +253,7 @@ public class CharacterHandler : MonoBehaviour
     void ModeSwitch()
     {
         // changemode is an axis that is 0 when not pressed, 1 when pressed in one direction and -1 when pressed in the other
-        if (m_changeModeAction.WasPressedThisFrame() && !isGrapple)
+        if (m_changeModeAction.WasPressedThisFrame() && !isGrapple && !swording.isCharging)
         {
             if(m_changeModeAction.ReadValue<float>() > 0)
             {
@@ -333,6 +347,7 @@ public class CharacterHandler : MonoBehaviour
             {
                 isDashing = false;
                 playerAnimator.Dash(false, !isFacingRight);
+                becomeTangible();
                 // Gravity will be restored in the normal flow next frame
             }
             return; // Skip normal movement & gravity
@@ -412,5 +427,17 @@ public class CharacterHandler : MonoBehaviour
             return hit as BoxCollider2D;
         }
         return null;   
+    }
+
+    public void becomeUntangible()
+    {
+        gameObject.layer = UntangiblePlayerLayer;
+        healthManager.setIsHittable(false);
+    }
+
+    public void becomeTangible()
+    {
+        gameObject.layer = playerLayer;
+        healthManager.setIsHittable(true);
     }
 }
