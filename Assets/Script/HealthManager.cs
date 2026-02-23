@@ -61,6 +61,7 @@ public class HealthManager : MonoBehaviour
 
     public void Resapwn()
     {
+        GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0f, 0f);
         health = 4;
         transform.position = spawn.position;
         zoneHandler.Set();

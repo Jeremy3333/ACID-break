@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4075299163075246963}
   - component: {fileID: 2517190063375073972}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: spawnCaCmob
   m_TagString: Untagged
   m_Icon: {fileID: 0}

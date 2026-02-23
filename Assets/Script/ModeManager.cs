@@ -12,7 +12,7 @@ public class CombatModeManager : MonoBehaviour
     [Header("Modes:")]
     public MonoBehaviour swordMode;
     public MonoBehaviour grapplingGunMode;
-
+    public MonoBehaviour gunMode;
     private ICombatMode currentMode;
 
     private void Awake()
@@ -27,6 +27,9 @@ public class CombatModeManager : MonoBehaviour
         currentMode?.Exit();
 
         SwitchMode(grapplingGunMode as ICombatMode);
+        currentMode?.Exit();
+
+        SwitchMode(gunMode as ICombatMode);
     }
 
     void Update()

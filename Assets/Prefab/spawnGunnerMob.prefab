@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 774926504397266320}
   - component: {fileID: 5189312676832816404}
-  m_Layer: 9
+  m_Layer: 11
   m_Name: spawnGunnerMob
   m_TagString: Untagged
   m_Icon: {fileID: 0}

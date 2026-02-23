@@ -8,6 +8,8 @@ TagManager:
   - RightJumpTrigger
   - LeftJumpTrigger
   - Bullet
+  - Zone
+  - SpawnerMob
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Attack
   - Screen
   - PlayerGrappleAttaque
-  - 
+  - Trigger
   - 
   - 
   - 

@@ -17,13 +17,16 @@ public class ShootingMob : MonoBehaviour
     {
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         enemieHandler = GetComponentInParent<EnemieHandler>();
+        timeBetweenFire = cadence;
+        canFire = false;
     }
 
     // Update is called once per frame
     void Update()
     {   
-        RotateToTarget();
+        if(!enemieHandler.asDetected || enemieHandler.isFrozen) return;
         
+        RotateToTarget();
         if(!canFire)
         {
             timer += Time.deltaTime;
@@ -45,7 +48,7 @@ public class ShootingMob : MonoBehaviour
 
     public void FireSingle()
     {
-        if(!canFire || !enemieHandler.asDetected || enemieHandler.isFrozen) return;
+        if(!canFire) return;
         timeBetweenFire = cadence;
         canFire = false;
         Vector2 recoilDir = -gun.right;

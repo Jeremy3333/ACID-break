@@ -116,10 +116,10 @@ BoxCollider2D:
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
-    m_Bits: 1023
+    m_Bits: 895
   m_ForceReceiveLayers:
     serializedVersion: 2
-    m_Bits: 1015
+    m_Bits: 887
   m_ContactCaptureLayers:
     serializedVersion: 2
     m_Bits: 4294967295
@@ -181,13 +181,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ace043fd39b0ba6eea704858ff553425, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemieHandler
-  playerTransform: {fileID: 0}
+  acceleration: 10
+  walkingSpeed: 3
+  speed: 8
   groundLayers:
     serializedVersion: 2
     m_Bits: 64
   touchGround: 0
   touchGroundfront: 0
   enemieType: 0
+  isFrozen: 0
+  gravityScale: 2.5
+  gravityMultiplier: 2.3
   minMarche: 1
   maxMarche: 3
   minPause: 0.5
@@ -427,13 +432,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51e43e6d56d87fa498663bb0e5654f59, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwordMob
-  target: {fileID: 0}
   attackCooldown: 2
   activeTime: 0.3
   anticipationTime: 0.8
   attackRadius: 1.5
   attackAngle: 100
-  enemieHandler: {fileID: 6358263389224969798}
   swordHitbox: {fileID: 5438124526137640460}
   mobSprite: {fileID: 1180174616362238746}
   swordSprite: {fileID: 6730832120624779111}

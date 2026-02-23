@@ -6,6 +6,22 @@ public class MobSpawner : MonoBehaviour
     GameObject mobPrefab;
 
     private GameObject currentMob;
+    
+    BoxCollider2D zoneCollider;
+    float zoneMinX;
+    float zoneMaxX;
+
+    public void Start()
+    {
+        
+        zoneCollider = GetComponentInParent<BoxCollider2D>();
+
+        if (zoneCollider != null)
+        {
+            zoneMinX = zoneCollider.bounds.min.x;
+            zoneMaxX = zoneCollider.bounds.max.x;
+        }
+    }
 
     // Fonction pour faire apparaître le mob
     public void SpawnMob()
@@ -22,6 +38,12 @@ public class MobSpawner : MonoBehaviour
             transform.position,
             transform.rotation
         );
+
+        float minX = zoneMinX;
+        float maxX = zoneMaxX;
+
+        // On transmet au mob
+        currentMob.GetComponent<EnemieHandler>().SetPatrolBounds(zoneMinX, zoneMaxX);
     }
     public void Kill()
     {
@@ -29,5 +51,12 @@ public class MobSpawner : MonoBehaviour
         {
             Destroy(currentMob);
         }
+    }
+    
+    
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 0.5f);
     }
 }

@@ -1,10 +1,25 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ZoneHandler : MonoBehaviour
 {
     public Transform spawn;
-    [SerializeField]
     GameObject[] mobSpawners;
+
+    private void Awake()
+    {
+        List<GameObject> spawners = new List<GameObject>();
+
+        foreach (Transform child in transform)
+        {
+            if (child.CompareTag("SpawnerMob"))
+            {
+                spawners.Add(child.gameObject);
+            }
+        }
+
+        mobSpawners = spawners.ToArray();
+    }
 
     public void Set()
     {
@@ -24,12 +39,10 @@ public class ZoneHandler : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.green;
-        Gizmos.DrawWireSphere(spawn.position, 0.5f);
-        for (int i = 0; i < mobSpawners.Length; i++)
+        if (spawn != null)
         {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(mobSpawners[i].transform.position, 0.5f);
+            Gizmos.color = Color.green;
+            Gizmos.DrawWireSphere(spawn.position, 0.5f);
         }
     }
 }

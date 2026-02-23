@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8213112711639034334}
   - component: {fileID: 3488047054010977889}
   - component: {fileID: -1014643988306433768}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: RightJumpTrigger
   m_TagString: RightJumpTrigger
   m_Icon: {fileID: 0}
