@@ -347,7 +347,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::HealthDisplay
   health: 4
   isHittable: 1
-  invincybilityTime: 0.6
+  invincybilityTime: 1
   brokenModule: {fileID: 7446353681231411918, guid: 03442e4a010a21d45ad14416794b02d2, type: 3}
   module: {fileID: -4106512570545776594, guid: 90351103a7b57a0418a6fccafdddf523, type: 3}
   moduleUI:
@@ -821,6 +821,8 @@ MonoBehaviour:
   damage: 2
   attackCooldown: 0.5
   activeTime: 0.15
+  pogoForce: 18
+  pogoDownAngleTolerance: 30
   attackRadius: 1.5
   attackAngle: 120
   chargedAttackAngle: 120
@@ -833,7 +835,6 @@ MonoBehaviour:
   swordSprite: {fileID: 2523434879068442398}
   swordCollider: {fileID: 4143496893608001972}
   playerRb: {fileID: 3444569684929839330}
-  characterHandler: {fileID: 0}
   isCharging: 0
 --- !u!114 &186201149509189314
 MonoBehaviour:

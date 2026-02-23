@@ -42,7 +42,8 @@ public class BulletScripteMob : MonoBehaviour
             collision.gameObject.GetComponent<HealthManager>().Hit();
         }
         bool isTrigger = collision.collider.gameObject.tag == "LeftJumpTrigger" || collision.collider.gameObject.tag == "RightJumpTrigger";
-        if(collision.collider.gameObject.tag != "Mob" && collision.collider.gameObject.tag != "Bullet" && !isTrigger)
+        if(collision.collider.gameObject.tag != "Mob" && collision.collider.gameObject.tag != "Bullet" && !isTrigger
+            && (collision.collider.gameObject.tag != "PassableGround" || rb.linearVelocity.y < 0))
         {
             Destroy(gameObject);
         }
