@@ -243,7 +243,7 @@ public class Swording : MonoBehaviour
                 if (health != null)
                 {
                     health.Hit(dmg);
-                    if (!pogoTriggered && !characterHandler.CheckGround() && IsAttackingDown())
+                    if (!pogoTriggered && IsAttackingDown())
                     {
                         pogoTriggered = true;
                         playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, 0f);

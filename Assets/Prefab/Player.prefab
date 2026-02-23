@@ -240,7 +240,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CharacterHandler1
   inputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   cameraTransform: {fileID: 0}
-  rotationPoint: {fileID: 0}
+  rotationPoint: {fileID: 6230553782290057071}
   moveSpeed: 10
   acceleration: 7
   decceleration: 7
@@ -371,6 +371,7 @@ MonoBehaviour:
   inputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   swordMode: {fileID: 2135474792646751812}
   grapplingGunMode: {fileID: 9162712609039972583}
+  gunMode: {fileID: 9162712609039972583}
 --- !u!231 &1144064943240423146
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -474,7 +475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67afc437c31d7a645ac113c71bab27c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cursor
-  inputActions: {fileID: 0}
+  inputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   stickSensitivity: 5
   center: {fileID: 0}
 --- !u!212 &696009298610460701

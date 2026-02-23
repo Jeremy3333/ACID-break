@@ -588,6 +588,7 @@ MonoBehaviour:
   inputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   swordMode: {fileID: 5780014058635968407}
   grapplingGunMode: {fileID: 4031678398376374881}
+  gunMode: {fileID: 0}
 --- !u!231 &8438744378368653962
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -1004,7 +1005,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67afc437c31d7a645ac113c71bab27c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cursor
-  inputActions: {fileID: 0}
+  inputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   stickSensitivity: 5
   center: {fileID: 0}
 --- !u!212 &5270704844381353912
