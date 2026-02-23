@@ -160,7 +160,7 @@ public class CharacterHandler : MonoBehaviour
         {
             dashCooldownTimer = Time.time + dashCooldown;
             isDashing = true;
-            dashTimer = GrappleDashMaxTimer;
+            dashTimer = dashMaxTimer;
             dashDirection = new Vector2(isFacingRight ? 1f : -1f, 0f).normalized;
 
             // Reset velocity and apply constant dash speed
@@ -206,6 +206,9 @@ public class CharacterHandler : MonoBehaviour
                 (mo < 0 && grappleDir.y < 0)
             )
                 perpendicularDir = -perpendicularDir;
+            
+
+        dashTimer = GrappleDashMaxTimer;
 
             Dash(perpendicularDir);
 
@@ -220,7 +223,6 @@ public class CharacterHandler : MonoBehaviour
         );
 
         isDashing = true;
-        dashTimer = dashMaxTimer;
         dashDirection = direction.normalized;
         rb.linearVelocity = dashDirection * dashVelocityAmplitude;
         rb.gravityScale = 0f;
