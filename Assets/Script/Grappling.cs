@@ -167,7 +167,7 @@ public class Grappling : MonoBehaviour
         hasValidTarget = true;
         isEnnemieGrappled = true;
         grapledEnnemieHandler = hitEnnemie.collider.GetComponent<EnemieHandler>();
-        characterCharacterHandler.gameObject.layer = LayerMask.NameToLayer("PlayerGrappleAttaque");
+        characterCharacterHandler.becomeUntangible();
         characterCharacterHandler.setCanDash(false);
         grapledEnnemieHandler.setFrozen(true);
         startRetracting();
@@ -230,7 +230,7 @@ public class Grappling : MonoBehaviour
         isGrappled = false;
         isRetracting = false;
         characterCharacterHandler.setIsGrapple(false);
-        characterCharacterHandler.gameObject.layer = LayerMask.NameToLayer("Player");
+        characterCharacterHandler.becomeTangible();
         characterCharacterHandler.setCanDash(true);
         DestroyCurrentProjectile();
     }

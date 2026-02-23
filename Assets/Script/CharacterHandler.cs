@@ -93,6 +93,9 @@ public class CharacterHandler : MonoBehaviour
 
     PlayerAnimator playerAnimator;
 
+    LayerMask playerLayer;
+    LayerMask UntangiblePlayerLayer;
+
     [SerializeField]
     UIDocument uiDocument;
 
@@ -131,6 +134,9 @@ public class CharacterHandler : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         bc = GetComponent<BoxCollider2D>();
         playerAnimator = GetComponent<PlayerAnimator>();
+
+        playerLayer = LayerMask.NameToLayer("Player");
+        UntangiblePlayerLayer = LayerMask.NameToLayer("PlayerUntangible");
     }
 
     public void Jump()
@@ -409,5 +415,15 @@ public class CharacterHandler : MonoBehaviour
             return hit as BoxCollider2D;
         }
         return null;   
+    }
+
+    public void becomeUntangible()
+    {
+        gameObject.layer = UntangiblePlayerLayer;
+    }
+
+    public void becomeTangible()
+    {
+        gameObject.layer = playerLayer;
     }
 }
