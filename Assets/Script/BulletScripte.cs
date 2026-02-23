@@ -30,8 +30,8 @@ public class BulletScripte : MonoBehaviour
     {
         Vector3 viewPos = mainCam.WorldToViewportPoint(transform.position);
 
-        if (viewPos.x < 0 || viewPos.x > 1 ||
-            viewPos.y < 0 || viewPos.y > 1)
+        if (viewPos.x < -0.5 || viewPos.x > 1.5 ||
+            viewPos.y < -0.5 || viewPos.y > 1.5)
         {
             Destroy(gameObject);
         }

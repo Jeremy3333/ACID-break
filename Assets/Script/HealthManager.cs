@@ -6,6 +6,10 @@ public class HealthManager : MonoBehaviour
     public int health;
     public bool isHittable = true;
 
+    public ZoneHandler zoneHandler;
+    Transform spawn;
+
+
     private float timer;
 
     private Swording swording;
@@ -15,9 +19,15 @@ public class HealthManager : MonoBehaviour
     public Sprite module;
     public Image[] moduleUI;
 
+    void Awake()
+    {
+    }
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        spawn = zoneHandler.spawn;
+        Resapwn();
         swording = GetComponentInChildren<Swording>();
         UpDateUI();    
     }
@@ -35,6 +45,8 @@ public class HealthManager : MonoBehaviour
             } 
         }
         UpDateUI();
+
+        if(health <= 0) Resapwn();
     }
 
     public void Hit()
@@ -45,6 +57,19 @@ public class HealthManager : MonoBehaviour
             health = Mathf.Max(health-1, 0);
             swording.InterruptChargedAttack();
         }
+    }
+
+    public void Resapwn()
+    {
+        GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0f, 0f);
+        health = 4;
+        transform.position = spawn.position;
+        zoneHandler.Set();
+    }
+
+    void Heal()
+    {
+        health = 4;
     }
 
     void UpDateUI()
@@ -59,5 +84,23 @@ public class HealthManager : MonoBehaviour
     public void setIsHittable(bool value)
     {
         isHittable = value;
+    }
+
+    void OnTriggerEnter2D(Collider2D  collision)
+    {
+        if(collision.CompareTag("Zone"))
+        {
+            zoneHandler = collision.gameObject.GetComponent<ZoneHandler>();
+            spawn = zoneHandler.spawn;
+            Heal();
+            zoneHandler.Set();
+        }
+    }
+    void OnTriggerExit2D(Collider2D  collision)
+    {
+        if(collision.CompareTag("Zone"))
+        {
+            collision.gameObject.GetComponent<ZoneHandler>().ReSet();
+        }
     }
 }

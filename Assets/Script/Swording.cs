@@ -266,6 +266,23 @@ public class Swording : MonoBehaviour
                 if (isBullet)
                 {
                     Destroy(hit.gameObject);
+                    if (angleToTarget <= arcAngle * 0.5f)
+                    {
+                        HealthManagerMob health = hit.GetComponent<HealthManagerMob>();
+                        if (health != null)
+                        {
+                            health.Hit(dmg);
+                            if (!pogoTriggered && IsAttackingDown())
+                            {
+                                pogoTriggered = true;
+                                playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, 0f);
+                                playerRb.AddForce(Vector2.up * pogoForce, ForceMode2D.Impulse);
+                            }
+                            //Debug.Log("Ennemi touché pendant charge : " + hit.name + " Damage : " + dmg);
+                            if (isChargedActive)
+                                chargedAlreadyHit.Add(hit);
+                        }
+                    }
                 }
             }
         }

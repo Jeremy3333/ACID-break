@@ -8,12 +8,12 @@ public enum EnemieType
 
 public class EnemieHandler : MonoBehaviour
 {
-    [SerializeField]
     Transform playerTransform;
 
-    float acceleration;
+    [SerializeField] float acceleration;
 
-    float speed;
+    [SerializeField] float walkingSpeed = 4;
+    [SerializeField] float speed = 6;
     
     [SerializeField]
     LayerMask groundLayers;
@@ -59,11 +59,16 @@ public class EnemieHandler : MonoBehaviour
 
     JumpTriggerScript[] jumpTriggers;
 
+    float minX;
+    float maxX;
+
     void Start()
     {
+        playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         enemieRB = GetComponent<Rigidbody2D>();
         enemieCollider = GetComponent<BoxCollider2D>();
         healthManagerMob = GetComponent<HealthManagerMob>();
+
         if (enemieRB == null)
         {
             Debug.LogError("Rigidbody2D component is missing on the enemie.");
@@ -76,11 +81,9 @@ public class EnemieHandler : MonoBehaviour
         {
             case EnemieType.Basic:
                 acceleration = 25f;
-                speed = 4f;
                 break;
             case EnemieType.Gunner:
                 acceleration = 20f;
-                speed = 2f;
                 break;
             default:
                 Debug.LogError("Unknown EnemieType.");
@@ -122,12 +125,31 @@ public class EnemieHandler : MonoBehaviour
     void BasicBehavior()
     {
         Vector2 directionToPlayer = playerTransform.position - transform.position;
-        if(directionToPlayer.magnitude > 2f)
+
+        if(directionToPlayer.magnitude > 1.75f)
         {
+            searchDirection  = directionToPlayer.x<0 ? -1 : 1;
+
+            if (!CheckGroundFront() && CheckGround()){
+                Vector2 vel = enemieRB.linearVelocity;
+                vel.x = 0f;
+                enemieRB.linearVelocity = vel;
+                return;
+            }
+
             MoveTowardsPlayer(true);
         }
-        else if(directionToPlayer.magnitude < 0.5f)
+        else if(directionToPlayer.magnitude < 1.5f)
         {
+            searchDirection  = directionToPlayer.x<0 ? 1 : -1;
+
+            if (!CheckGroundFront() && CheckGround()){
+                Vector2 vel = enemieRB.linearVelocity;
+                vel.x = 0f;
+                enemieRB.linearVelocity = vel;
+                return;
+            }
+
             MoveTowardsPlayer(false);
         }
     }
@@ -135,12 +157,31 @@ public class EnemieHandler : MonoBehaviour
     void GunnerBehavior()
     {
         Vector2 directionToPlayer = playerTransform.position - transform.position;
+
         if(directionToPlayer.magnitude > 6f)
         {
+            searchDirection  = directionToPlayer.x<0 ? -1 : 1;
+
+            if (!CheckGroundFront() && CheckGround()){
+                Vector2 vel = enemieRB.linearVelocity;
+                vel.x = 0f;
+                enemieRB.linearVelocity = vel;
+                return;
+            }
+
             MoveTowardsPlayer(true);
         }
         else if(directionToPlayer.magnitude < 4f)
         {
+            searchDirection  = directionToPlayer.x<0 ? 1 : -1;
+
+            if (!CheckGroundFront() && CheckGround()){
+                Vector2 vel = enemieRB.linearVelocity;
+                vel.x = 0f;
+                enemieRB.linearVelocity = vel;
+                return;
+            }
+
             MoveTowardsPlayer(false);
         }
     }
@@ -150,7 +191,9 @@ public class EnemieHandler : MonoBehaviour
         if (!CheckGroundFront())
         {
             searchDirection *= -1;
-            targetVelocityX = 0f;
+            Vector2 vel = enemieRB.linearVelocity;
+            vel.x = 0f;
+            enemieRB.linearVelocity = vel;
             return;
         }
 
@@ -158,7 +201,7 @@ public class EnemieHandler : MonoBehaviour
 
         if (isWalking)
         {
-            targetVelocityX = searchDirection * speed;
+            targetVelocityX = searchDirection * walkingSpeed;
 
             if (searchTimer >= currentDuration)
             {
@@ -265,7 +308,7 @@ public class EnemieHandler : MonoBehaviour
 
     void Jump(float jumpForce)
     {
-        if (!touchGround || (playerTransform.position.y - transform.position.y) < 5) return;
+        if (!touchGround || Mathf.Abs(playerTransform.position.y - transform.position.y) < 3) return;
         enemieRB.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
     }
     #endregion Jump
@@ -306,6 +349,12 @@ public class EnemieHandler : MonoBehaviour
         return false;
     }
 
+    public void SetPatrolBounds(float zoneMinX, float zoneMaxX)
+    {
+        minX = zoneMinX;
+        maxX = zoneMaxX;
+    }
+
     // Update is called once per frame
     void Update()
     {
@@ -322,7 +371,19 @@ public class EnemieHandler : MonoBehaviour
     void FixedUpdate()
     {
         float newVx = Mathf.MoveTowards(enemieRB.linearVelocity.x, targetVelocityX, acceleration * Time.fixedDeltaTime);
+        
+        float nextX = transform.position.x + newVx * Time.fixedDeltaTime;
+        if (nextX < minX)
+        {
+            newVx = 0f;
+        }
+        else if (nextX > maxX)
+        {
+            newVx = 0f;
+        }
+
         enemieRB.linearVelocity = new Vector2(newVx, enemieRB.linearVelocity.y);    
+
         if (targetVelocityX > 0)
             isFacingRight = true;
         else if (targetVelocityX < 0)
@@ -337,6 +398,7 @@ public class EnemieHandler : MonoBehaviour
 
     void OnCollisionStay2D(Collision2D collision)
     {
+        if (enemieType == EnemieType.Gunner || !asDetected || !touchGround) return;
         if(collision.collider.gameObject.tag == "LeftJumpTrigger" && !isFacingRight)
         {
             float jumpForce = collision.gameObject.GetComponent<JumpTriggerScript>().jumpForce;

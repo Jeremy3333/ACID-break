@@ -3,7 +3,7 @@ using System.Collections;
 
 public class SwordMob : MonoBehaviour
 {
-    [SerializeField] Transform target;
+    Transform target;
 
     [Header("Attack")]
     [SerializeField] float attackCooldown = 2.0f;
@@ -30,6 +30,7 @@ public class SwordMob : MonoBehaviour
 
     void Start()
     {
+        target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         swordHitbox.enabled = false;
         swordSprite.enabled = false;
         enemieHandler = GetComponentInParent<EnemieHandler>();

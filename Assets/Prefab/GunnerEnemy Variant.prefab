@@ -136,11 +136,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5020e91717a210040bc0d1732f785963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShootingMob
-  target: {fileID: 0}
   bullet: {fileID: 7877757816228954581, guid: b1041a4a04b06fa4b961d17df57dc11c, type: 3}
   gun: {fileID: 3215054616991064704}
-  canFire: 1
-  enemieHandler: {fileID: 4144459992345686740}
+  canFire: 0
   cadence: 1
 --- !u!1001 &7041662494329607314
 PrefabInstance:
@@ -223,6 +221,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6358263389224969798, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
+      propertyPath: speed
+      value: 8
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358263389224969798, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
       propertyPath: maxPause
       value: 3
       objectReference: {fileID: 0}
@@ -263,17 +265,6 @@ PrefabInstance:
       addedObject: {fileID: 811244552785019367}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
---- !u!114 &4144459992345686740 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6358263389224969798, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
-  m_PrefabInstance: {fileID: 7041662494329607314}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ace043fd39b0ba6eea704858ff553425, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemieHandler
 --- !u!4 &6916124000452609040 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4486148833515737218, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}

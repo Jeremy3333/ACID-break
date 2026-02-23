@@ -6,7 +6,8 @@ using System.Collections.Generic;
 public enum CharacterMode
 {
     BaseballBat,
-    Lasso
+    Lasso,
+    Gun
 }
 
 public class CharacterHandler : MonoBehaviour
@@ -241,6 +242,10 @@ public class CharacterHandler : MonoBehaviour
             case CharacterMode.Lasso:
                 Debug.Log("Lasso mode selected");
                 modeManager.SwitchMode(modeManager.grapplingGunMode as ICombatMode);
+                break;
+            case CharacterMode.Gun:
+                Debug.Log("Gun mode selected");
+                modeManager.SwitchMode(modeManager.gunMode as ICombatMode);
                 break;
         }
     }

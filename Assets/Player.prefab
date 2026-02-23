@@ -157,7 +157,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: '::'
   line: {fileID: 45685761477319593}
   grappling: {fileID: 3799512133763063023}
-  extendDuration: 0.15
 --- !u!1 &1252292402544581834
 GameObject:
   m_ObjectHideFlags: 0
@@ -456,21 +455,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70dc4e4e15e5da24e951053088679b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CharacterHandler1
+  inputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   cameraTransform: {fileID: 0}
+  rotationPoint: {fileID: 0}
   moveSpeed: 10
   acceleration: 7
   decceleration: 7
   velPow: 0.9
   jumpForce: 13.5
+  dashVelocityAmplitude: 25
+  dashCooldown: 1
   gravityScale: 2.5
   GravityMultiplier: 2.3
-  groundCheck: {fileID: 4527725983058193567}
-  radius: 0.1
-  collisionLayer:
+  groundLayers:
     serializedVersion: 2
-    m_Bits: 64
-  isGrounded: 0
-  joint: {fileID: 8438744378368653962}
+    m_Bits: 0
+  screenLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  dashMaxTimer: 0.2
+  GrappleDashMaxTimer: 0.5
   uiDocument: {fileID: 0}
   modeManager: {fileID: 1372557364160186923}
 --- !u!61 &4280649391483658440
@@ -559,12 +563,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HealthDisplay
   health: 4
-  hitLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  hitCheck: {fileID: 3523727420036575462}
-  dim: {x: 1, y: 1}
   isHittable: 1
+  zoneHandler: {fileID: 0}
   invincybilityTime: 0.6
   brokenModule: {fileID: 7446353681231411918, guid: 03442e4a010a21d45ad14416794b02d2, type: 3}
   module: {fileID: -4106512570545776594, guid: 90351103a7b57a0418a6fccafdddf523, type: 3}
@@ -585,9 +585,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a0090f0615a3764b9e9c945014e33eb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatModeManager
-  gunMode: {fileID: 3831482246026592755}
+  inputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   swordMode: {fileID: 5780014058635968407}
   grapplingGunMode: {fileID: 4031678398376374881}
+  gunMode: {fileID: 0}
 --- !u!231 &8438744378368653962
 SpringJoint2D:
   m_ObjectHideFlags: 0
@@ -643,6 +644,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aebccbf792f05d84ab07cecc9038b9a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimator
+  inputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   character: {fileID: 7236991040548320231}
   torso: {fileID: 3909493031972332764}
 --- !u!1 &3909493031972332764
@@ -850,6 +852,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 983ab8c4475d2a8409ca515d7b8c8da6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Shooting
+  target: {fileID: 0}
   bullet: {fileID: 7877757816228954581, guid: 026099bc5dab35047a2980d9a7c53a67, type: 3}
   gun: {fileID: 4678306884799848197}
   playerRb: {fileID: 7236991040548320231}
@@ -874,12 +877,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: acfe0dc0486dbdb488756a6a507d1ec7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Swording
+  target: {fileID: 0}
   damage: 2
   attackCooldown: 0.5
   activeTime: 0.15
-  swordHitbox: {fileID: 8297053306773851841}
+  pogoForce: 18
+  pogoDownAngleTolerance: 30
+  attackRadius: 1.5
+  attackAngle: 120
+  chargedAttackAngle: 120
+  chargedAttackChargeTime: 0.75
+  chargedAttackCooldown: 0
+  chargedDamage: 6
+  chargedDashForce: 22
+  chargedActiveTime: 0.22
+  chargedHitInterval: 0.03
   swordSprite: {fileID: 6953847243234411052}
+  swordCollider: {fileID: 0}
   playerRb: {fileID: 7236991040548320231}
+  isCharging: 0
 --- !u!114 &3799512133763063023
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -894,16 +910,24 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Grappling
   rope: {fileID: 7266115082098574701}
   cam: {fileID: 0}
+  target: {fileID: 0}
   firePoint: {fileID: 2103389752388421826}
   rb: {fileID: 7236991040548320231}
   joint: {fileID: 8438744378368653962}
-  maxDistance: 20
-  grappableLayer:
-    serializedVersion: 2
-    m_Bits: 64
   jointFrequency: 6
   retractSpeed: 10
-  minDistance: 1.5
+  maxLength: 15
+  grappleProjectilePrefab: {fileID: 0}
+  projectileSpeed: 100
+  projectileMaxDistance: 20
+  projectileRetractSpeed: 100
+  grapplePlateformMask:
+    serializedVersion: 2
+    m_Bits: 0
+  grappleEnnemieMask:
+    serializedVersion: 2
+    m_Bits: 0
+  attaqueDamage: 5
   grapplePoint: {x: 0, y: 0}
 --- !u!1 &5954050055917977361
 GameObject:
@@ -981,6 +1005,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67afc437c31d7a645ac113c71bab27c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Cursor
+  inputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
+  stickSensitivity: 5
+  center: {fileID: 0}
 --- !u!212 &5270704844381353912
 SpriteRenderer:
   serializedVersion: 2
