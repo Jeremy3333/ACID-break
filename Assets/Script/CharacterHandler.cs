@@ -166,6 +166,8 @@ public class CharacterHandler : MonoBehaviour
             rb.gravityScale = 0f; // Disable gravity during dash
 
             playerAnimator.Dash(true, !isFacingRight); // Trigger dash animation
+            
+            becomeUntangible();
         }
     }
 
@@ -336,6 +338,7 @@ public class CharacterHandler : MonoBehaviour
             {
                 isDashing = false;
                 playerAnimator.Dash(false, !isFacingRight);
+                becomeTangible();
                 // Gravity will be restored in the normal flow next frame
             }
             return; // Skip normal movement & gravity
