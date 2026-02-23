@@ -21,13 +21,13 @@ public class HealthManager : MonoBehaviour
 
     void Awake()
     {
-        spawn = zoneHandler.spawn;
-        Resapwn();
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
+        spawn = zoneHandler.spawn;
+        Resapwn();
         swording = GetComponentInChildren<Swording>();
         UpDateUI();    
     }
