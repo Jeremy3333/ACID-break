@@ -3530,6 +3530,7 @@ MonoBehaviour:
   followSpeed: 0.2
   motionMagn: 0.4
   mouseOffset: 3
+  target: {fileID: 1570926634}
 --- !u!81 &1231842735
 AudioListener:
   m_ObjectHideFlags: 0

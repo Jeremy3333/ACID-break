@@ -28,6 +28,8 @@ public class SwordMob : MonoBehaviour
     float cooldownTimer;
     float anticipationTimer;
 
+    AudioManager audioManager;
+
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -42,6 +44,7 @@ public class SwordMob : MonoBehaviour
         HandleCooldown();
         CheckAttack();
         HandleAnticipation();
+        audioManager = transform.parent.GetComponentInChildren<AudioManager>();
     }
 
     void RotateToTarget()
@@ -128,6 +131,7 @@ public class SwordMob : MonoBehaviour
                 }
             }
         }
+        audioManager.PlayClipRand(audioManager.woosh);
     }
 
     void Attack()

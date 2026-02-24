@@ -146,8 +146,6 @@ public class Swording : MonoBehaviour
         DoArcDamage(damage, attackAngle);
 
         Invoke(nameof(EndAttack), activeTime);
-
-        audioManager.PlayClipRand(audioManager.woosh);
     }
 
     void EndAttack()
@@ -291,6 +289,7 @@ public class Swording : MonoBehaviour
                 }
             }
         }
+        audioManager.PlayClipRand(audioManager.woosh);
     }
 
     void LockMovement()

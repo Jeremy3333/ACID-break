@@ -12,6 +12,8 @@ public class ShootingMob : MonoBehaviour
 
     [SerializeField] float cadence = 0.3f;
 
+    AudioManager audioManager;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -19,6 +21,7 @@ public class ShootingMob : MonoBehaviour
         enemieHandler = GetComponentInParent<EnemieHandler>();
         timeBetweenFire = cadence;
         canFire = false;
+        audioManager = transform.parent.GetComponentInChildren<AudioManager>();
     }
 
     // Update is called once per frame
@@ -57,5 +60,7 @@ public class ShootingMob : MonoBehaviour
 
         GameObject b = Instantiate(bullet, gun.position, Quaternion.identity);
         b.GetComponent<BulletScripteMob>().Init(direction);
+
+        audioManager.PlayClipRand(audioManager.gun);
     }
 }

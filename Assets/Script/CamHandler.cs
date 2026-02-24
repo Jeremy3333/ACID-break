@@ -6,6 +6,7 @@ public class CamHandler : MonoBehaviour
     [SerializeField] float followSpeed = 0.2f;
     [SerializeField] float motionMagn = 0.4f;
     [SerializeField] float mouseOffset = 3f;
+    [SerializeField] Transform target;
 
     Camera cam;
     Vector3 velocity;
@@ -113,9 +114,7 @@ public class CamHandler : MonoBehaviour
 
     Vector3 calculateDisplaceDirection(float minX, float minY, float maxX, float maxY)
     {
-        Vector3 mouseWorld = getMouseWorldPos(minX, minY, maxX, maxY);
-
-        Vector3 dir = mouseWorld - (Vector3)playerRb.position;
+        Vector3 dir = target.position - (Vector3)playerRb.position;
         return Vector3.ClampMagnitude(dir, mouseOffset);
     }
 
