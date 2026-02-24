@@ -59,11 +59,15 @@ public class EnemieHandler : MonoBehaviour
 
     JumpTriggerScript[] jumpTriggers;
 
+    private EnemyAnimator enemyAnimator;
+
     void Start()
     {
         enemieRB = GetComponent<Rigidbody2D>();
         enemieCollider = GetComponent<BoxCollider2D>();
         healthManagerMob = GetComponent<HealthManagerMob>();
+        enemyAnimator = GetComponent<EnemyAnimator>();
+
         if (enemieRB == null)
         {
             Debug.LogError("Rigidbody2D component is missing on the enemie.");
@@ -71,6 +75,10 @@ public class EnemieHandler : MonoBehaviour
         if (playerTransform == null)
         {
             Debug.LogError("Player Transform is not assigned.");
+        }
+        if (enemyAnimator == null)
+        {
+            Debug.LogError("Enemy Animator is not assigned.");
         }
         switch (enemieType)
         {
