@@ -95,6 +95,7 @@ public class SwordMob : MonoBehaviour
         if (anticipationTimer >= anticipationTime)
         {
             isAnticipating = false;
+            Debug.Log(Time.deltaTime);
             Attack();
         }
     }
@@ -138,9 +139,9 @@ public class SwordMob : MonoBehaviour
     void Attack()
     {
         canAttack = false;
-        animator.SetInteger("AttackPhase", 2);
 
         swordSprite.enabled = true;
+        animator.SetInteger("AttackPhase", 2);
 
         DoArcDamage(attackAngle);
 

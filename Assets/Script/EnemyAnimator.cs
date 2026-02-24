@@ -10,7 +10,7 @@ public class EnemyAnimator : MonoBehaviour
 
     private SpriteRenderer gunnerArmRenderer;
 
-    private const float animEpsilon = 0.5f;
+    private const float animEpsilon = 1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -41,6 +41,6 @@ public class EnemyAnimator : MonoBehaviour
             }
         }
 
-        animator.SetBool("IsChasing", Mathf.Abs(enemy.linearVelocity.x) > animEpsilon);
+        animator.SetFloat("XSpeed", Mathf.Abs(enemy.linearVelocity.x));
     }
 }
