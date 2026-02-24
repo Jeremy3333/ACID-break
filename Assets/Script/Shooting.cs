@@ -26,11 +26,16 @@ public class Shooting : MonoBehaviour
 
     private PlayerAnimator playerAnimator;
 
+    AudioManager audioManager;
+
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         mainCam = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<Camera>();
         playerAnimator = playerRb.gameObject.GetComponent<PlayerAnimator>();
+        audioManager = transform.parent.GetComponentInChildren<AudioManager>();
+
     }
 
     // Update is called once per frame
@@ -68,6 +73,8 @@ public class Shooting : MonoBehaviour
 
         GameObject b = Instantiate(bullet, gun.position, Quaternion.identity);
         b.GetComponent<BulletScripte>().Init(direction, damage1);
+
+        audioManager.PlayClipRand(audioManager.gun);
     }
 
     public void FireShotgun()
@@ -86,5 +93,6 @@ public class Shooting : MonoBehaviour
             GameObject b = Instantiate(bullet, gun.position, Quaternion.identity);
             b.GetComponent<BulletScripte>().Init(direction, damage2);
         }
+        audioManager.PlayClipRand(audioManager.shotGun);
     }
 }

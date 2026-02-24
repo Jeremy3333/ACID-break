@@ -59,12 +59,15 @@ public class Swording : MonoBehaviour
     private RigidbodyConstraints2D _savedConstraints;
     private bool _movementLocked = false;
 
+    AudioManager audioManager;
+
     void Start()
     {
         mainCam = Camera.main;
         swordSprite.enabled = false;
         swordCollider.enabled = false;
         characterHandler = GetComponentInParent<CharacterHandler>();
+        audioManager = transform.parent.GetComponentInChildren<AudioManager>();
     }
 
     void Update()
@@ -143,6 +146,8 @@ public class Swording : MonoBehaviour
         DoArcDamage(damage, attackAngle);
 
         Invoke(nameof(EndAttack), activeTime);
+
+        audioManager.PlayClipRand(audioManager.woosh);
     }
 
     void EndAttack()
@@ -251,7 +256,7 @@ public class Swording : MonoBehaviour
                     {
                         health.Hit(dmg);
 
-                        if (!pogoTriggered && !characterHandler.CheckGround() && IsAttackingDown())
+                        if (!pogoTriggered && IsAttackingDown())
                         {
                             pogoTriggered = true;
                             playerRb.linearVelocity = new Vector2(playerRb.linearVelocity.x, 0f);

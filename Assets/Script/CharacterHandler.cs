@@ -5,8 +5,8 @@ using System.Collections.Generic;
 
 public enum CharacterMode
 {
-    BaseballBat,
     Lasso,
+    BaseballBat,
     Gun
 }
 
@@ -110,6 +110,11 @@ public class CharacterHandler : MonoBehaviour
     [SerializeField]
     CombatModeManager modeManager;
 
+    private bool playingFootStep = false;
+    public float footStepSpeed = 0.3f;
+
+    AudioManager audioManager;
+
     void OnEnable()
     {
         inputActions.FindActionMap("Player").Enable();
@@ -140,19 +145,25 @@ public class CharacterHandler : MonoBehaviour
         playerLayer = LayerMask.NameToLayer("Player");
         UntangiblePlayerLayer = LayerMask.NameToLayer("PlayerUntangible");
         healthManager = GetComponent<HealthManager>();
+        
+        audioManager = GetComponentInChildren<AudioManager>();
     }
 
     public void Jump()
     {
         if (!touchGround && !doubleJumpReady) return;
+        
         if(!touchGround)
         {
             rb.linearVelocity = new Vector2(rb.linearVelocity.x, 0f);
             rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+            audioManager.PlayClipRand(audioManager.jump);
             doubleJumpReady = false;
             return;
         }
         rb.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
+
+        audioManager.PlayClipRand(audioManager.jump);
     }
 
     void GroundDash()
@@ -171,6 +182,7 @@ public class CharacterHandler : MonoBehaviour
             playerAnimator.Dash(true, !isFacingRight); // Trigger dash animation
             
             becomeUntangible();
+            audioManager.PlayClipRand(audioManager.jump);
         }
     }
 
@@ -209,10 +221,11 @@ public class CharacterHandler : MonoBehaviour
                 perpendicularDir = -perpendicularDir;
             
 
-        dashTimer = GrappleDashMaxTimer;
+            dashTimer = GrappleDashMaxTimer;
 
             Dash(perpendicularDir);
 
+            audioManager.PlayClipRand(audioManager.jump);
         }
     }
 
@@ -289,6 +302,35 @@ public class CharacterHandler : MonoBehaviour
         isFacingRight = !isFacingRight;
     }
 
+    void StartFootSteps()
+    {
+        playingFootStep = true;
+        InvokeRepeating(nameof(PlayFootStep), 0f, footStepSpeed);
+    }
+
+    void StopFootSteps()
+    {
+        playingFootStep = false;
+        CancelInvoke(nameof(PlayFootStep));
+    }
+    
+    void PlayFootStep()
+    {
+        audioManager.PlayClipRand(audioManager.walk);
+    }
+
+    void CheckFootSteps()
+    {
+        if(rb.linearVelocity.magnitude > 1f && touchGround && !playingFootStep)
+        {
+            StartFootSteps();
+        }
+        else if(rb.linearVelocity.magnitude < 1f || !touchGround)
+        {
+            StopFootSteps();
+        }
+    }
+
     void UpdateMovement()
     {
 
@@ -329,6 +371,8 @@ public class CharacterHandler : MonoBehaviour
         UpdateMovement();
 
         ModeSwitch();
+
+        CheckFootSteps();
     }
 
     void FixedUpdate()

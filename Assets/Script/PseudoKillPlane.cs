@@ -15,7 +15,7 @@ public class PseudoKillPlane : MonoBehaviour
     {
         if(transform.position.y < killHeight)
         {
-            GetComponent<HealthManager>().Resapwn();
+            GetComponent<HealthManager>().Respawn();
         }
     }
 }
