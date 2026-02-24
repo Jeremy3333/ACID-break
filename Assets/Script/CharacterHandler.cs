@@ -90,6 +90,8 @@ public class CharacterHandler : MonoBehaviour
 
     bool grappleDashReady = true;
 
+    [SerializeField] float grappleDashForce = 20f;
+
     bool isGrapple = false;
 
     PlayerAnimator playerAnimator;
@@ -209,10 +211,10 @@ public class CharacterHandler : MonoBehaviour
                 perpendicularDir = -perpendicularDir;
             
 
-        dashTimer = GrappleDashMaxTimer;
+            dashTimer = GrappleDashMaxTimer;
 
-            Dash(perpendicularDir);
-
+            rb.linearVelocity = Vector2.zero; // Reset current velocity before applying dash force
+            rb.AddForce(perpendicularDir * grappleDashForce, ForceMode2D.Impulse);
         }
     }
 
