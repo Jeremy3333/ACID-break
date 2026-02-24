@@ -4223,7 +4223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6355964925543335445, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: dashVelocityAmplitude
-      value: 50
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6423307217694462622, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: center
