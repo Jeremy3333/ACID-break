@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using SpriteFlash;
 
 public class HealthManagerMob : MonoBehaviour
 {
@@ -16,9 +17,11 @@ public class HealthManagerMob : MonoBehaviour
     [SerializeField]
     float invincybilityTime = 0.6f;
 
+    private SimpleFlash flashEffect;
+
     void Start()
     {
-
+        flashEffect = GetComponent<SimpleFlash>();
     }
 
     // Update is called once per frame
@@ -40,6 +43,7 @@ public class HealthManagerMob : MonoBehaviour
         if (isHittable)
         {
             isHittable = false;
+            flashEffect.Flash();
             health = Mathf.Max(health-damage, 0);
             if (health <= 0) Destroy(gameObject);
             enemieHandler.asDetected = true;

@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
+using SpriteFlash;
 
 public class HealthManager : MonoBehaviour
 {
@@ -13,6 +14,7 @@ public class HealthManager : MonoBehaviour
     private float timer;
 
     private Swording swording;
+    private SimpleFlash flashEffect;
     public float invincybilityTime = 0.6f;
 
     public Sprite brokenModule;
@@ -29,6 +31,7 @@ public class HealthManager : MonoBehaviour
         spawn = zoneHandler.spawn;
         Resapwn();
         swording = GetComponentInChildren<Swording>();
+        flashEffect = GetComponent<SimpleFlash>();
         UpDateUI();    
     }
 
@@ -55,6 +58,7 @@ public class HealthManager : MonoBehaviour
         {
             isHittable = false;
             health = Mathf.Max(health-1, 0);
+            flashEffect.Flash();
             swording.InterruptChargedAttack();
         }
     }
