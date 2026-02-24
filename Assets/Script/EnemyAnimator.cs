@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class EnemyAnimator : MonoBehaviour
 {
+    Transform target;
 
     public Rigidbody2D enemy;
     private Animator animator;
@@ -26,6 +27,7 @@ public class EnemyAnimator : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         enemy = GetComponent<Rigidbody2D>();
+        target = GameObject.FindGameObjectWithTag("Player").transform;
     }
 
     // Update is called once per frame
@@ -42,5 +44,15 @@ public class EnemyAnimator : MonoBehaviour
         }
 
         animator.SetFloat("XSpeed", Mathf.Abs(enemy.linearVelocity.x));
+
+        // If BasicEnemy
+        if (gunnerArmRenderer == null)
+        {
+            // If enemy's attacking, make it look at the player
+            if (animator.GetInteger("AttackPhase") > 0)
+            {
+                spriteRenderer.flipX = (target.transform.position.x < transform.position.x);
+            }
+        }
     }
 }
