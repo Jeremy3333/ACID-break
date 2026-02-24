@@ -472,7 +472,7 @@ MonoBehaviour:
   attackCooldown: 2
   activeTime: 0.3
   anticipationTime: 0.8
-  attackRadius: 1.5
+  attackRadius: 3
   attackAngle: 100
   swordHitbox: {fileID: 5438124526137640460}
   mobSprite: {fileID: 1180174616362238746}
