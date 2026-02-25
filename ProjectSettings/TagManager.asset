@@ -10,6 +10,7 @@ TagManager:
   - Bullet
   - Zone
   - SpawnerMob
+  - PassableGround
   layers:
   - Default
   - TransparentFX
@@ -23,7 +24,7 @@ TagManager:
   - Screen
   - PlayerUntangible
   - Trigger
-  - 
+  - PassableGround
   - 
   - 
   - 

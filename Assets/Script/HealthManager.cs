@@ -13,23 +13,31 @@ public class HealthManager : MonoBehaviour
     private float timer;
 
     private Swording swording;
+    private Grappling grappling;
     public float invincybilityTime = 0.6f;
 
     public Sprite brokenModule;
     public Sprite module;
     public Image[] moduleUI;
+    AudioManager audioManager;
+
+    
 
     void Awake()
     {
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         spawn = zoneHandler.spawn;
-        Resapwn();
+        zoneHandler.Set();
         swording = GetComponentInChildren<Swording>();
-        UpDateUI();    
+        grappling = GetComponentInChildren<Grappling>();
+        Respawn();
+        UpDateUI();
+        audioManager = GetComponentInChildren<AudioManager>();
     }
 
     // Update is called once per frame
@@ -46,7 +54,7 @@ public class HealthManager : MonoBehaviour
         }
         UpDateUI();
 
-        if(health <= 0) Resapwn();
+        if(health <= 0) Respawn();
     }
 
     public void Hit()
@@ -56,15 +64,19 @@ public class HealthManager : MonoBehaviour
             isHittable = false;
             health = Mathf.Max(health-1, 0);
             swording.InterruptChargedAttack();
+
+            audioManager.PlayClip(audioManager.hit);
         }
     }
 
-    public void Resapwn()
+    public void Respawn()
     {
         GetComponent<Rigidbody2D>().linearVelocity = new Vector2(0f, 0f);
         health = 4;
         transform.position = spawn.position;
         zoneHandler.Set();
+        grappling.DestroyCurrentProjectile();
+        grappling.StopGrapple();
     }
 
     void Heal()
