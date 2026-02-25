@@ -139739,7 +139739,7 @@ AudioSource:
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: 712cf2b55a5aee800b6efc5ffbe0c170, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0
+  m_Volume: 1
   m_Pitch: 1
   Loop: 0
   Mute: 0
@@ -140874,10 +140874,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 326756571714471987, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 6465969072001767519, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1443575248}
+    m_AddedGameObjects: []
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 1951263583988276626, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       insertIndex: -1

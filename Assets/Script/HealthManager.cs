@@ -35,7 +35,7 @@ public class HealthManager : MonoBehaviour
         zoneHandler.Set();
         swording = GetComponentInChildren<Swording>();
         grappling = GetComponentInChildren<Grappling>();
-        Resapwn();
+        Respawn();
         UpDateUI();
         audioManager = GetComponentInChildren<AudioManager>();
     }
