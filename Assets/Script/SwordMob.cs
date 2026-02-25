@@ -28,12 +28,16 @@ public class SwordMob : MonoBehaviour
     float cooldownTimer;
     float anticipationTimer;
 
+    private Animator animator;
+
     void Start()
     {
         target = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
         swordHitbox.enabled = false;
         swordSprite.enabled = false;
         enemieHandler = GetComponentInParent<EnemieHandler>();
+
+        animator = transform.parent.gameObject.GetComponent<Animator>();
     }
 
     void Update()
@@ -77,6 +81,7 @@ public class SwordMob : MonoBehaviour
     void StartAnticipation()
     {
         isAnticipating = true;
+        animator.SetInteger("AttackPhase", 1);
         anticipationTimer = 0f;
         StartCoroutine(BlinkEffect());
     }
@@ -90,6 +95,7 @@ public class SwordMob : MonoBehaviour
         if (anticipationTimer >= anticipationTime)
         {
             isAnticipating = false;
+            Debug.Log(Time.deltaTime);
             Attack();
         }
     }
@@ -135,6 +141,7 @@ public class SwordMob : MonoBehaviour
         canAttack = false;
 
         swordSprite.enabled = true;
+        animator.SetInteger("AttackPhase", 2);
 
         DoArcDamage(attackAngle);
 
@@ -144,6 +151,7 @@ public class SwordMob : MonoBehaviour
     void EndAttack()
     {
         swordSprite.enabled = false;
+        animator.SetInteger("AttackPhase", 0);
     }
 
     void OnDrawGizmosSelected()
