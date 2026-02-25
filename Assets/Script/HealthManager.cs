@@ -13,6 +13,7 @@ public class HealthManager : MonoBehaviour
     private float timer;
 
     private Swording swording;
+    private Grappling grappling;
     public float invincybilityTime = 0.6f;
 
     public Sprite brokenModule;
@@ -20,17 +21,22 @@ public class HealthManager : MonoBehaviour
     public Image[] moduleUI;
     AudioManager audioManager;
 
+    
+
     void Awake()
     {
+
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         spawn = zoneHandler.spawn;
-        Respawn();
+        zoneHandler.Set();
         swording = GetComponentInChildren<Swording>();
-        UpDateUI(); 
+        grappling = GetComponentInChildren<Grappling>();
+        Resapwn();
+        UpDateUI();
         audioManager = GetComponentInChildren<AudioManager>();
     }
 
@@ -69,6 +75,8 @@ public class HealthManager : MonoBehaviour
         health = 4;
         transform.position = spawn.position;
         zoneHandler.Set();
+        grappling.DestroyCurrentProjectile();
+        grappling.StopGrapple();
     }
 
     void Heal()

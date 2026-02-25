@@ -258,6 +258,7 @@ MonoBehaviour:
     m_Bits: 0
   dashMaxTimer: 0.2
   GrappleDashMaxTimer: 0.5
+  grappleDashForce: 20
   uiDocument: {fileID: 0}
   modeManager: {fileID: 6309833254955042922}
 --- !u!61 &8289134739863195676
@@ -865,7 +866,7 @@ MonoBehaviour:
   projectileRetractSpeed: 70
   grapplePlateformMask:
     serializedVersion: 2
-    m_Bits: 64
+    m_Bits: 4160
   grappleEnnemieMask:
     serializedVersion: 2
     m_Bits: 128
@@ -1054,7 +1055,7 @@ Transform:
   m_GameObject: {fileID: 7493259045300810212}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.008508444, y: 0.31096256, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1177,7 +1178,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 2}
+    oldSize: {x: 1.5, y: 2.17}
     newSize: {x: 1.53, y: 2.04}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
