@@ -27,9 +27,10 @@ public class HealthManager : MonoBehaviour
     void Start()
     {
         spawn = zoneHandler.spawn;
+        zoneHandler.Set();
         Resapwn();
         swording = GetComponentInChildren<Swording>();
-        UpDateUI();    
+        UpDateUI();
     }
 
     // Update is called once per frame
