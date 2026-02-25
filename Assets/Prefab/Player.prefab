@@ -140,6 +140,7 @@ GameObject:
   - component: {fileID: 1144064943240423146}
   - component: {fileID: 4801783803052102987}
   - component: {fileID: 470113166121709219}
+  - component: {fileID: -7204353225025729771}
   m_Layer: 3
   m_Name: Player
   m_TagString: Player
@@ -258,6 +259,7 @@ MonoBehaviour:
     m_Bits: 0
   dashMaxTimer: 0.2
   GrappleDashMaxTimer: 0.5
+  grappleDashForce: 20
   uiDocument: {fileID: 0}
   modeManager: {fileID: 6309833254955042922}
 --- !u!61 &8289134739863195676
@@ -430,6 +432,20 @@ MonoBehaviour:
   inputActions: {fileID: -944628639613478452, guid: 3590b91b4603b465dbb4216d601bff33, type: 3}
   character: {fileID: 3444569684929839330}
   torso: {fileID: 5145874242991544530}
+--- !u!114 &-7204353225025729771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1951263583988276626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 48a134728add7e2499ee6b07d9917f37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpriteFlash.SimpleFlash
+  flashColor: {r: 1, g: 1, b: 1, a: 1}
+  duration: 0.2
 --- !u!1 &2326997166574632708
 GameObject:
   m_ObjectHideFlags: 0
@@ -1177,7 +1193,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 2}
+    oldSize: {x: 1.5, y: 2.17}
     newSize: {x: 1.53, y: 2.04}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
