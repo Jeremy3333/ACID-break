@@ -27,14 +27,14 @@ public class HealthManagerMob : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!isHittable)
+        if (!isHittable)
         {
             timer += Time.deltaTime;
-            if(timer > invincybilityTime) 
+            if (timer > invincybilityTime)
             {
                 isHittable = true;
                 timer = 0;
-            } 
+            }
         }
     }
 
@@ -44,9 +44,17 @@ public class HealthManagerMob : MonoBehaviour
         {
             isHittable = false;
             flashEffect.Flash();
-            health = Mathf.Max(health-damage, 0);
-            if (health <= 0) Destroy(gameObject);
+            health = Mathf.Max(health - damage, 0);
+            if (health <= 0)
+            {
+                GameEvents.RaiseDeath(new DeathEvent
+                    {
+                        position = transform.position,
+                        victim = gameObject
+                    });
+                Destroy(gameObject);
+            }
             enemieHandler.asDetected = true;
-        }   
+        }
     }
 }

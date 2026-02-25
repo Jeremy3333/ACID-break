@@ -251,9 +251,19 @@ public class Swording : MonoBehaviour
                 if (isMob)
                 {
                     HealthManagerMob health = hit.GetComponent<HealthManagerMob>();
+                    EnemieHandler handler = hit.GetComponent<EnemieHandler>();
                     if (health != null)
                     {
                         health.Hit(dmg);
+                        Vector2 p = hit.ClosestPoint(transform.position);
+                        Vector2 dir = isChargedActive ? chargedDashDir : (Vector2)transform.right;
+
+                        GameEvents.RaiseHit(new HitEvent
+                            {
+                                position = p,
+                                direction = dir,
+                                victim = hit.gameObject,
+                            });
 
                         if (!pogoTriggered && !characterHandler.CheckGround() && IsAttackingDown())
                         {
@@ -316,6 +326,8 @@ public class Swording : MonoBehaviour
         if (isCharging)
             CancelCharge();
     }
+
+
 
     // Debug visuel depuis unity
     void OnDrawGizmosSelected()
