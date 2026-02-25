@@ -315,7 +315,7 @@ GameObject:
   - component: {fileID: 5438124526137640460}
   - component: {fileID: 6730832120624779111}
   - component: {fileID: 1824322299848099505}
-  m_Layer: 8
+  m_Layer: 7
   m_Name: colider
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -479,7 +479,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2683336461985382455}
   - component: {fileID: 3187793944558814133}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: RotaPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -535,7 +535,7 @@ GameObject:
   - component: {fileID: 4337804745042633007}
   - component: {fileID: 2181275434539561431}
   - component: {fileID: 4777851994859526700}
-  m_Layer: 3
+  m_Layer: 7
   m_Name: SoundEffectManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
