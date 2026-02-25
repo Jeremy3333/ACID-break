@@ -308,7 +308,7 @@ public class EnemieHandler : MonoBehaviour
 
     void Jump(float jumpForce)
     {
-        if (!touchGround || Mathf.Abs(playerTransform.position.y - transform.position.y) < 3) return;
+        if (!touchGround || Mathf.Abs(playerTransform.position.y - transform.position.y) < 2) return;
         enemieRB.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
     }
     #endregion Jump

@@ -26,10 +26,10 @@ public class CombatModeManager : MonoBehaviour
         SwitchMode(swordMode as ICombatMode);
         currentMode?.Exit();
 
-        SwitchMode(grapplingGunMode as ICombatMode);
+        SwitchMode(gunMode as ICombatMode);
         currentMode?.Exit();
 
-        SwitchMode(gunMode as ICombatMode);
+        SwitchMode(grapplingGunMode as ICombatMode);
     }
 
     void Update()
