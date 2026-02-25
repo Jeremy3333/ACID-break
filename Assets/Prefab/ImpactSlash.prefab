@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5541434305621924811}
   - component: {fileID: 2184820623028651989}
   - component: {fileID: 1768213993285069275}
-  - component: {fileID: 2498260543563537813}
+  - component: {fileID: -6870015558252130600}
   m_Layer: 0
   m_Name: ImpactSlash
   m_TagString: Untagged
@@ -28,8 +28,8 @@ Transform:
   m_GameObject: {fileID: 78645505652426101}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.5681, y: 1.0582, z: 0}
-  m_LocalScale: {x: 2.56475, y: 2.64675, z: 1}
+  m_LocalPosition: {x: -3.1748586, y: 2.0197248, z: 0}
+  m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -115,7 +115,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &2498260543563537813
+--- !u!114 &-6870015558252130600
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

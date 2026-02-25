@@ -357,6 +357,10 @@ PrefabInstance:
       value: 64
       objectReference: {fileID: 0}
     - target: {fileID: 7954775752504262739, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
+      propertyPath: hitVFX
+      value: 
+      objectReference: {fileID: 78645505652426101, guid: 100ff9da9f6c9824ab719b7285864014, type: 3}
+    - target: {fileID: 7954775752504262739, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
       propertyPath: deathVFX
       value: 
       objectReference: {fileID: 2782672989490886977, guid: db5f177ad72928049a68fd7759cc6e18, type: 3}
@@ -364,9 +368,6 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 3167378870401262104, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4486148833515737218, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7287929038309429038}
     - targetCorrespondingSourceObject: {fileID: 4486148833515737218, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 811244552785019367}
