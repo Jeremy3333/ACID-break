@@ -16,7 +16,7 @@ public class GunMode : MonoBehaviour, ICombatMode
         shooting.enabled = false;
     }
 
-    public void HandleUpdate()
+    public void HandleUpdate(InputAction input)
     {
         
     }

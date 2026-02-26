@@ -15,7 +15,7 @@ public class GrapplingGunMode : MonoBehaviour, ICombatMode
         grappling.enabled = false;
     }
 
-    public void HandleUpdate()
+    public void HandleUpdate(InputAction input)
     {
 
     }
