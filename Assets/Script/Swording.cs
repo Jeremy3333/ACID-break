@@ -165,6 +165,13 @@ public class Swording : MonoBehaviour
         chargeTimer = 0f;
         chargeCancelled = false;
         LockMovement();
+        GameEvents.RaiseCharge(new ChargeEvent
+        {
+            position = transform.position,
+            direction = transform.right,
+            victim = gameObject,
+            state = ChargeState.Started
+        });
     }
 
     void UpdateCharge()
@@ -186,6 +193,13 @@ public class Swording : MonoBehaviour
         chargeTimer = 0f;
         chargeCancelled = true;
         UnlockMovement();
+        GameEvents.RaiseCharge(new ChargeEvent
+        {
+            position = transform.position,
+            direction = transform.right,
+            victim = gameObject,
+            state = ChargeState.Ended
+        });
     }
 
     private Vector2 chargedDashDir;
@@ -201,6 +215,13 @@ public class Swording : MonoBehaviour
         attackTimer = 0f;
 
         UnlockMovement();
+        GameEvents.RaiseCharge(new ChargeEvent
+        {
+            position = transform.position,
+            direction = transform.right,
+            victim = gameObject,
+            state = ChargeState.Ended
+        });
 
         chargedAlreadyHit.Clear();
         isChargedActive = true;
@@ -262,11 +283,11 @@ public class Swording : MonoBehaviour
                         Vector2 dir = isChargedActive ? chargedDashDir : (Vector2)transform.right;
 
                         GameEvents.RaiseHit(new HitEvent
-                            {
-                                position = p,
-                                direction = dir,
-                                victim = hit.gameObject,
-                            });
+                        {
+                            position = p,
+                            direction = dir,
+                            victim = hit.gameObject,
+                        });
 
                         if (!pogoTriggered && IsAttackingDown())
                         {
