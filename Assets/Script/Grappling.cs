@@ -18,6 +18,7 @@ public class Grappling : MonoBehaviour
     [SerializeField] float propulsionForce = 40f;
 
     [SerializeField] float maxLength = 15f;
+    [SerializeField] float retractSpeed = 30f;
 
     [Header("Projectile Settings")]
     
@@ -40,6 +41,7 @@ public class Grappling : MonoBehaviour
     GameObject currentProjectile;
 
     bool isGrappled = false;
+    bool isRetracting = false;
 
     bool isEnnemieGrappled = false;
 
@@ -92,10 +94,16 @@ public class Grappling : MonoBehaviour
         {
             AttaqueEnnemie();
         }
+
+        if(isRetracting)
+        {
+            Retract();
+        }
     }
 
     void AttaqueEnnemie()
     {
+        isRetracting = true;
         if (Vector2.Distance(rb.position, grapplePoint) < 0.5f)
         {
             hasTriggeredAttack = true;
@@ -104,6 +112,7 @@ public class Grappling : MonoBehaviour
 
     public void TryGrapple()
     {
+        isRetracting = false;
         if(isGrappled  || currentProjectile != null) return;
 
         if (joint.enabled)
@@ -166,6 +175,19 @@ public class Grappling : MonoBehaviour
 
         rope.enabled = true;
     }
+    public void Retract()
+    {
+        if (!joint.enabled) return;
+
+        joint.distance -= retractSpeed * Time.deltaTime;
+        joint.distance = Mathf.Max(joint.distance, 0.1f); // prevent distance from becoming negative
+
+        if (joint.distance <= 0.1f)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+        
+    }
 
     Vector2 grappleEnemie(out bool hasValidTarget, RaycastHit2D hitEnnemie)
     {
@@ -217,6 +239,7 @@ public class Grappling : MonoBehaviour
         rope.enabled = false;
         joint.enabled = false;
         isGrappled = false;
+        isRetracting = false;
         characterCharacterHandler.setIsGrapple(false);
         characterCharacterHandler.becomeTangible();
         characterCharacterHandler.setCanDash(true);
