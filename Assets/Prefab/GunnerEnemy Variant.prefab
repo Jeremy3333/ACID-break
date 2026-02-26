@@ -367,7 +367,7 @@ PrefabInstance:
     - target: {fileID: 7954775752504262739, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
       propertyPath: hitVFX
       value: 
-      objectReference: {fileID: 78645505652426101, guid: 100ff9da9f6c9824ab719b7285864014, type: 3}
+      objectReference: {fileID: 5358210227235067169, guid: 355c962f30c644047a5f6a5abf235d70, type: 3}
     - target: {fileID: 7954775752504262739, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
       propertyPath: deathVFX
       value: 

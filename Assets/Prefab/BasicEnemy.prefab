@@ -290,7 +290,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VFXProfile
   hitVFX: {fileID: 78645505652426101, guid: 100ff9da9f6c9824ab719b7285864014, type: 3}
-  deathVFX: {fileID: 680592448418125973, guid: 35175bf30de21ea4abb8633bf888a57a, type: 3}
+  deathVFX: {fileID: 4327811860601866263, guid: d03ac5be62a793f45bc7abda11a8f38c, type: 3}
+  chargeVFX: {fileID: 0}
   rotateToDirection: 1
 --- !u!114 &1488077244822397953
 MonoBehaviour:

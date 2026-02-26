@@ -138579,11 +138579,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4075299163075246963, guid: 947da4683292c3342948eb0b681ef19f, type: 3}
   m_PrefabInstance: {fileID: 963554961}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1014562099 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 504931342200667117, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
-  m_PrefabInstance: {fileID: 1570926632}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1056704554 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1951263583988276626, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
@@ -139954,7 +139949,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Shooting
   target: {fileID: 1570926634}
   bullet: {fileID: 7877757816228954581, guid: 026099bc5dab35047a2980d9a7c53a67, type: 3}
-  gun: {fileID: 1014562099}
+  gun: {fileID: 0}
   playerRb: {fileID: 1570926648}
   canFire: 0
   cadence1: 0.1
@@ -139978,6 +139973,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GunMode
   shooting: {fileID: 1492830833}
+--- !u!114 &1492830840
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492830827}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cac4ed8a99dfe1c41b52b90f0f90a0f7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VFXProfile
+  hitVFX: {fileID: 0}
+  deathVFX: {fileID: 0}
+  chargeVFX: {fileID: 4336269011265681985, guid: ea927215cb67e4e49af61d827cf99168, type: 3}
+  rotateToDirection: 1
 --- !u!1 &1554269790
 GameObject:
   m_ObjectHideFlags: 0
@@ -140150,12 +140161,24 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 922648328}
     - target: {fileID: 2079898334404387158, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: chargedDamage
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 2079898334404387158, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: swordCollider
       value: 
       objectReference: {fileID: 922648329}
     - target: {fileID: 2079898334404387158, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: attackCooldown
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2079898334404387158, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: chargedDashForce
+      value: 25
+      objectReference: {fileID: 0}
+    - target: {fileID: 2079898334404387158, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      propertyPath: chargedAttackCooldown
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 2326997166574632708, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       propertyPath: m_Layer
@@ -140447,6 +140470,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 6230553782290057071, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1492830833}
+    - targetCorrespondingSourceObject: {fileID: 6230553782290057071, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1492830840}
   m_SourcePrefab: {fileID: 100100000, guid: c437cfc30aa95db41b9a6562d6513ee7, type: 3}
 --- !u!4 &1570926633 stripped
 Transform:
