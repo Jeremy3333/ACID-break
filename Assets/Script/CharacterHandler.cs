@@ -231,6 +231,11 @@ public class CharacterHandler : MonoBehaviour
         touchGround = CheckGround();
         if(touchGround)
             doubleJumpReady = true;
+        if (!isGrapple)
+        {
+            leftStop = false;
+            rightStop = false;
+        }
     }
 
     void Flip()
@@ -277,7 +282,8 @@ public class CharacterHandler : MonoBehaviour
             {
                 GrappleDash();
             }
-            return;
+            if(!touchGround)
+                return; // don't allow to move in the air when grappling, the movement is handled by the grapple
         }
         
         // Direction gauche/droite
@@ -339,8 +345,9 @@ public class CharacterHandler : MonoBehaviour
             return; // Skip normal movement & gravity
         }
 
-        if(isGrapple)
+        if(isGrapple && !touchGround)
             return;
+
         // ===== MOUVEMENT =====
         float targetSpeed = moveDir * moveSpeed;
         float speedDiff = targetSpeed - rb.linearVelocity.x;
@@ -348,8 +355,9 @@ public class CharacterHandler : MonoBehaviour
         float accelerationRate;
         if (Mathf.Abs(targetSpeed) > 0.01f)
             accelerationRate = acceleration;
-        else
-            accelerationRate = isGrapple ? 0f : decceleration;
+        else {
+            accelerationRate = decceleration;
+        }
 
         float movement =
             Mathf.Pow(Mathf.Abs(speedDiff) * accelerationRate, velPow)
@@ -388,7 +396,6 @@ public class CharacterHandler : MonoBehaviour
     public void setIsGrapple(bool p_isGrapple)
     {
         grappleDashReady = true;
-        moveDir = 0f;
         if (!isGrapple && p_isGrapple)
         {
             startGrapple();

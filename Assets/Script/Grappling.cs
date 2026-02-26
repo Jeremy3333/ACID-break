@@ -77,12 +77,10 @@ public class Grappling : MonoBehaviour
         {
             if (characterCharacterHandler.CheckGround()) {
                 joint.enabled = false;
-                characterCharacterHandler.setIsGrapple(false);
                 characterCharacterHandler.stopMovementNotInDirection(grapplePoint - (Vector2)transform.position);
             }
             else {
                 joint.enabled = true;
-                characterCharacterHandler.setIsGrapple(true);
             }
         }
 
