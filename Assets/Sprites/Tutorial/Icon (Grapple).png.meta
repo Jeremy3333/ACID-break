@@ -1,19 +1,28 @@
 fileFormatVersion: 2
-guid: d3389bafff4de5244a8133d3b9c913b5
+guid: 98809294fca95d94385f6e2f878812df
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -2706983828589694039
-    second: Icon (Melee)_0
+      213: -7200087998591404890
+    second: Icon (Grapple)_0
   - first:
-      213: -98463483655286126
-    second: Icon (Melee)_1
+      213: 4548837046896464321
+    second: Icon (Grapple)_1
   - first:
-      213: 8788437674613568120
-    second: Icon (Melee)_2
+      213: -6040301134611006982
+    second: Icon (Grapple)_2
   - first:
-      213: -5326610582764830094
-    second: Icon (Melee)_3
+      213: 7200236672125438584
+    second: Icon (Grapple)_3
+  - first:
+      213: 8680408836903417080
+    second: Icon (Grapple)_4
+  - first:
+      213: -811218363531042841
+    second: Icon (Grapple)_5
+  - first:
+      213: -5229913244220812733
+    second: Icon (Grapple)_6
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -109,89 +118,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Icon (Melee)_0
+      name: Icon (Grapple)_0
       rect:
         serializedVersion: 2
-        x: 17
-        y: 24
-        width: 110
-        height: 116
+        x: 0
+        y: 28
+        width: 144
+        height: 114
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9a33f24dc8cde6ad0800000000000000
-      internalID: -2706983828589694039
+      spriteID: 6a4f76cec16241c90800000000000000
+      internalID: -7200087998591404890
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Icon (Melee)_1
+      name: Icon (Grapple)_1
       rect:
         serializedVersion: 2
-        x: 27
-        y: 4
-        width: 23
-        height: 20
+        x: 0
+        y: 0
+        width: 144
+        height: 28
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2921169bbff22aef0800000000000000
-      internalID: -98463483655286126
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icon (Melee)_2
-      rect:
-        serializedVersion: 2
-        x: 51
-        y: 4
-        width: 17
-        height: 20
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 872700e708dc6f970800000000000000
-      internalID: 8788437674613568120
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: Icon (Melee)_3
-      rect:
-        serializedVersion: 2
-        x: 67
-        y: 2
-        width: 51
-        height: 23
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      customData: 
-      outline: []
-      physicsShape: []
-      tessellationDetail: -1
-      bones: []
-      spriteID: 272477585e31416b0800000000000000
-      internalID: -5326610582764830094
+      spriteID: 1c196618137b02f30800000000000000
+      internalID: 4548837046896464321
       vertices: []
       indices: 
       edges: []
@@ -200,7 +165,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: f8255824d67e9f943ba4687ad6c59900
     internalID: 0
     vertices: []
     indices: 
@@ -208,12 +173,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     spriteCustomMetadata:
-      entries: []
+      entries:
+      - key: SpriteEditor.SliceSettings
+        value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":2.0},"gridSpriteSize":{"x":144.0,"y":32.0},"gridSpriteOffset":{"x":0.0,"y":80.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.5,"y":0.5},"pivotPixels":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"pivotUnitMode":0,"slicingType":2,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      Icon (Melee)_0: -2706983828589694039
-      Icon (Melee)_1: -98463483655286126
-      Icon (Melee)_2: 8788437674613568120
-      Icon (Melee)_3: -5326610582764830094
+      Icon (Grapple)_0: -7200087998591404890
+      Icon (Grapple)_1: 4548837046896464321
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

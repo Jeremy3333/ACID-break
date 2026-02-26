@@ -475,8 +475,8 @@ MonoBehaviour:
     m_Bits: 0
   dashMaxTimer: 0.2
   GrappleDashMaxTimer: 0.5
-  uiDocument: {fileID: 0}
-  modeManager: {fileID: 1372557364160186923}
+  grappleDashForce: 20
+  footStepSpeed: 0.3
 --- !u!61 &4280649391483658440
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -515,7 +515,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 4, y: 4}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -826,6 +826,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bab9ec6357b3194485f8b29611db011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwordMode
+  longPressThreshold: 0.1
   swording: {fileID: 4656633030247448808}
 --- !u!114 &3831482246026592755
 MonoBehaviour:
@@ -915,8 +916,9 @@ MonoBehaviour:
   rb: {fileID: 7236991040548320231}
   joint: {fileID: 8438744378368653962}
   jointFrequency: 6
-  retractSpeed: 10
+  propulsionForce: 40
   maxLength: 15
+  retractSpeed: 10
   grappleProjectilePrefab: {fileID: 0}
   projectileSpeed: 100
   projectileMaxDistance: 20
@@ -1138,7 +1140,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.5, y: 2}
+    oldSize: {x: 1.5, y: 2.17}
     newSize: {x: 1.53, y: 2.04}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
