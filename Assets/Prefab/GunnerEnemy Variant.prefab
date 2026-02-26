@@ -325,6 +325,10 @@ PrefabInstance:
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6358263389224969798, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
+      propertyPath: kbForce
+      value: 23
+      objectReference: {fileID: 0}
+    - target: {fileID: 6358263389224969798, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
       propertyPath: maxPause
       value: 3
       objectReference: {fileID: 0}
@@ -364,9 +368,6 @@ PrefabInstance:
     m_RemovedGameObjects:
     - {fileID: 3167378870401262104, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
     m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 4486148833515737218, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7287929038309429038}
     - targetCorrespondingSourceObject: {fileID: 4486148833515737218, guid: 2328dae87f862acb9b93d9a248484fd2, type: 3}
       insertIndex: -1
       addedObject: {fileID: 811244552785019367}

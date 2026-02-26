@@ -3,13 +3,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 
-public enum CharacterMode
-{
-    Lasso,
-    BaseballBat,
-    Gun
-}
-
 public class CharacterHandler : MonoBehaviour
 {
     [Header("Input Actions")]
@@ -18,9 +11,7 @@ public class CharacterHandler : MonoBehaviour
     InputAction m_dashAction;
     InputAction m_jumpAction;
     InputAction m_moveAction;
-    InputAction m_menuAction;
     InputAction m_lookAction;
-    InputAction m_changeModeAction;
     Vector2 lookInput;
     float moveInput;
 
@@ -100,18 +91,6 @@ public class CharacterHandler : MonoBehaviour
     LayerMask playerLayer;
     LayerMask UntangiblePlayerLayer;
 
-    [SerializeField]
-    UIDocument uiDocument;
-
-    Dictionary<string, VisualElement> modeIcons = new Dictionary<string, VisualElement>();
-
-    Vector2 modeSelectionStartPos;
-
-    CharacterMode currentMode = CharacterMode.BaseballBat;
-
-    [SerializeField]
-    CombatModeManager modeManager;
-
     private bool playingFootStep = false;
     public float footStepSpeed = 0.3f;
 
@@ -131,8 +110,6 @@ public class CharacterHandler : MonoBehaviour
         m_dashAction = inputActions.FindAction("Dash");
         m_moveAction = inputActions.FindAction("Move");
         m_lookAction = inputActions.FindAction("Look");
-        m_menuAction = inputActions.FindAction("Menu");
-        m_changeModeAction = inputActions.FindAction("ChangeMode");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -247,52 +224,6 @@ public class CharacterHandler : MonoBehaviour
         playerAnimator.Dash(true, !isFacingRight);
     }
 
-    void ApplySelectedMode()
-    {
-        switch (currentMode)
-        {
-            case CharacterMode.BaseballBat:
-                Debug.Log("Baseball Bat mode selected");
-                modeManager.SwitchMode(modeManager.swordMode as ICombatMode);
-                break;
-            case CharacterMode.Lasso:
-                Debug.Log("Lasso mode selected");
-                modeManager.SwitchMode(modeManager.grapplingGunMode as ICombatMode);
-                break;
-            case CharacterMode.Gun:
-                Debug.Log("Gun mode selected");
-                modeManager.SwitchMode(modeManager.gunMode as ICombatMode);
-                break;
-        }
-    }
-
-    void ModeSwitch()
-    {
-        // changemode is an axis that is 0 when not pressed, 1 when pressed in one direction and -1 when pressed in the other
-        if (m_changeModeAction.WasPressedThisFrame() && !isGrapple && !swording.isCharging)
-        {
-            if(m_changeModeAction.ReadValue<float>() > 0)
-            {
-                NextMode();
-            }
-            else
-            {
-                PreviousMode();
-            }
-            ApplySelectedMode();
-        }
-    }
-
-    void NextMode()
-    {
-        currentMode = (CharacterMode)(((int)currentMode + 1) % System.Enum.GetValues(typeof(CharacterMode)).Length);
-    }
-
-    void PreviousMode()
-    {
-        currentMode = (CharacterMode)(((int)currentMode - 1 + System.Enum.GetValues(typeof(CharacterMode)).Length) % System.Enum.GetValues(typeof(CharacterMode)).Length);
-    }
-
     void UpdateValues()
     {
         touchGround = CheckGround();
@@ -372,8 +303,6 @@ public class CharacterHandler : MonoBehaviour
         UpdateValues();
 
         UpdateMovement();
-
-        ModeSwitch();
 
         CheckFootSteps();
     }

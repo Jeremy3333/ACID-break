@@ -38,7 +38,7 @@ public class HealthManagerMob : MonoBehaviour
         }
     }
 
-    public void Hit(int damage)
+    public void Hit(int damage, bool kb = false)
     {
         if (isHittable)
         {
@@ -55,6 +55,7 @@ public class HealthManagerMob : MonoBehaviour
                 Destroy(gameObject);
             }
             enemieHandler.asDetected = true;
+            if(kb) enemieHandler.KnockBack();
         }
     }
 }
