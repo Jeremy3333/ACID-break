@@ -81,6 +81,8 @@ public class CharacterHandler : MonoBehaviour
     Vector2 dashDirection;
 
     bool isDashing;
+    bool leftStop;
+    bool rightStop;
 
     bool canDash = true;
 
@@ -200,7 +202,7 @@ public class CharacterHandler : MonoBehaviour
         if (Vector2.Dot(perpendicularDir, rb.linearVelocity) < 0)
             perpendicularDir = -perpendicularDir;
 
-        rb.linearVelocity = perpendicularDir * moveSpeed; // Set initial velocity for smooth swinging
+        rb.linearVelocity = perpendicularDir * moveSpeed * 1.2f; // Set initial velocity for smooth swinging
     }
 
     void GrappleDash()
@@ -358,6 +360,14 @@ public class CharacterHandler : MonoBehaviour
         {
             Flip();
         }
+
+        if(leftStop && moveDir > 0)
+        {
+            moveDir = 0;
+        } else if(rightStop && moveDir < 0)
+        {
+            moveDir = 0;
+        }
         
         if (m_jumpAction.WasPressedThisFrame())
             Jump();
@@ -452,6 +462,10 @@ public class CharacterHandler : MonoBehaviour
         if (isGrapple)
         {
             startGrapple();
+        } else
+        {
+            leftStop = false;
+            rightStop = false;
         }
     }
 
@@ -486,5 +500,22 @@ public class CharacterHandler : MonoBehaviour
     {
         gameObject.layer = playerLayer;
         healthManager.setIsHittable(true);
+    }
+
+    public void stopMovementNotInDirection(Vector2 dir)
+    {
+        Vector2 velocity = rb.linearVelocity;
+        // use leftStop and rightStop to only stop the velocity in one direction, if the player is moving in the opposite direction of the dash, don't stop the velocity
+        if (dir.x > 0 && !rightStop)
+        {
+            velocity.x = Mathf.Max(0, velocity.x);
+            rightStop = true;
+        }
+        else if (dir.x < 0 && !leftStop)
+        {
+            velocity.x = Mathf.Min(0, velocity.x);
+            leftStop = true;
+        }
+        rb.linearVelocity = velocity;
     }
 }
