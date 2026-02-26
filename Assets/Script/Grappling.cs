@@ -15,11 +15,9 @@ public class Grappling : MonoBehaviour
     [Header("Grapple Settings")]
     [SerializeField] float jointFrequency = 6f;
 
-    [SerializeField] float retractSpeed = 30f;       // right‑click retract (shorten rope)
+    [SerializeField] float propulsionForce = 40f;
 
     [SerializeField] float maxLength = 15f;
-
-    bool isRetracting = false;
 
     [Header("Projectile Settings")]
     
@@ -94,11 +92,6 @@ public class Grappling : MonoBehaviour
         {
             AttaqueEnnemie();
         }
-
-        if(isRetracting)
-        {
-            Retract();
-        }
     }
 
     void AttaqueEnnemie()
@@ -111,7 +104,6 @@ public class Grappling : MonoBehaviour
 
     public void TryGrapple()
     {
-        isRetracting = false;
         if(isGrappled  || currentProjectile != null) return;
 
         if (joint.enabled)
@@ -215,33 +207,16 @@ public class Grappling : MonoBehaviour
         joint.frequency = jointFrequency;
     }
 
-    public void Retract()
-    {
-        if (!joint.enabled) return;
-
-        joint.distance -= retractSpeed * Time.deltaTime;
-        joint.distance = Mathf.Max(joint.distance, 0.1f); // prevent distance from becoming negative
-
-        if (joint.distance <= 0.1f)
-        {
-            rb.linearVelocity = Vector2.zero;
-        }
-        
-    }
-
     public void StopGrapple()
     {
-        if(!isGrappled || (isEnnemieGrappled && !hasTriggeredAttack)) return;
+        if (!isGrappled || (isEnnemieGrappled && !hasTriggeredAttack)) return;
 
-        if(hasTriggeredAttack)
-        {
+        if (hasTriggeredAttack)
             finishAttack();
-        }
 
         rope.enabled = false;
         joint.enabled = false;
         isGrappled = false;
-        isRetracting = false;
         characterCharacterHandler.setIsGrapple(false);
         characterCharacterHandler.becomeTangible();
         characterCharacterHandler.setCanDash(true);
@@ -279,7 +254,11 @@ public class Grappling : MonoBehaviour
     public void startRetracting()
     {
         if (!isGrappled && !isEnnemieGrappled) return;
-        isRetracting = true;
+
+        Vector2 dir = (grapplePoint - rb.position).normalized;
         rb.linearVelocity = Vector2.zero;
+        rb.AddForce(dir * propulsionForce, ForceMode2D.Impulse);
+
+        StopGrapple();
     }
 }
