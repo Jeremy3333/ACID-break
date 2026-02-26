@@ -3,13 +3,6 @@ using UnityEngine.InputSystem;
 using UnityEngine.UIElements;
 using System.Collections.Generic;
 
-public enum CharacterMode
-{
-    Lasso,
-    BaseballBat,
-    Gun
-}
-
 public class CharacterHandler : MonoBehaviour
 {
     [Header("Input Actions")]
@@ -18,9 +11,7 @@ public class CharacterHandler : MonoBehaviour
     InputAction m_dashAction;
     InputAction m_jumpAction;
     InputAction m_moveAction;
-    InputAction m_menuAction;
     InputAction m_lookAction;
-    InputAction m_changeModeAction;
     Vector2 lookInput;
     float moveInput;
 
@@ -81,6 +72,8 @@ public class CharacterHandler : MonoBehaviour
     Vector2 dashDirection;
 
     bool isDashing;
+    bool leftStop;
+    bool rightStop;
 
     bool canDash = true;
 
@@ -99,18 +92,6 @@ public class CharacterHandler : MonoBehaviour
 
     LayerMask playerLayer;
     LayerMask UntangiblePlayerLayer;
-
-    [SerializeField]
-    UIDocument uiDocument;
-
-    Dictionary<string, VisualElement> modeIcons = new Dictionary<string, VisualElement>();
-
-    Vector2 modeSelectionStartPos;
-
-    CharacterMode currentMode = CharacterMode.BaseballBat;
-
-    [SerializeField]
-    CombatModeManager modeManager;
 
     private bool playingFootStep = false;
     public float footStepSpeed = 0.3f;
@@ -131,8 +112,6 @@ public class CharacterHandler : MonoBehaviour
         m_dashAction = inputActions.FindAction("Dash");
         m_moveAction = inputActions.FindAction("Move");
         m_lookAction = inputActions.FindAction("Look");
-        m_menuAction = inputActions.FindAction("Menu");
-        m_changeModeAction = inputActions.FindAction("ChangeMode");
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -200,7 +179,7 @@ public class CharacterHandler : MonoBehaviour
         if (Vector2.Dot(perpendicularDir, rb.linearVelocity) < 0)
             perpendicularDir = -perpendicularDir;
 
-        rb.linearVelocity = perpendicularDir * moveSpeed; // Set initial velocity for smooth swinging
+        rb.linearVelocity = perpendicularDir * moveSpeed * 1.2f; // Set initial velocity for smooth swinging
     }
 
     void GrappleDash()
@@ -245,52 +224,6 @@ public class CharacterHandler : MonoBehaviour
         rb.gravityScale = 0f;
 
         playerAnimator.Dash(true, !isFacingRight);
-    }
-
-    void ApplySelectedMode()
-    {
-        switch (currentMode)
-        {
-            case CharacterMode.BaseballBat:
-                Debug.Log("Baseball Bat mode selected");
-                modeManager.SwitchMode(modeManager.swordMode as ICombatMode);
-                break;
-            case CharacterMode.Lasso:
-                Debug.Log("Lasso mode selected");
-                modeManager.SwitchMode(modeManager.grapplingGunMode as ICombatMode);
-                break;
-            case CharacterMode.Gun:
-                Debug.Log("Gun mode selected");
-                modeManager.SwitchMode(modeManager.gunMode as ICombatMode);
-                break;
-        }
-    }
-
-    void ModeSwitch()
-    {
-        // changemode is an axis that is 0 when not pressed, 1 when pressed in one direction and -1 when pressed in the other
-        if (m_changeModeAction.WasPressedThisFrame() && !isGrapple && !swording.isCharging)
-        {
-            if(m_changeModeAction.ReadValue<float>() > 0)
-            {
-                NextMode();
-            }
-            else
-            {
-                PreviousMode();
-            }
-            ApplySelectedMode();
-        }
-    }
-
-    void NextMode()
-    {
-        currentMode = (CharacterMode)(((int)currentMode + 1) % System.Enum.GetValues(typeof(CharacterMode)).Length);
-    }
-
-    void PreviousMode()
-    {
-        currentMode = (CharacterMode)(((int)currentMode - 1 + System.Enum.GetValues(typeof(CharacterMode)).Length) % System.Enum.GetValues(typeof(CharacterMode)).Length);
     }
 
     void UpdateValues()
@@ -358,6 +291,14 @@ public class CharacterHandler : MonoBehaviour
         {
             Flip();
         }
+
+        if(leftStop && moveDir > 0)
+        {
+            moveDir = 0;
+        } else if(rightStop && moveDir < 0)
+        {
+            moveDir = 0;
+        }
         
         if (m_jumpAction.WasPressedThisFrame())
             Jump();
@@ -372,8 +313,6 @@ public class CharacterHandler : MonoBehaviour
         UpdateValues();
 
         UpdateMovement();
-
-        ModeSwitch();
 
         CheckFootSteps();
     }
@@ -452,6 +391,10 @@ public class CharacterHandler : MonoBehaviour
         if (isGrapple)
         {
             startGrapple();
+        } else
+        {
+            leftStop = false;
+            rightStop = false;
         }
     }
 
@@ -486,5 +429,22 @@ public class CharacterHandler : MonoBehaviour
     {
         gameObject.layer = playerLayer;
         healthManager.setIsHittable(true);
+    }
+
+    public void stopMovementNotInDirection(Vector2 dir)
+    {
+        Vector2 velocity = rb.linearVelocity;
+        // use leftStop and rightStop to only stop the velocity in one direction, if the player is moving in the opposite direction of the dash, don't stop the velocity
+        if (dir.x > 0 && !rightStop)
+        {
+            velocity.x = Mathf.Max(0, velocity.x);
+            rightStop = true;
+        }
+        else if (dir.x < 0 && !leftStop)
+        {
+            velocity.x = Mathf.Min(0, velocity.x);
+            leftStop = true;
+        }
+        rb.linearVelocity = velocity;
     }
 }

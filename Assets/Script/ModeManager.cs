@@ -6,8 +6,10 @@ public class CombatModeManager : MonoBehaviour
     [Header("Input Actions")]
     [SerializeField]
     InputActionAsset inputActions;
-    private InputAction m_action1Action;
-    private InputAction m_action2Action;
+    private InputAction m_action1Action_batte;
+    private InputAction m_action2Action_batte;
+    private InputAction m_action1Action_grappin;
+    private InputAction m_action2Action_grappin;
     
     [Header("Modes:")]
     public MonoBehaviour swordMode;
@@ -17,36 +19,24 @@ public class CombatModeManager : MonoBehaviour
 
     private void Awake()
     {
-        m_action1Action = inputActions.FindAction("Action1");
-        m_action2Action = inputActions.FindAction("Action2");
+        m_action1Action_batte = inputActions.FindAction("Action1_batte");
+        m_action2Action_batte = inputActions.FindAction("Action2_batte");
+        m_action1Action_grappin = inputActions.FindAction("Action1_grappin");
+        m_action2Action_grappin = inputActions.FindAction("Action2_grappin");
     }
 
     void Start()
     {
-        SwitchMode(swordMode as ICombatMode);
-        currentMode?.Exit();
+        (swordMode as ICombatMode).Enter();
 
-        SwitchMode(gunMode as ICombatMode);
-        currentMode?.Exit();
-
-        SwitchMode(grapplingGunMode as ICombatMode);
+        (grapplingGunMode as ICombatMode).Enter();
     }
 
     void Update()
     {
-
-        currentMode?.HandleUpdate();
-
-        currentMode?.Action2(m_action2Action);
-        currentMode?.Action1(m_action1Action);
-    }
-
-    public void SwitchMode(ICombatMode newMode)
-    {
-        if (currentMode == newMode) return;
-
-        currentMode?.Exit();
-        currentMode = newMode;
-        currentMode.Enter();
+        (swordMode as ICombatMode).Action1(m_action1Action_batte);
+        (swordMode as ICombatMode).Action2(m_action2Action_batte);
+        (grapplingGunMode as ICombatMode).Action1(m_action1Action_grappin);
+        (grapplingGunMode as ICombatMode).Action2(m_action2Action_grappin);
     }
 }

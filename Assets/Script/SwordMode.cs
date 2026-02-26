@@ -24,6 +24,8 @@ public class SwordMode : MonoBehaviour, ICombatMode
     {
         if(input.WasPressedThisFrame())
             swording.Attack();
+        
+        
     }
     
     public void Action2(InputAction input)

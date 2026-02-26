@@ -15,11 +15,10 @@ public class Grappling : MonoBehaviour
     [Header("Grapple Settings")]
     [SerializeField] float jointFrequency = 6f;
 
-    [SerializeField] float retractSpeed = 30f;       // right‑click retract (shorten rope)
+    [SerializeField] float propulsionForce = 40f;
 
     [SerializeField] float maxLength = 15f;
-
-    bool isRetracting = false;
+    [SerializeField] float retractSpeed = 30f;
 
     [Header("Projectile Settings")]
     
@@ -42,6 +41,7 @@ public class Grappling : MonoBehaviour
     GameObject currentProjectile;
 
     bool isGrappled = false;
+    bool isRetracting = false;
 
     bool isEnnemieGrappled = false;
 
@@ -73,6 +73,19 @@ public class Grappling : MonoBehaviour
             targetPos = target.position;
         }
 
+        if (isGrappled && !isEnnemieGrappled)
+        {
+            if (characterCharacterHandler.CheckGround()) {
+                joint.enabled = false;
+                characterCharacterHandler.setIsGrapple(false);
+                characterCharacterHandler.stopMovementNotInDirection(grapplePoint - (Vector2)transform.position);
+            }
+            else {
+                joint.enabled = true;
+                characterCharacterHandler.setIsGrapple(true);
+            }
+        }
+
         Vector3 direction = (Vector3)targetPos - transform.position;
         float rotaZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotaZ);
@@ -90,6 +103,7 @@ public class Grappling : MonoBehaviour
 
     void AttaqueEnnemie()
     {
+        isRetracting = true;
         if (Vector2.Distance(rb.position, grapplePoint) < 0.5f)
         {
             hasTriggeredAttack = true;
@@ -161,6 +175,19 @@ public class Grappling : MonoBehaviour
 
         rope.enabled = true;
     }
+    public void Retract()
+    {
+        if (!joint.enabled) return;
+
+        joint.distance -= retractSpeed * Time.deltaTime;
+        joint.distance = Mathf.Max(joint.distance, 0.1f); // prevent distance from becoming negative
+
+        if (joint.distance <= 0.1f)
+        {
+            rb.linearVelocity = Vector2.zero;
+        }
+        
+    }
 
     Vector2 grappleEnemie(out bool hasValidTarget, RaycastHit2D hitEnnemie)
     {
@@ -202,28 +229,12 @@ public class Grappling : MonoBehaviour
         joint.frequency = jointFrequency;
     }
 
-    public void Retract()
-    {
-        if (!joint.enabled) return;
-
-        joint.distance -= retractSpeed * Time.deltaTime;
-        joint.distance = Mathf.Max(joint.distance, 0.1f); // prevent distance from becoming negative
-
-        if (joint.distance <= 0.1f)
-        {
-            rb.linearVelocity = Vector2.zero;
-        }
-        
-    }
-
     public void StopGrapple()
     {
-        if(!isGrappled || (isEnnemieGrappled && !hasTriggeredAttack)) return;
+        if (!isGrappled || (isEnnemieGrappled && !hasTriggeredAttack)) return;
 
-        if(hasTriggeredAttack)
-        {
+        if (hasTriggeredAttack)
             finishAttack();
-        }
 
         rope.enabled = false;
         joint.enabled = false;
@@ -266,7 +277,11 @@ public class Grappling : MonoBehaviour
     public void startRetracting()
     {
         if (!isGrappled && !isEnnemieGrappled) return;
-        isRetracting = true;
+
+        Vector2 dir = (grapplePoint - rb.position).normalized;
         rb.linearVelocity = Vector2.zero;
+        rb.AddForce(dir * propulsionForce, ForceMode2D.Impulse);
+
+        StopGrapple();
     }
 }
