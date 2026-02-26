@@ -339,6 +339,8 @@ public class CharacterHandler : MonoBehaviour
             return; // Skip normal movement & gravity
         }
 
+        if(isGrapple)
+            return;
         // ===== MOUVEMENT =====
         float targetSpeed = moveDir * moveSpeed;
         float speedDiff = targetSpeed - rb.linearVelocity.x;
@@ -385,17 +387,17 @@ public class CharacterHandler : MonoBehaviour
 
     public void setIsGrapple(bool p_isGrapple)
     {
-        isGrapple = p_isGrapple;
         grappleDashReady = true;
         moveDir = 0f;
-        if (isGrapple)
+        if (!isGrapple && p_isGrapple)
         {
             startGrapple();
-        } else
+        } else if (isGrapple && !p_isGrapple)
         {
             leftStop = false;
             rightStop = false;
         }
+        isGrapple = p_isGrapple;
     }
 
     public void setCanDash(bool p_canDash)
