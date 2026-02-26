@@ -62,6 +62,8 @@ public class EnemieHandler : MonoBehaviour
     float minX;
     float maxX;
 
+    [SerializeField] float kbForce = 15;
+
     void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").GetComponent<Transform>();
@@ -311,6 +313,15 @@ public class EnemieHandler : MonoBehaviour
         if (!touchGround || Mathf.Abs(playerTransform.position.y - transform.position.y) < 2) return;
         enemieRB.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
     }
+
+    public void KnockBack()
+    {
+        Vector2 origin = transform.position;
+        Vector2 direction = origin - new Vector2(playerTransform.position.x, playerTransform.position.y);
+        direction = direction.normalized;
+        enemieRB.AddForce(direction * kbForce, ForceMode2D.Impulse);
+    }
+
     #endregion Jump
 
     bool CanSeePlayer()

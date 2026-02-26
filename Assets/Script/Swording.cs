@@ -257,7 +257,7 @@ public class Swording : MonoBehaviour
                     EnemieHandler handler = hit.GetComponent<EnemieHandler>();
                     if (health != null)
                     {
-                        health.Hit(dmg);
+                        health.Hit(dmg, true);
                         Vector2 p = hit.ClosestPoint(transform.position);
                         Vector2 dir = isChargedActive ? chargedDashDir : (Vector2)transform.right;
 
