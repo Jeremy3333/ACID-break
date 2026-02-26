@@ -200,7 +200,7 @@ public class CharacterHandler : MonoBehaviour
         if (Vector2.Dot(perpendicularDir, rb.linearVelocity) < 0)
             perpendicularDir = -perpendicularDir;
 
-        rb.linearVelocity = perpendicularDir * moveSpeed; // Set initial velocity for smooth swinging
+        rb.linearVelocity = perpendicularDir * moveSpeed * 1.5f; // Set initial velocity for smooth swinging
     }
 
     void GrappleDash()
