@@ -978,6 +978,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bab9ec6357b3194485f8b29611db011, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SwordMode
+  longPressThreshold: 0.3
   swording: {fileID: 2079898334404387158}
 --- !u!114 &2079898334404387158
 MonoBehaviour:
