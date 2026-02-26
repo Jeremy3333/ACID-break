@@ -7,7 +7,6 @@ public class CombatModeManager : MonoBehaviour
     [SerializeField]
     InputActionAsset inputActions;
     private InputAction m_action1Action_batte;
-    private InputAction m_action2Action_batte;
     private InputAction m_action1Action_grappin;
     private InputAction m_action2Action_grappin;
     
@@ -20,7 +19,6 @@ public class CombatModeManager : MonoBehaviour
     private void Awake()
     {
         m_action1Action_batte = inputActions.FindAction("Action1_batte");
-        m_action2Action_batte = inputActions.FindAction("Action2_batte");
         m_action1Action_grappin = inputActions.FindAction("Action1_grappin");
         m_action2Action_grappin = inputActions.FindAction("Action2_grappin");
     }
@@ -34,8 +32,7 @@ public class CombatModeManager : MonoBehaviour
 
     void Update()
     {
-        (swordMode as ICombatMode).Action1(m_action1Action_batte);
-        (swordMode as ICombatMode).Action2(m_action2Action_batte);
+        (swordMode as ICombatMode).HandleUpdate(m_action1Action_batte);
         (grapplingGunMode as ICombatMode).Action1(m_action1Action_grappin);
         (grapplingGunMode as ICombatMode).Action2(m_action2Action_grappin);
     }

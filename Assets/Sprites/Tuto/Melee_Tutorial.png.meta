@@ -1,0 +1,611 @@
+fileFormatVersion: 2
+guid: d312c4324343bd2448ab680b3736275b
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -4494605972743322912
+    second: Melee_Tutorial_0
+  - first:
+      213: -5953013628173191270
+    second: Melee_Tutorial_1
+  - first:
+      213: -7623010501352989160
+    second: Melee_Tutorial_2
+  - first:
+      213: -8018187892782838494
+    second: Melee_Tutorial_3
+  - first:
+      213: -404439806094037445
+    second: Melee_Tutorial_4
+  - first:
+      213: 6813829934046534036
+    second: Melee_Tutorial_5
+  - first:
+      213: -2254249023287643715
+    second: Melee_Tutorial_6
+  - first:
+      213: 1363156120498265874
+    second: Melee_Tutorial_7
+  - first:
+      213: -3998755668727791699
+    second: Melee_Tutorial_8
+  - first:
+      213: 1070198227470936163
+    second: Melee_Tutorial_9
+  - first:
+      213: -835135244850515738
+    second: Melee_Tutorial_10
+  - first:
+      213: 3182021631430137623
+    second: Melee_Tutorial_11
+  - first:
+      213: 6707813066399578242
+    second: Melee_Tutorial_12
+  - first:
+      213: -2387260271572082358
+    second: Melee_Tutorial_13
+  - first:
+      213: 7541099512100522576
+    second: Melee_Tutorial_14
+  - first:
+      213: 6661125543250589640
+    second: Melee_Tutorial_15
+  - first:
+      213: -9045858540320178113
+    second: Melee_Tutorial_16
+  - first:
+      213: -2042958778445912611
+    second: Melee_Tutorial_17
+  - first:
+      213: -8063710760829792562
+    second: Melee_Tutorial_18
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Melee_Tutorial_0
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 193
+        width: 133
+        height: 155
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 0e209456ea3ff91c0800000000000000
+      internalID: -4494605972743322912
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_1
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 171
+        width: 165
+        height: 213
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a977da545a5a26da0800000000000000
+      internalID: -5953013628173191270
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_2
+      rect:
+        serializedVersion: 2
+        x: 292
+        y: 320
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 81e58c36650a53690800000000000000
+      internalID: -7623010501352989160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_3
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 152
+        width: 164
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 22d475cf79ca9b090800000000000000
+      internalID: -8018187892782838494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_4
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 152
+        width: 39
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b3eacb0a324236af0800000000000000
+      internalID: -404439806094037445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_5
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 153
+        width: 45
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49954ca49369f8e50800000000000000
+      internalID: 6813829934046534036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_6
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 93
+        width: 97
+        height: 56
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: db13ba3f47c47b0e0800000000000000
+      internalID: -2254249023287643715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_7
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 84
+        width: 85
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 21fd2bfe447eae210800000000000000
+      internalID: 1363156120498265874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_8
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 87
+        width: 46
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: daf76e5d7e09188c0800000000000000
+      internalID: -3998755668727791699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_9
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 112
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 36868a32e9b1ade00800000000000000
+      internalID: 1070198227470936163
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_10
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 92
+        width: 45
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 6e0b6476be00964f0800000000000000
+      internalID: -835135244850515738
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_11
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 101
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 717900190dfc82c20800000000000000
+      internalID: 3182021631430137623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_12
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 30
+        width: 65
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2887872c170f61d50800000000000000
+      internalID: 6707813066399578242
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_13
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 32
+        width: 68
+        height: 33
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a412b866e6fbeded0800000000000000
+      internalID: -2387260271572082358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_14
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 21
+        width: 80
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 05a8f924d0e57a860800000000000000
+      internalID: 7541099512100522576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_15
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 26
+        width: 45
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 8c77bb1b362117c50800000000000000
+      internalID: 6661125543250589640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_16
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 49
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f3048c7a597a67280800000000000000
+      internalID: -9045858540320178113
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_17
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: dd527f7a0d3f5a3e0800000000000000
+      internalID: -2042958778445912611
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Melee_Tutorial_18
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 31
+        width: 45
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: ecece3159c1f71090800000000000000
+      internalID: -8063710760829792562
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Melee_Tutorial_0: -4494605972743322912
+      Melee_Tutorial_1: -5953013628173191270
+      Melee_Tutorial_10: -835135244850515738
+      Melee_Tutorial_11: 3182021631430137623
+      Melee_Tutorial_12: 6707813066399578242
+      Melee_Tutorial_13: -2387260271572082358
+      Melee_Tutorial_14: 7541099512100522576
+      Melee_Tutorial_15: 6661125543250589640
+      Melee_Tutorial_16: -9045858540320178113
+      Melee_Tutorial_17: -2042958778445912611
+      Melee_Tutorial_18: -8063710760829792562
+      Melee_Tutorial_2: -7623010501352989160
+      Melee_Tutorial_3: -8018187892782838494
+      Melee_Tutorial_4: -404439806094037445
+      Melee_Tutorial_5: 6813829934046534036
+      Melee_Tutorial_6: -2254249023287643715
+      Melee_Tutorial_7: 1363156120498265874
+      Melee_Tutorial_8: -3998755668727791699
+      Melee_Tutorial_9: 1070198227470936163
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

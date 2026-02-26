@@ -1,0 +1,741 @@
+fileFormatVersion: 2
+guid: b8a069906d7b70c42a1b15a0f2a5acb0
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: -8909176905612969574
+    second: Grapple_Tutorial_0
+  - first:
+      213: 4474092534547226085
+    second: Grapple_Tutorial_1
+  - first:
+      213: -6285958770049352798
+    second: Grapple_Tutorial_2
+  - first:
+      213: 3470823017798862623
+    second: Grapple_Tutorial_3
+  - first:
+      213: -2142773872104487061
+    second: Grapple_Tutorial_4
+  - first:
+      213: -6519843190266774654
+    second: Grapple_Tutorial_5
+  - first:
+      213: 5840509339546207996
+    second: Grapple_Tutorial_6
+  - first:
+      213: 570193614175275532
+    second: Grapple_Tutorial_7
+  - first:
+      213: 4988178789608589383
+    second: Grapple_Tutorial_8
+  - first:
+      213: -6595794277219773603
+    second: Grapple_Tutorial_9
+  - first:
+      213: -2739295798420681324
+    second: Grapple_Tutorial_10
+  - first:
+      213: 2343105743828787479
+    second: Grapple_Tutorial_11
+  - first:
+      213: 6671796295526719882
+    second: Grapple_Tutorial_12
+  - first:
+      213: -7296309045542802473
+    second: Grapple_Tutorial_13
+  - first:
+      213: 1672735032449293448
+    second: Grapple_Tutorial_14
+  - first:
+      213: 8773871614555869341
+    second: Grapple_Tutorial_15
+  - first:
+      213: 9141185685410845214
+    second: Grapple_Tutorial_16
+  - first:
+      213: -344791081204260414
+    second: Grapple_Tutorial_17
+  - first:
+      213: 8572982540078802107
+    second: Grapple_Tutorial_18
+  - first:
+      213: -4808510889712168775
+    second: Grapple_Tutorial_19
+  - first:
+      213: 2084927262522141309
+    second: Grapple_Tutorial_20
+  - first:
+      213: -4355510194201882077
+    second: Grapple_Tutorial_21
+  - first:
+      213: 3680817156162309358
+    second: Grapple_Tutorial_22
+  - first:
+      213: -6789355944166396021
+    second: Grapple_Tutorial_23
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 1
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 4
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 4
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: Grapple_Tutorial_0
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 264
+        width: 22
+        height: 21
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a9933d3aece3c5480800000000000000
+      internalID: -8909176905612969574
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_1
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 245
+        width: 10
+        height: 29
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 5ed1ae5947b271e30800000000000000
+      internalID: 4474092534547226085
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_2
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 171
+        width: 163
+        height: 209
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2abf4769dc9c3c8a0800000000000000
+      internalID: -6285958770049352798
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_3
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 249
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: f17862e3527da2030800000000000000
+      internalID: 3470823017798862623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_4
+      rect:
+        serializedVersion: 2
+        x: 26
+        y: 232
+        width: 9
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b67493724865342e0800000000000000
+      internalID: -2142773872104487061
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_5
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 227
+        width: 14
+        height: 17
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 28b36ec792dd485a0800000000000000
+      internalID: -6519843190266774654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_6
+      rect:
+        serializedVersion: 2
+        x: 189
+        y: 164
+        width: 130
+        height: 63
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: cf6c00bcc48ad0150800000000000000
+      internalID: 5840509339546207996
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_7
+      rect:
+        serializedVersion: 2
+        x: 12
+        y: 202
+        width: 16
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c0a0d12321cb9e700800000000000000
+      internalID: 570193614175275532
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_8
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 152
+        width: 164
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 74802ce3e22993540800000000000000
+      internalID: 4988178789608589383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_9
+      rect:
+        serializedVersion: 2
+        x: 199
+        y: 152
+        width: 39
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d53d2c60d080774a0800000000000000
+      internalID: -6595794277219773603
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_10
+      rect:
+        serializedVersion: 2
+        x: 233
+        y: 153
+        width: 45
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 49d4a681cf01cf9d0800000000000000
+      internalID: -2739295798420681324
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_11
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 95
+        width: 97
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 711a71c7242648020800000000000000
+      internalID: 2343105743828787479
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_12
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 84
+        width: 85
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: a8123a0d16bf69c50800000000000000
+      internalID: 6671796295526719882
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_13
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 87
+        width: 46
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 7dba3f0a49d4eba90800000000000000
+      internalID: -7296309045542802473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_14
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 112
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 88cdd7446afb63710800000000000000
+      internalID: 1672735032449293448
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_15
+      rect:
+        serializedVersion: 2
+        x: 263
+        y: 92
+        width: 45
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d905c7a5fbd03c970800000000000000
+      internalID: 8773871614555869341
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_16
+      rect:
+        serializedVersion: 2
+        x: 299
+        y: 101
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: e129cc4e2f30cde70800000000000000
+      internalID: 9141185685410845214
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_17
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 30
+        width: 65
+        height: 54
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2c1e813a65e073bf0800000000000000
+      internalID: -344791081204260414
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_18
+      rect:
+        serializedVersion: 2
+        x: 16
+        y: 56
+        width: 61
+        height: 22
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: bb4e507d23a59f670800000000000000
+      internalID: 8572982540078802107
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_19
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 21
+        width: 80
+        height: 59
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 9b0db1882dcb44db0800000000000000
+      internalID: -4808510889712168775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_20
+      rect:
+        serializedVersion: 2
+        x: 138
+        y: 26
+        width: 45
+        height: 61
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: d7ae8218c462fec10800000000000000
+      internalID: 2084927262522141309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_21
+      rect:
+        serializedVersion: 2
+        x: 211
+        y: 49
+        width: 20
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 322110b0e8e1e83c0800000000000000
+      internalID: -4355510194201882077
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_22
+      rect:
+        serializedVersion: 2
+        x: 259
+        y: 31
+        width: 45
+        height: 58
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: eecc734a3b3e41330800000000000000
+      internalID: 3680817156162309358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Grapple_Tutorial_23
+      rect:
+        serializedVersion: 2
+        x: 258
+        y: 40
+        width: 10
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: b8f66468dbc57c1a0800000000000000
+      internalID: -6789355944166396021
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    customData: 
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    spriteCustomMetadata:
+      entries: []
+    nameFileIdTable:
+      Grapple_Tutorial_0: -8909176905612969574
+      Grapple_Tutorial_1: 4474092534547226085
+      Grapple_Tutorial_10: -2739295798420681324
+      Grapple_Tutorial_11: 2343105743828787479
+      Grapple_Tutorial_12: 6671796295526719882
+      Grapple_Tutorial_13: -7296309045542802473
+      Grapple_Tutorial_14: 1672735032449293448
+      Grapple_Tutorial_15: 8773871614555869341
+      Grapple_Tutorial_16: 9141185685410845214
+      Grapple_Tutorial_17: -344791081204260414
+      Grapple_Tutorial_18: 8572982540078802107
+      Grapple_Tutorial_19: -4808510889712168775
+      Grapple_Tutorial_2: -6285958770049352798
+      Grapple_Tutorial_20: 2084927262522141309
+      Grapple_Tutorial_21: -4355510194201882077
+      Grapple_Tutorial_22: 3680817156162309358
+      Grapple_Tutorial_23: -6789355944166396021
+      Grapple_Tutorial_3: 3470823017798862623
+      Grapple_Tutorial_4: -2142773872104487061
+      Grapple_Tutorial_5: -6519843190266774654
+      Grapple_Tutorial_6: 5840509339546207996
+      Grapple_Tutorial_7: 570193614175275532
+      Grapple_Tutorial_8: 4988178789608589383
+      Grapple_Tutorial_9: -6595794277219773603
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -4,7 +4,7 @@ public interface ICombatMode
 {
     void Enter();
     void Exit();
-    void HandleUpdate();
+    void HandleUpdate(InputAction input);
     void Action1(InputAction input);
     void Action2(InputAction input);
 }
