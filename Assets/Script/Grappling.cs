@@ -73,6 +73,19 @@ public class Grappling : MonoBehaviour
             targetPos = target.position;
         }
 
+        if (isGrappled && !isEnnemieGrappled)
+        {
+            if (characterCharacterHandler.CheckGround()) {
+                joint.enabled = false;
+                characterCharacterHandler.setIsGrapple(false);
+                characterCharacterHandler.stopMovementNotInDirection(grapplePoint - (Vector2)transform.position);
+            }
+            else {
+                joint.enabled = true;
+                characterCharacterHandler.setIsGrapple(true);
+            }
+        }
+
         Vector3 direction = (Vector3)targetPos - transform.position;
         float rotaZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotaZ);
