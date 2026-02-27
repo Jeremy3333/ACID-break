@@ -48,6 +48,7 @@ public class Grappling : MonoBehaviour
     bool hasTriggeredAttack = false;
 
     EnemieHandler grapledEnnemieHandler;
+    float stuckTimer = 0f;
 
     CharacterHandler characterCharacterHandler;
 
@@ -84,6 +85,33 @@ public class Grappling : MonoBehaviour
             }
         }
 
+        if (isEnnemieGrappled)
+        {
+            if (grapledEnnemieHandler == null)
+            {
+                CancelEnemyGrapple();
+            }
+            else
+            {
+                AttaqueEnnemie();
+
+                if (!hasTriggeredAttack)
+                {
+                    if (rb.linearVelocity.magnitude < 0.1f)
+                        stuckTimer += Time.deltaTime;
+                    else
+                        stuckTimer = 0f;
+
+                    if (stuckTimer >= 0.5f)
+                        CancelEnemyGrapple();
+                }
+                else
+                {
+                    stuckTimer = 0f;
+                }
+            }
+        }
+
         Vector3 direction = (Vector3)targetPos - transform.position;
         float rotaZ = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, rotaZ);
@@ -97,6 +125,28 @@ public class Grappling : MonoBehaviour
         {
             Retract();
         }
+    }
+
+    void CancelEnemyGrapple()
+    {
+        stuckTimer = 0f;
+        hasTriggeredAttack = false;
+        isEnnemieGrappled = false;
+
+        if (grapledEnnemieHandler != null)
+        {
+            grapledEnnemieHandler.setFrozen(false);
+            grapledEnnemieHandler = null;
+        }
+
+        rope.enabled = false;
+        joint.enabled = false;
+        isGrappled = false;
+        isRetracting = false;
+        characterCharacterHandler.setIsGrapple(false);
+        characterCharacterHandler.becomeTangible();
+        characterCharacterHandler.setCanDash(true);
+        DestroyCurrentProjectile();
     }
 
     void AttaqueEnnemie()

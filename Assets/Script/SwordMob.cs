@@ -98,7 +98,6 @@ public class SwordMob : MonoBehaviour
         if (anticipationTimer >= anticipationTime)
         {
             isAnticipating = false;
-            Debug.Log(Time.deltaTime);
             Attack();
         }
     }
