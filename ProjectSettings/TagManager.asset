@@ -11,6 +11,7 @@ TagManager:
   - Zone
   - SpawnerMob
   - PassableGround
+  - WallFriction
   layers:
   - Default
   - TransparentFX

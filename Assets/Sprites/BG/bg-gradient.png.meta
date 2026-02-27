@@ -106,9 +106,9 @@ TextureImporter:
         x: 0
         y: 0
         width: 1
-        height: 4
+        height: 6
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -121,11 +121,33 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: bg-justred
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 5
+        width: 1
+        height: 1
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1afaeb2cc1d7237448d7fac9f854880c
+      internalID: -1140155990
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 4004492b8f667954cbdd8d5d453efc14
     internalID: 0
     vertices: []
     indices: 
@@ -135,6 +157,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
+      bg-justred: -1140155990
       sandy-bg_0: -8508282436805123929
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
