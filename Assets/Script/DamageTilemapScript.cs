@@ -22,7 +22,7 @@ public class DamageTilemapScript : MonoBehaviour
 
     }
 
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionStay2D(Collision2D collision)
     {
         if (collision.collider.gameObject.tag == "Player"
             || collision.collider.gameObject.tag == "WallFriction")

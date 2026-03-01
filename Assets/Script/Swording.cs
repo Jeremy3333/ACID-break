@@ -19,10 +19,11 @@ public class Swording : MonoBehaviour
 
 
     [Header("Melee Arc")]
-    public float attackRadius = 1.5f; // porté de l'attaque du personnage
+    public float attackRadius = 1.5f; // portée de l'attaque du personnage
 
     [Range(0f, 360f)]
     public float attackAngle = 120f;
+    public float attackOffset = 0.5f; // décalage de l'attaque vers l'avant/l'arrière
 
     [Header("Charged Attack (Right Click)")]
     [Range(0f, 360f)]
@@ -250,9 +251,17 @@ public class Swording : MonoBehaviour
         UnlockMovement();
     }
 
+    Vector2 PosOffsetOnCursorAxis()
+    {
+        return (Vector2)(transform.position)
+            + (Vector2)((target.position - transform.position).normalized * attackOffset);
+    }
+
     void DoArcDamage(int dmg, float arcAngle)
     {
-        Collider2D[] hits = Physics2D.OverlapCircleAll(transform.position, attackRadius);
+        Vector2 offsetPos = PosOffsetOnCursorAxis();
+
+        Collider2D[] hits = Physics2D.OverlapCircleAll(offsetPos, attackRadius);
 
         foreach (Collider2D hit in hits)
         {
@@ -265,7 +274,7 @@ public class Swording : MonoBehaviour
             if (isChargedActive && chargedAlreadyHit.Contains(hit))
                 continue;
 
-            Vector2 dirToTarget = ((Vector2)hit.transform.position - (Vector2)transform.position).normalized;
+            Vector2 dirToTarget = ((Vector2)hit.transform.position - offsetPos).normalized;
             Vector2 facing = isChargedActive ? chargedDashDir : (Vector2)transform.right;
 
             float angleToTarget = Vector2.Angle(facing, dirToTarget);
@@ -279,7 +288,7 @@ public class Swording : MonoBehaviour
                     if (health != null)
                     {
                         health.Hit(dmg, true);
-                        Vector2 p = hit.ClosestPoint(transform.position);
+                        Vector2 p = hit.ClosestPoint(offsetPos);
                         Vector2 dir = isChargedActive ? chargedDashDir : (Vector2)transform.right;
 
                         GameEvents.RaiseHit(new HitEvent
@@ -368,8 +377,9 @@ public class Swording : MonoBehaviour
 
         // Couleur des lignes d'angle
         Gizmos.color = Color.green;
-        Gizmos.DrawLine(pos, pos + left * attackRadius);
-        Gizmos.DrawLine(pos, pos + right * attackRadius);
+        Vector3 offsetPos = (Vector3)PosOffsetOnCursorAxis();
+        Gizmos.DrawLine(offsetPos, offsetPos + left * attackRadius);
+        Gizmos.DrawLine(offsetPos, offsetPos + right * attackRadius);
     }
 
 }
